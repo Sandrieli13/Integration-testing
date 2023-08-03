@@ -3,8 +3,6 @@
     {% extends 'base.html' %}
 
     {% block content %}
-    <body>
-        <div class="grid-container">
             <div class="chart-container">
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
             </div>
@@ -19,7 +17,6 @@
             </div>
             <div class="chart-container">
                 <div id="chartContainer4" style="height: 370px; width: 100%;"></div>
-            </div>
             </div>
             <script>
                 var dataPoints = [
@@ -176,6 +173,6 @@
 
                 chart4.render();
                 </script>
-    </body>
+
 
     {% endblock %}
