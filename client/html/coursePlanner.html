@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #ffffff;
+                margin: 0;
+                padding: 0; 
+                text-align: center;
+                }
+                .content-wrapper {
+                flex-grow: 1;
+                overflow-y: auto;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.9);
+                }
+            .box {
+            width: 250px;
+            height: 300px; 
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            text-align: center;
+            }
+            .box-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            }
+            .item {
+            cursor: pointer;
+            padding: 5px;
+            margin-bottom: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            }
+            
+            .arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+            }
+            .arrow button {
+            margin: 5px 0;
+            background-color: #21a9be;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            }
+            
+            .arrow button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            }
+            form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            
+            }
+            
+            form label {
+            margin-right: 10px;
+            }
+            
+            form select {
+            padding: 5px;
+            }
+            
+            input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            }
+            
+            input[type="submit"]:hover {
+            background-color: #45a049;
+            }
+            
+            table {
+            margin: 20px auto;
+            border-collapse: collapse; 
+            }
+            
+            table th,
+            table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            }
+            
+            table th {
+            background-color: #f2f2f2;
+            }
+            tr:hover {
+            background-color: #ddd;
+                                }
+            #remaining-credits {
+            margin-bottom: 20px;
+            font-weight: bold;
+            }
+            
+            #completion-percentage {
+            font-weight: bold;
+            }
+            .courseResults{
+                    display: flex;
+                    max-width: 1200px;
+                    margin: auto;
+                    }             
+            </style>
+    </head>
+
+<body>
+   
+    <h3>Remaining Credits:</h3>
+    <p id="remaining-credits"></p>
+
+    <h3>Degree Completion:</h3>
+    <p id="completion-percentage"></p>
+
+    <div class="container">
+        <div class="box" id="all-courses">
+            <h3 class="box-title">All Courses</h3>
+        </div>
+
+        <div class="arrow">
+            <button onclick="moveLeft()" id="left-arrow" disabled>&lt;</button>
+            <button onclick="moveRight()" id="right-arrow" disabled>&gt;</button>
+        </div>
+
+        <div class="box" id="selected-courses">
+            <h3 class="box-title">Selected Courses</h3>
+        </div>
+    </div>
+
+    <form id="major-form" onsubmit="return loadCourseList()" method="post">
+        {% csrf_token %}
+        <label for="major">Select your major:</label>
+        <select name="major" id="major">
+            <option value="1">Computer Science</option>
+            <option value="2">Computer Information Systems</option>
+            <option value="3">Computer Network Technology</option>
+            <option value="4">Geographic Information Science</option>
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="courseResults">
+        
+        <h3>Remaining Courses:</h3>
+        <table id="remaining-courses-table">
+            <tr>
+                <th>Course Name</th>
+                <th>Credits</th>
+            </tr>
+        </table>
+        <h3>Taken Courses:</h3>
+        <table id="taken-courses-table">
+            <tr>
+                <th>Course Name</th>
+                <th>Credits</th>
+            </tr>
+        </table>
+
+    </div>
+
+    <h4>Note: The table shows the four categories: Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+        on the page <a href="electives.php">Elective Courses</a>
+    </h4>
+
+</body>
+
+
+
+<script>
+    // Function to update the course tables based on the returned JSON data
+function loadCourseList() {
+  const majorSelect = document.getElementById('major');
+  const selectedMajorId = majorSelect.value;
+
+  // Fetch the course list for the selected major
+  fetch(`/coursePlanner/?majorId=${selectedMajorId}`)
+      .then((response) => response.json())
+      .then((courseList) => {
+          // Update the course tables with the fetched data
+          updateTables(courseList);
+      })
+      .catch((error) => {
+          console.error('Error fetching course data:', error);
+      });
+
+  // Prevent the form from submitting
+  return false;
+}
+    function moveCourse() {
+    const selectedCourses = document.getElementById('selected-courses');
+    const allCourses = document.getElementById('all-courses');
+
+    if (this.parentElement === selectedCourses) {
+        // Deselect the course
+        allCourses.appendChild(this);
+    } else {
+        // Select the course
+        selectedCourses.appendChild(this);
+    }
+
+    updateButtonStates();
+    updateTable();
+    }
+
+    function moveLeft() {
+    const selectedCourses = document.getElementById('selected-courses');
+    const allCourses = document.getElementById('all-courses');
+    const selectedCourse = selectedCourses.querySelector('.item');
+
+    if (selectedCourse) {
+        allCourses.appendChild(selectedCourse);
+    }
+
+    updateButtonStates();
+    updateTable();
+    }
+
+    function moveRight() {
+    const selectedCourses = document.getElementById('selected-courses');
+    const allCourses = document.getElementById('all-courses');
+    const selectedCourse = allCourses.querySelector('.item');
+
+    if (selectedCourse) {
+        selectedCourses.appendChild(selectedCourse);
+    }
+
+    updateButtonStates();
+    updateTable();
+    }
+
+    function updateButtonStates() {
+    const selectedCourses = document.getElementById('selected-courses');
+    const allCourses = document.getElementById('all-courses');
+    const leftArrow = document.getElementById('left-arrow');
+    const rightArrow = document.getElementById('right-arrow');
+
+    leftArrow.disabled = selectedCourses.children.length === 0;
+    rightArrow.disabled = allCourses.children.length === 0;
+    }
+
+    function updateTable() {
+    const takenCoursesTable = document.getElementById('taken-courses-table');
+    const remainingCoursesTable = document.getElementById('remaining-courses-table');
+    const remainingCredits = calculateRemainingCredits();
+
+    updateCoursesTable('selected-courses', takenCoursesTable);
+    updateCoursesTable('all-courses', remainingCoursesTable);
+    document.getElementById('remaining-credits').textContent = remainingCredits;
+
+    // Call the updateDegreeCompletion function
+    updateDegreeCompletion();
+    }
+
+    function updateCoursesTable(containerId, table) {
+    const container = document.getElementById(containerId);
+    const courses = container.getElementsByClassName('item');
+
+    table.innerHTML = '';
+    const headerRow = table.insertRow();
+    headerRow.innerHTML = '<th>Course Name</th><th>Credits</th>';
+
+    for (let i = 0; i < courses.length; i++) {
+        const course = courses[i];
+        const courseName = course.textContent;
+        const credits = course.getAttribute('data-credits');
+
+        const newRow = table.insertRow();
+        newRow.innerHTML = `<td>${courseName}</td><td>${credits}</td>`;
+    }
+    }
+
+    function calculateRemainingCredits() {
+    const remainingCourses = document.getElementById('all-courses').getElementsByClassName('item');
+    let remainingCredits = 0;
+    for (let i = 0; i < remainingCourses.length; i++) {
+        const credits = parseInt(remainingCourses[i].getAttribute('data-credits'));
+        remainingCredits += credits;
+    }
+    return remainingCredits;
+    }
+
+    function calculateTakenCredits() {
+    const takenCourses = document.getElementById('selected-courses').getElementsByClassName('item');
+    let takenCredits = 0;
+    for (let i = 0; i < takenCourses.length; i++) {
+        const credits = parseInt(takenCourses[i].getAttribute('data-credits'));
+        takenCredits += credits;
+    }
+    return takenCredits;
+    }
+
+    function updateDegreeCompletion() {
+    const takenCoursesTable = document.getElementById('taken-courses-table');
+    const remainingCoursesTable = document.getElementById('remaining-courses-table');
+    const completionPercentage = document.getElementById('completion-percentage');
+
+    const totalCourses = takenCoursesTable.rows.length - 1 + remainingCoursesTable.rows.length - 1;
+    const takenCoursesCount = takenCoursesTable.rows.length - 1;
+    const completion = (takenCoursesCount / totalCourses) * 100;
+
+    completionPercentage.textContent = completion.toFixed(2) + '%';
+    }
+</script>
+</html>

@@ -33,6 +33,7 @@
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'CampusInfo' %}">Campus Information</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursePlanner' %}">Course Planner</a></li>
                   <li class="navbar-item">
                     <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
                       {% if user.is_authenticated %}
