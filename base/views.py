@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Majors, Courses, Semester
-
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 
 # Create your views here.
 def home(request):
@@ -58,3 +59,35 @@ def course_search(request):
 
 def CampusInfo(request):
     return render(request, 'CampusInfo.html')
+
+
+
+def coursePlanner(request):
+    print('loadCourseList() called')
+    major_id = request.GET.get('majorId')
+    print('Received major ID:', major_id)  # Add this line for debugging
+
+    if not major_id:
+        # Return an error JSON response if majorId is not provided in the request
+        return JsonResponse({'error': 'Major ID not provided.'}, status=400)
+
+    try:
+        major = Majors.objects.get(pk=major_id)
+        courses = Courses.objects.filter(major_id=major_id)
+
+        course_list = []
+        for course in courses:
+            course_list.append({
+                'course_name': course.course_name,
+                'credits': course.credits,
+            })
+
+        return JsonResponse(course_list, safe=False)  # Return the JSON response
+    except Majors.DoesNotExist:
+        return JsonResponse({'error': 'Major not found.'}, status=404)
+    except Exception as e:
+        # Return an error JSON response if any other exception occurs
+        return JsonResponse({'error': str(e)}, status=500)
+
+def DataAnalysisPage(request):
+    return render(request, 'DataAnalysisPage.html')

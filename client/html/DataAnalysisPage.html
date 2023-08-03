@@ -1,0 +1,181 @@
+
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <body>
+        <div class="grid-container">
+            <div class="chart-container">
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
+            </div>
+            <div class="chart-container">
+                <div id="chartContainer4" style="height: 370px; width: 100%;"></div>
+            </div>
+            </div>
+            <script>
+                var dataPoints = [
+                    { label: "Computer Science", y: 1026 },
+                    { label: "Computer Information Systems", y: 256 },
+                    { label: "Geographic Information Science", y: 10 },
+                    { label: "Computer Network Technology", y: 157 },
+                ];
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: {
+                    text: "BMCC CIS Department in CS, CIS, GIS, and CNT Enrollment Data (Fall 2022)"
+                    },
+                    subtitles: [{
+                    text: "Major Distribution Analysis"
+                    }],
+                    data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - #percent%",
+                    dataPoints: dataPoints
+                    }]
+                });
+
+                chart.render();
+                </script>
+                <script>
+                var dataPoints1 = [
+                    { label: "Asian", y: 85 },
+                    { label: "Black", y: 80 },
+                    { label: "Hispanic", y: 74 },
+                    { label: "White", y: 17 },
+                    { label: "Native American", y: 0 },
+                ];
+
+                var chart1 = new CanvasJS.Chart("chartContainer1", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: {
+                    text: "Computer Information Systems - Ethnicity Data(Fall 2022)"
+                    },
+                    subtitles: [{
+                    text: "Ethnicity Analysis"
+                    }],
+                    data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - #percent%",
+                    dataPoints: dataPoints1
+                    }]
+                });
+
+                chart1.render();
+                </script>
+
+                <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                <script>
+                var dataPoints2 = [
+                    { label: "Asian", y: 297 },
+                    { label: "Black", y: 310 },
+                    { label: "Hispanic", y: 283 },
+                    { label: "White", y: 133 },
+                { label: "Native American", y: 3 },
+                ];
+
+                var chart2 = new CanvasJS.Chart("chartContainer2", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: {
+                    text: "Computer Science - Ethnicity Data(Fall 2022)"
+                    },
+                    subtitles: [{
+                    text: "Ethnicity Analysis"
+                    }],
+                    data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - #percent%",
+                    dataPoints: dataPoints2
+                    }]
+                });
+
+                chart2.render();
+                </script>
+
+                <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                <script>
+                var dataPoints3 = [
+                    { label: "Asian", y: 34 },
+                    { label: "Black", y: 52 },
+                    { label: "Hispanic", y: 55 },
+                    { label: "White", y: 15 },
+                    { label: "Native American", y: 1 },
+                ];
+
+                var chart3 = new CanvasJS.Chart("chartContainer3", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: {
+                    text: "Computer Network Technology - Ethnicity Data(Fall 2022)"
+                    },
+                    subtitles: [{
+                    text: "Ethnicity Analysis"
+                    }],
+                    data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - #percent%",
+                    dataPoints: dataPoints3
+                    }]
+                });
+
+                chart3.render();
+                </script>
+
+                <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                <script>
+                var dataPoints4 = [
+                    { label: "Asian", y: 2 },
+                    { label: "Black", y: 1 },
+                    { label: "Hispanic", y: 4 },
+                    { label: "White", y: 3 },
+                { label: "Native American", y: 0 },
+                ];
+
+                var chart4 = new CanvasJS.Chart("chartContainer4", {
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title: {
+                    text: "Geographic Information Systems - Ethnicity Data(Fall 2022)"
+                    },
+                    subtitles: [{
+                    text: "Ethnicity Analysis"
+                    }],
+                    data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - #percent%",
+                    dataPoints: dataPoints4
+                    }]
+                });
+
+                chart4.render();
+                </script>
+    </body>
+
+    {% endblock %}
