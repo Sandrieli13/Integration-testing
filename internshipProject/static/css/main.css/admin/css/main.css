@@ -1,0 +1,38 @@
+/* Style for the course requirements table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for the major footnotes table */
+  h2 {
+    margin-top: 30px;
+  }
+  
+  table.major-footnotes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table.major-footnotes-table th, table.major-footnotes-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+  }
+  
+  table.major-footnotes-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
