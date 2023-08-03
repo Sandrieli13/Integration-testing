@@ -56,3 +56,5 @@ def course_search(request):
     majors = Majors.objects.all()
     return render(request, 'course_search.html', {'majors': majors})
 
+def CampusInfo(request):
+    return render(request, 'CampusInfo.html')

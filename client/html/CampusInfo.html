@@ -1,0 +1,584 @@
+
+
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+<head>
+    <style>
+        
+        
+        
+        .content {
+        flex-grow: 1;
+        overflow-y: auto;  
+        padding: 0 auto;
+        }
+        
+
+        .logo-item {
+            margin-right: 10px;
+        }
+
+        .menu-items {
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+    
+    
+       
+        .fa-solid {
+                font-size: 35px; /* Adjust the size as needed */
+                margin-right: 10px; /* Optional: Adds some spacing between the icon and the text */
+                }
+                .fa-brands{
+                    font-size: 35px; /* Adjust the size as needed */
+                    margin-right: 10px; /* Optional: Adds some spacing between the icon and the text */
+                }
+        .search-bar {
+            float: left;
+            margin-top: 8px;
+        }
+    
+        .search-bar {
+            margin: 0;
+            padding: 0;
+        }
+    
+        .search-bar input[type="text"] {
+            padding: 6px;
+            border-radius: 4px;
+            border: none;
+            border: 1px solid black;
+        
+        }
+    
+        .search-bar button {
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+    
+        .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .logo {
+            margin-top: 40px;
+            max-width: 450px;
+            width: 100%;
+            height: 100%;
+            height: 300px;
+            border: blur;               
+        }
+         
+         
+        .icon {
+            width: 150px;
+            height: 40px;
+            margin-right: 10px;
+            border-radius: 10px;
+        
+            }
+            h1{  
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+                color: #000;
+                text-align: center;              
+                font-size: 62px;
+                font-family: Koh Santepheap;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;                
+            }
+            h2{            
+                color: rgb(91, 86, 86);              
+                text-align: center;
+                font-size: 25px;
+                font-family: Koh Santepheap;             
+                line-height: normal;                
+            }
+            h3{
+                    display: flex;
+                    justify-content: center;
+                    color: #686f70;
+                    font-size: 18px;
+                }  
+            
+            .icon-container {
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px; /* Optional: Adds some spacing between each icon-container */
+                }
+
+                .logo-container {                      
+                        margin-bottom:20px;
+                        margin-top: 50px;
+                    }
+
+                    .banner, .logo {
+                        margin: 0;
+                        padding: 0;
+                        top: 0;
+                        left: 0;
+                    
+                    }
+
+                    .banner {
+                        z-index: index 3;  /* This ensures that the banner image appears above the logo image */
+                        width: 100%;
+                        height:min-content; 
+                        box-shadow: 0 0 10px 5px rgba(18, 20, 19, 0.6);  
+                        /* position: absolute; */
+                        
+                    }
+                    
+
+                    .grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap:30px;
+                    margin: 10px auto; /* Add this line to center the grid horizontally */
+                    max-width:1200px; /* Adjust the maximum width as needed */
+                }
+
+                .grid-item {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center; /* Add this property */
+                }
+
+                .grid-item .wsite-content-title {
+                    font-size: 4;
+                }
+
+                /* .grid-item .imgPusher {
+                    float: right;
+                    height: 0px;
+                } */
+
+                .grid-item img {
+            width: 200px; /* Adjust the width as needed */
+            height: 200px; /* Adjust the height as needed */
+            object-fit: cover;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            border-width: 0;
+            max-width: 100%;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);  
+                }
+
+                .grid-item .paragraph {
+                    display: block;
+                }
+
+                .grid-item .span{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center; /* Add this property */
+                }
+                .container2{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 50px;
+                text-align: center;
+                background:white;
+                }
+
+                .content2 {
+                max-width: 1200px;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+
+                .title2 {
+                font-size: 24px;
+                color: #333;
+                margin-bottom: 20px;
+                }
+
+                .paragraph2 {
+                font-size: 16px;
+                color: #666;
+                line-height: 1.6;
+                }
+
+                .button2 {
+                display: inline-block;
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+                }
+
+                .button2:hover {
+                background-color: #0056b3;
+                }
+                hr.new5 {
+                border: 10px solid rgb(85, 156, 238);
+                border-radius: 1px;
+                }
+    </style>
+</head>
+<body>
+
+    <h1>Campus Information</h1>
+    <h3 style="color: rgb(5, 5, 5);">Explore the Campus Directions, Opportunities and Sign Up for Amenities and Events
+    </h3>
+    <h2 style="margin-top: 30px;">CAMPUS ADDRESSES:<br></h2>
+    <div class="grid-container">             
+        <div class="grid-item">
+            <h2 class="wsite-content-title"><font size="4">Main Campus</font></h2>
+            <span class="imgPusher"></span>
+            <a>
+                <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/editor/maincampus.jpeg?1667077002" alt="Picture" class="galleryImageBorder wsite-image">
+            </a>
+            <div class="paragraph">
+                <span style="color: rgb(0, 0, 0);">199 Chambers Street</span><br>
+                <span style="color: rgb(0, 0, 0);">New York, NY 10007</span><br>
+                <font size="2" style="color: rgb(102, 102, 102);">
+                    <span style="color: rgb(0, 0, 0); font-weight: 700;">Hours:</span><br>
+                    <span style="color: rgb(0, 0, 0);">Weekdays: Monday through Friday, 6:30 a.m. to 11 p.m.</span>
+                </font><br>
+                <span style="color: rgb(0, 0, 0);"><font size="2">Weekend: Saturday and Sunday, 6:30 a.m. to 8:30 p.m.</font></span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <h2 class="wsite-content-title"><font size="4">Murray Street</font></h2>
+            <span class="imgPusher"></span>
+            <a>
+                <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/editor/murray.jpeg?1667077019" alt="Picture" class="galleryImageBorder wsite-image">
+            </a>
+            <div class="paragraph">
+                <font size="3"><span style="color: rgb(0, 0, 0);">70 Murray Street</span><br><span style="color: rgb(0, 0, 0);">New York, NY 10007</span></font><br>
+                <font size="2">
+                    <span style="color: rgb(0, 0, 0); font-weight: 700;">Hours:</span><br>
+                    <span style="color: rgb(0, 0, 0);">Weekdays: Monday through Thursday, 7 a.m. to 10 p.m.</span><br>
+                    <span style="color: rgb(0, 0, 0);">Friday, 7 a.m. to 9 p.m.</span>
+                </font><br>
+                <span style="color: rgb(0, 0, 0);"><font size="2">Weekend: Closed</font></span>
+            </div>
+        </div>
+        <div class="grid-item">
+            <h2 class="wsite-content-title"><font size="4">Fiterman Hall</font></h2>
+            <span class="imgPusher"></span>
+            <a>
+                <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/fittermann.jpeg?1667081619" alt="Picture" class="galleryImageBorder wsite-image">
+            </a>
+            <div class="paragraph">
+                <span style="color: rgb(0, 0, 0);">245 Greenwich Street</span><br>
+                <span style="color: rgb(0, 0, 0);">New York, NY 10007</span><br>
+                <font size="2" style="color: rgb(102, 102, 102);">
+                    <span style="color: rgb(0, 0, 0); font-weight: 700;">Hours:</span><br>
+                    <span style="color: rgb(0, 0, 0);">Weekdays: Monday through Friday, 6:30 a.m. to 10:30 p.m.</span>
+                </font><br>
+                <span style="color: rgb(0, 0, 0);"><font size="2">Weekend: Saturday and Sunday, 7:00 a.m. to 9:30 p.m.</font></span><br>
+            </div>
+        </div>
+        
+        <div class="grid-item">
+            <h2 class="wsite-content-title"><font size="4">Center for Continuing Education Workforce Development</font></h2>
+            <span class="imgPusher"></span>
+            <a>
+                <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/centerbmcc.jpeg?1667077041" alt="Picture" class="galleryImageBorder wsite-image">
+            </a>
+            <div class="paragraph">
+                <span style="color: rgb(0, 0, 0);">25 Broadway, 8th Floor</span><br>
+                <span style="color: rgb(0, 0, 0);">New York, NY 10004<br></span>
+                <font size="2" style="color: rgb(102, 102, 102);">
+                    <span style="color: rgb(0, 0, 0); font-weight: 700;">Hours:</span><br>
+                    <span style="color: rgb(0, 0, 0);">Weekdays: Monday through Thursday, 8:30 a.m. to 8:00 p.m.&nbsp;<br>Friday, 8:30 a.m. to 5:00 p.m.</span>
+                </font> 
+                
+            </div>
+        </div>
+    </div>
+
+    <h2 class="wsite-content-title" style="text-align:center;"><font size="6">Main Campus</font></h2>
+    
+    <div class="grid-container">
+        <div class="grid-item">
+            
+            
+            <h2 class="wsite-content-title" style="text-align:center;"><font size="4"><strong>MAP</strong></font></h2>
+            
+            <div class="wsite-map">
+                <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width: 100%; height: 250px; margin-top: 10px; margin-bottom: 10px;" src="//www.weebly.com/weebly/apps/generateMap.php?map=google&elementid=512735625293894117&ineditor=0&control=3&width=auto&height=250px&overviewmap=0&scalecontrol=0&typecontrol=0&zoom=15&long=-74.0122469&lat=40.7174546&domain=www&point=1&align=1&reseller=false"></iframe>
+            </div>
+            
+            <div class="paragraph" style="text-align:left;">
+                <br />
+                <span style="color:rgb(0, 0, 0)"><font size="2">Located in the heart of downtown NYC, students actively participate in the artistic communities of Tribeca and SoHo, the dynamic downtown financial district, and the center of New York City government at City Hall.&nbsp;</font></span>
+                <br /><br />
+                <span><font size="2"><strong>By Subway</strong></font></span>
+                <br />
+                <font size="2">You can get to BMCC&rsquo;s main campus by taking any one of the following lines:</font>
+                <ul style="color:rgb(85, 85, 85)">
+                    <li style="color:rgb(0, 0, 0)"><font size="2"><span style="font-weight:700">IND/8th Avenue Subway Line</span><br />A, C to Chambers Street<br />Walk 3 Blocks West on Chambers Street</font></li>
+                    <li style="color:rgb(0, 0, 0)"><font size="2"><span style="font-weight:700">IRT/7th Avenue Subway Line</span><br />1, 2, or 3 to Chambers Street (Local)<br />Walk 2 Blocks West on Chambers Street</font></li>
+                    <li style="color:rgb(0, 0, 0)"><font size="2"><span style="font-weight:700">BMT Subway Line</span><br />R to City Hall (Local)<br />J, M to Chambers Street<br />Walk 6 Blocks West on Chambers Street</font></li>
+                </ul>
+                <font size="2">Check the&nbsp;<a href="http://www.mta.info/" target="_blank">MTA&rsquo;s web site</a>&nbsp;for the latest information.</font>
+                <br /><br /><br />
+            </div>
+        </div>
+        
+        <div class="grid-item">
+            <h2 class="wsite-content-title" style="text-align:center;"><font size="4">RESOURCE AND AMENITIES</font></h2>
+            
+            <div>
+                <div class="wsite-image wsite-image-border-none ">
+                    <a>
+                        <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/screen-shot-2022-10-29-at-2-52-04-pm.png?1667081637" alt="Picture"   />
+                    </a>
+                    <div style="display:block;font-size:90%"></div>
+                </div>
+            </div>
+            
+            <div class="paragraph" style="text-align:left;">
+                <ul>
+                    <li><font size="2"><span style="color:rgb(68, 68, 68)">The&nbsp;</span><strong style="color:rgb(68, 68, 68)">Randolph Library&nbsp;</strong></font></li>
+                </ul>
+                <font size="2"><span style="color:rgb(68, 68, 68)">&nbsp; &nbsp; &nbsp; 199 Chambers Street, 4th floor&nbsp;</span><span style="color:rgb(68, 68, 68)">(S-410)<br /></span></font>
+                <ul>
+                    <li><font size="2"><span style="color: rgb(0, 0, 0);">Student Study room&nbsp;</span><a href="https://bmcc.libguides.com/studyspace" >reservations</a><span style="color:rgb(68, 68, 68)"></span></font><font size="2"><span style="color:rgb(68, 68, 68)"></span></font></li>
+                    <li><font size="2"><span style="color:rgb(68, 68, 68)">Group Study Area (S-430).</span></font></li>
+                    <li><font size="2"><span style="color:rgb(68, 68, 68)">Cell Phone Charging Stations</span></font></li>
+                    <li><font color="#000000" size="2"><font color="#000000"><a href="https://www.bmcc.cuny.edu/students/fitness-center/">Fitness Center</a>&nbsp;</font>(N-275)</font></li>
+                    <li style="color:rgb(0, 0, 0)"><font size="2"><a href="https://bmccathletics.com/index.aspx">Intramural and Recreational Activities</a>&nbsp;(N-255)</font></li>
+                    <li style="color:rgb(0, 0, 0)"><font size="2">Swimming Pool (N-255)</font></li>
+                    <li style="color:rgb(0, 0, 0)"><font size="2">ATMs (2nd and 3rd Floor South)</font>&#8203;</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="grid-item">
+            <h2 class="wsite-content-title" style="text-align:center;"><strong><font size="4">ACADEMIC DEPARTMENTS</font></strong></h2>
+            
+            <span class='imgPusher' style='float:left;height:0px'></span>
+            <span style='display: table;width:297px;position:relative;float:left;max-width:100%;;clear:left;margin-top:0px;*margin-top:0px'>
+                <a>
+                    <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/screen-shot-2022-10-29-at-3-03-25-pm.png?1667081632"/>
+                </a>
+                <span style="display: table-caption; caption-side: bottom; font-size: 90%; margin-top: -10px; margin-bottom: 10px; text-align: center;" class="wsite-caption"></span>
+            </span>
+            
+            <div class="paragraph" style="display:block;">
+                <br /><br /><br />
+                <font size="2"><span style="color:rgb(0, 0, 0); font-weight:600">Academic Literacy and Linguistics Department:&nbsp;</span></font>
+                <br />
+                <font size="2">
+                    <span style="color:rgb(0, 0, 0)">199 Chambers St, Room &nbsp;N-499</span><br />
+                    <span style="color:rgb(0, 0, 0)">(212) 220-1396</span><br />
+                    <font color="#171718">ALL@bmcc.cuny.edu</font>
+                    <br /><br />
+                    <span style="color:rgb(0, 0, 0); font-weight:600">Allied Health Sciences Department</span><br />
+                    <span style="color:rgb(0, 0, 0)">199 Chambers St, Room N-799</span><br />
+                    <span style="color:rgb(0, 0, 0)">(212) 220- 8335</span><br />
+                    <font color="#000000">HLT@bmcc.cuny.edu</font>
+                    <br /><br />
+                    <span style="color:rgb(0, 0, 0); font-weight:600">English Department</span><br />
+                    <span style="color:rgb(0, 0, 0)">Room N-751</span><br />
+                    <span style="color:rgb(0, 0, 0)">New York, NY 10007</span><br />
+                    <span style="color:rgb(0, 0, 0)">(212) 220-8270</span>
+                    <br />&#8203;<br />
+                    <span style="color:rgb(0, 0, 0); font-weight:600">Department of Ethnic and Race Studies</span><br />
+                    <span style="color:rgb(0, 0, 0)">Room S-623</span><br />
+                    <span style="color:rgb(0, 0, 0)">(212) 220-1370</span><br />
+                    <font color="#000000">EthnicStudies@bmcc.cuny.edu<br />&#8203;</font>
+                </font>
+                <br /><br />
+            </div>
+        </div>
+    </div>  
+                   
+                        <h2 class="wsite-content-title" style="text-align:center;"><font size="6">Fiterman Hall</font></h2>
+                        
+                        <div class="wsite-spacer" style="height:36px;"></div>
+                        
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4"><strong>MAP</strong></font></h2>
+                                
+                                <div class="wsite-map">
+                                    <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width: 100%; height: 250px; margin-top: 10px; margin-bottom: 10px;" src="//www.weebly.com/weebly/apps/generateMap.php?map=google&elementid=849599081480371467&ineditor=0&control=3&width=auto&height=250px&overviewmap=0&scalecontrol=0&typecontrol=0&zoom=15&long=-74.0113173&lat=40.71390780000001&domain=www&point=1&align=1&reseller=false"></iframe>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <span style="color:rgb(0, 0, 0)"><font size="2">The 15-story academic facility houses a first-floor art gallery, 65 classrooms, 35 computer labs, 130 offices for faculty, library spaces, atriums, open stairways, and several large assembly and performance rooms including a conference center on the top two floors and a double high choral ensemble space.</font></span>
+                                    <br />&#8203;
+                                    <br />
+                                    <strong><font size="2">By Subway</font></strong>
+                                    <ul>
+                                        <li style="color:rgb(0, 0, 0)"><font size="2"><em>A, C, E to Chambers Street.&nbsp;</em>Walk 3 blocks South on Church Street and turn right on Park Place. Walk two blocks and enter Fiterman at 245 Greenwich Street.</font></li>
+                                        <li style="color:rgb(0, 0, 0)"><font size="2"><em>1, 2, or 3 to Chambers Street.&nbsp;</em>Walk 3 blocks South on West Broadway and turn right on Park Place. Walk one block and enter Fiterman at 245 Greenwich Street.</font></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4">RESOURCES AND AMENITIES</font></h2>
+                                
+                                <div>
+                                    <div class="wsite-image wsite-image-border-none " >
+                                        <a>
+                                            <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/fitter.webp?1667076821" alt="Picture" style="width:200px;height:200px;" />
+                                        </a>
+                                        <div style="display:block;font-size:90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <ul>
+                                        <li><font size="2">Cafeteria (1st Floor)</font></li>
+                                        <li><font size="2">Study Rooms:</font>&#8203;</li>
+                                    </ul>
+                                    <font size="2">(F-402, F-502, F-602, F-702, F-902,F-902, F-1002,F-1102). For reservations, click <a href="https://www.bmcc.cuny.edu/library/services/fiterman-rooms/" target="_blank">here.</a></font>
+                                    <ul>
+                                        <li><font size="2">Fiterman Art Center</font></li>
+                                        <li><font size="2">Music Ensemble&nbsp;</font></li>
+                                    </ul>
+                                    <font size="2"><a href="https://www.bmcc.cuny.edu/library/services/fiterman-rooms/" target="_blank">&#8203;</a></font>
+                                </div>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4">ACADEMIC DEPARTMENTS</font></h2>
+                                
+                                <div>
+                                    <div class="wsite-image wsite-image-border-none ">
+                                        <a>
+                                            <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/fiterman.jpeg?1667076823" alt="Picture" style="width:200px;height:200px;" />
+                                        </a>
+                                        <div style="display:block;font-size:90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <font size="2"><span style="color:rgb(0, 0, 0); font-weight:600">Accounting Department</span><br /><span style="color:rgb(0, 0, 0)">Room F-530</span></font>
+                                    <br /><span style="color:rgb(0, 0, 0)"><font size="2">(212) 220-8185</font></span>
+                                    <br />
+                                    <strong><span style="color:black"><font size="2">Alexandria Jung:</font></span></strong>
+                                    <br /><font size="2">ajung@bmcc.cuny.edu</font>
+                                    <br /><font size="2"><strong><span style="color:black">Yvonne Phang:</span></strong><br />yphang@bmcc.cuny.edu</font>
+                                    <br /><strong><span style="color:black"><font size="2">Josh Wolfson:</font></span></strong>
+                                    <br /><font size="2">jwolfson@bmcc.cuny.edu</font><span style="color:black">&nbsp;</span>
+                                    <br /><br /><font size="2"><span style="color:rgb(0, 0, 0); font-weight:600">Business Management Department</span><br /><span style="color:rgb(0, 0, 0)">Room F-730A</span><br /><span style="color:rgb(0, 0, 0)">(212) 220-8205</span></font>
+                                    <br /><font size="2">bec@bmcc.cuny.edu</font>
+                                    <br /><br /><font size="2"><span style="color:rgb(0, 0, 0); font-weight:600">Computer Information Systems Department</span><br /><span style="color:rgb(0, 0, 0)">Room F-930A</span><br /><span style="color:rgb(0, 0, 0)">(212) 220-1476</span></font>
+                                    <br /><font size="2">cis@bmcc.cuny.edu</font>
+                                    <br /><br /><font size="2"><span style="color:rgb(0, 0, 0); font-weight:600">Music and Art Department</span><br /><span style="color:rgb(0, 0, 0)">Room F-1130P</span><br /><span style="color:rgb(0, 0, 0)">(212) 220-1464</span><br />Music&amp;art@bmcc.cuny.edu<br /><br />&#8203;</font>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <h2 class="wsite-content-title" style="text-align:center;"><font size="6">Murray Campus</font><br /></h2>
+                        
+                        <div class="wsite-spacer" style="height:36px;"></div>
+                        
+                        <div class="grid-container">
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4"><strong>MAP</strong></font></h2>
+                                
+                                <div class="wsite-map">
+                                    <iframe allowtransparency="true" frameborder="0" scrolling="no" style="width: 100%; height: 250px; margin-top: 10px; margin-bottom: 10px;" src="//www.weebly.com/weebly/apps/generateMap.php?map=google&elementid=204228714658104793&ineditor=0&control=3&width=auto&height=250px&overviewmap=0&scalecontrol=0&typecontrol=0&zoom=15&long=-74.01083899999999&lat=40.714323&domain=www&point=1&align=1&reseller=false"></iframe>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <font size="2"><span style="color:rgb(0, 0, 0)">BMCC currently occupies space on the 2nd, 10th, 11th and 14th floors of 70 Murray Street.&nbsp;</span></font>
+                                    <br /><br />
+                                    <font size="2"><strong>By Subway</strong></font>
+                                    <ul>
+                                        <li style="color:rgb(0, 0, 0)"><span style="font-weight:700"><font size="2">IND/8th Avenue Subway Line</font></span></li>
+                                    </ul>
+                                    <font size="2">&nbsp; &nbsp; &nbsp; &nbsp;A, C to Chambers Street<br />&nbsp; &nbsp; &nbsp; &nbsp;Walk 2 blocks South on Church and turn West and&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;walk 1 block on Murray</font>
+                                    <ul>
+                                        <li style="color:rgb(0, 0, 0)"><span style="font-weight:700"><font size="2">IRT/7th Avenue Subway Line</font></span></li>
+                                    </ul>
+                                    <font size="2">&nbsp; &nbsp; &nbsp; 1, 2, or 3 to Chambers Street<br />&nbsp; &nbsp; &nbsp;Walk 2 blocks South on Church and turn West on&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Murray.</font>
+                                    <br /><br />
+                                </div>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4">RESOURCES AND AMENITIES</font></h2>
+                                
+                                <div>
+                                    <div class="wsite-image wsite-image-border-none " >
+                                        <a>
+                                            <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/2019murray-stairs-dsc93805b15d.jpeg?1667076866" alt="Picture" style="width:200px;height:200px;" />
+                                        </a>
+                                        <div style="display:block;font-size:90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <ul>
+                                        <li><span><font size="2">Computer Labs</font></span></li>
+                                        <li><span><font size="2">Conference Rooms</font></span></li>
+                                        <li><span><font size="2">Student Lounge</font></span></li>
+                                        <li><span><font size="2">Printing/Copying Facilities</font></span></li>
+                                        <li><span><font size="2">Gender-neutral restrooms</font></span></li>
+                                        <li><span><font size="2">Respite Room</font></span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="grid-item">
+                                <h2 class="wsite-content-title" style="text-align:center;"><font size="4">DEPARTMENTS</font></h2>
+                                
+                                <div>
+                                    <div class="wsite-image wsite-image-border-none ">
+                                        <a>
+                                            <img src="https://freshmanroadmap.weebly.com/uploads/1/4/3/6/143641134/published/255-greenwich-street.jpeg?1667076840" alt="Picture" style="width:200px;height:200px;" />
+                                        </a>
+                                        <div style="display:block;font-size:90%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="paragraph" style="text-align:left;">
+                                    <font size="2"><a href="https://www.bmcc.cuny.edu/bmcc-express/">BMCC Express</a><span style="color:rgb(0, 0, 0)">&nbsp;</span><br />70 Murray Street, Street Level<br /><br /></font>
+                                    <font size="2">Accelerated Study in Associate Programs (ASAP)</font>
+                                    <font size="2">14th Floor<br />(212) 220-1397<br />asap@bmcc.cuny.edu</font>
+                                </div>
+                            </div>
+                        </div>
+</div>
+ 
+</div>
+
+<div class="container2">
+
+<div class="content2">
+  <h2 class="title2">Center for Continuing Education &amp; Workforce Development</h2>
+  <p class="paragraph2">Are you considering changing careers, seeking advancement, or professional development? The Center for Continuing Education and Workforce Development at BMCC has a wide range of courses that will help you reach your goals. BMCC has been providing individuals with hands-on training that has been changing lives for over 30 years in NYC.</p>
+  <p class="paragraph2"><strong>Career Training and Personal Development</strong><br>
+  We have courses in the popular fields of <a href="https://www.campusce.net/bmcc/course/course.aspx?catId=1">Allied Health</a> and <a href="https://www.campusce.net/bmcc/course/course.aspx?catId=3">Information Technology and Media Arts</a>. Other <a href="https://www.campusce.net/bmcc/course/course.aspx?catId=4">Career Training courses</a> include notary public preparation, legal studies, wedding and event planning, and basic accounting. We offer <a href="https://www.bmcc.cuny.edu/ce/programs/">English as a Second Language (ESL)</a> and <a href="https://www.bmcc.cuny.edu/ce/programs/">college prep courses</a> as well. See our <a href="https://bmccprodstroac.blob.core.windows.net/uploads/2022/06/BMCC-CE-Summer-Fall-Catalog-2022.pdf">catalogue</a> for detailed descriptions of courses and contact us with any questions you may have.</p>
+  <a class="button2" href="https://www.bmcc.cuny.edu/#virtualtour" target="_blank">Virtual Tour</a>
+</div>
+</div>
+
+<div class="footer">
+
+    <p >@ Borough of Manhattan Community College | 199 Chambers Street | New York, NY 10007 | Contact Us | Privacy Policy</p>
+
+</div>
+<hr>
+</body>
+{% endblock %}
+
