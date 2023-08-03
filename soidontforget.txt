@@ -1,0 +1,7 @@
+activating virt env: myvenv\Scripts\activate
+deactivate virt env: deactivate
+running server: python manage.py runserver
+admin database: http://127.0.0.1:8000/admin/
+stopping server: CONTROL + C
+
+/home/LisandroS

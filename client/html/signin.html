@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   <h1>Sign In</h1>
+    <form method="POST" class="ibm-row-form" action="{% url 'signin' %}">
+            {% csrf_token %}
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <input class="navbar-button w-nav-link  text-3" type="submit" value="Sign In">
+        </form>
+    <a class="navbar-button w-nav-link text-3 footer-ting" href="{% url 'signup' %}">Sign Up</a>
+{% endblock %}

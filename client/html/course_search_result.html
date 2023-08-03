@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Course Search Result</title>
+{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+{% block content %}
+    {% if major %}
+        <h2>Your Major: {{ major.major_name }}</h2>
+        <h3>Course Requirements:</h3>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Credits</th>
+            </tr>
+            {% for course in courses %}
+                <tr>
+                    <td>{{ course.course_name }}</td>
+                    <td>{{ course.credits }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Summary:</h3>
+        <p>Total Courses: {{ total_courses }}</p>
+        <p>Total Semesters: {{ total_semesters }}</p>
+        <p>Total Credits: {{ total_credits }}</p>
+
+        {% if is_computer_science %}
+            <h2>Computer Science Major Footnotes:</h2>
+            <table class="major-footnotes-table">
+                <tr>
+                    <th>Footnote</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Students are required to take MAT 206.5. MAT 206.5 is a combination course of Intermediate Algebra and Trigonometry and Precalculus and will help fulfill the General Elective requirement of which 6 credits are required. The remaining 2 credits can be satisfied by taking STEM variants in the Common Core.</td>
+                </tr>
+                <tr><td>2</td><td>CSC 101 and MAT 206.5 are prerequisite courses to CSC 111. Students are strongly encouraged to take both courses in their first semester.</td></tr>
+                <tr><td>3</td><td>MAT 206.5 must be passed in order to take MAT 301.</td></tr>
+                <tr><td>4</td><td>SPE 102 is an option for non-native speakers of English.</td></tr>
+                <tr><td>5</td><td>PHY 215 has a co-requisite course of MAT 302.</td></tr>
+                <tr><td>6</td><td>MAT 301 must be passed in order to take MAT 302.</td></tr>
+                <tr><td>7</td><td>CSC 111 must be passed in order to take CSC 211 and CSC 215.</td></tr>
+                <tr><td>8</td><td>CSC 111 and MAT 301 must be passed in order to take CSC 231.</td></tr>
+                <tr><td>9</td><td>A total of 6 credits are needed. Choose 1 from CIS 317, CIS 345, CIS 359, CIS 362, CIS 364, CIS 385, CIS 395, CSC 103, or GIS 201.</td></tr>
+                <tr><td>10</td><td>CSC 211 and CSC 231 must be passed in order to take CSC 331.</td></tr>
+                <tr><td>11</td><td>CSC 211 must be passed in order to take CSC 350.</td></tr>
+                <tr><td>12</td><td>A Writing Intensive course is needed to graduate.</td></tr>
+            </table>
+        {% elif is_computer_info_systems %}
+        <h2>Computer Information Systems Major Footnotes:</h2>
+        <table class="major-footnotes-table">
+            <tr><th>Footnote</th><th>Description</th></tr>
+            <tr><td>1</td><td>CSC 101 should be taken in the first semester as it is a prerequisite course for CSC 110.</td></tr>
+            <tr><td>2</td><td>SPE 102 is an option for non-native speakers of English.</td></tr>
+            <tr><td>3</td><td>CSC 111 is an alternative option.</td></tr>
+            <tr><td>4</td><td>PHY 110 is an alternative option.</td></tr>
+            <tr><td>5</td><td>MAT 206.5 is a co-requisite course for CSC 210.</td></tr>
+            <tr><td>6</td><td>CSC 110 must be passed in order to take CSC 210, CIS 345, CIS 385, CIS 395, and CIS 440.</td></tr>
+            <tr><td>7</td><td>A total of 6 credits is required. Choose from: GIS 101, GIS 201, CIS 359, CIS 362, CIS 364, CIS 459, and CIS 490.</td></tr>
+            <tr><td>8</td><td>CIS 385 must be passed in order to take CIS 485.</td></tr>
+            <tr><td>9</td><td>CIS 395 must be passed in order to take CIS 495.</td></tr>
+            <tr><td>10</td><td>A total of 3 credits is required. Choose from: ACC, BUS, CIS, CSC, GIS, or MMP except for CIS 100.</td></tr>
+            <tr><td>11</td><td>A Writing Intensive course is needed to graduate.</td></tr>
+        </table>
+        {% elif is_computer_network_technology %}
+        <h2>Computer Network Technology Major Footnotes:</h2>
+        <table class="major-footnotes-table">
+            <tr><th>Footnote</th><th>Description</th></tr>
+            <tr><td>1</td><td>CSC 101 should be taken in the first semester as it is a prerequisite course for CSC 110 and CIS 165.</td></tr>
+            <tr><td>2</td><td>CSC 111 is an alternative option.</td></tr>
+            <tr><td>3</td><td>SPE 102 is an option for non-native speakers of English.</td></tr>
+            <tr><td>4</td><td>A total of 6 credits is required. Choose from GIS 101, GIS 201, CIS 359, CIS 362, CIS 364, CIS 459, and CIS 490.</td></tr>
+            <tr><td>5</td><td>PHY 110 is an alternative option.</td></tr>
+            <tr><td>6</td><td>CIS 165 must be passed in order to take CIS 255.</td></tr>
+            <tr><td>7</td><td>CIS 165 or CSC 110 or CIS 111 must be passed in order to take CIS 345.</td></tr>
+            <tr><td>8</td><td>A total of 6 credits is required. Choose from ACC, BUS, CIS, CSC, GIS or MMP except for CIS 100.</td></tr>
+            <tr><td>9</td><td>CIS 345 must be passed in order to take CIS 445 and CIS 455.</td></tr>
+            <tr><td>10</td><td>CIS 255 or CSC 110 or CSC 111 must be passed in order to take CIS 440.</td></tr>
+            <tr><td>11</td><td>A Writing Intensive course is needed to graduate.</td></tr>
+        </table>
+        {% elif is_geographic_information_science %}
+        <h2>Geographic Information Science Major Footnotes:</h2>
+        <table class="major-footnotes-table">
+            <tr><th>Footnote</th><th>Description</th></tr>
+            <tr><td>1</td><td>CSC 101 should be taken in the first semester as it is a prerequisite course for CSC 110.</td></tr>
+            <tr><td>2</td><td>Students are required to take MAT 206.5. MAT 206.5 is a combination course of Intermediate Algebra and Trigonometry and Precalculus and will be used to satisfy the General Elective Requirement.</td></tr>
+            <tr><td>3</td><td>Students are advised to take GEO 100 to fulfill the World Culture & Global Issues requirement.</td></tr>
+            <tr><td>4</td><td>GEO 100 must be passed in order to take GIS 201 and GEO 226.</td></tr>
+            <tr><td>5</td><td>MAT 206.5 must be passed in order to take MAT 209.</td></tr>
+            <tr><td>6</td><td>CSC 110 must be passed in order to take CIS 395.</td></tr>
+            <tr><td>7</td><td>GIS 201 must be passed in order to take GIS 261.</td></tr>
+            <tr><td>8</td><td>SPE 102 is an option for non-native speakers of English.</td></tr>
+            <tr><td>9</td><td>GIS 261, CIS 395, and CSC 110 or CSC 111 must be completed before taking GIS 361.</td></tr>
+            <tr><td>10</td><td>GEO 100 must be passed in order to take GEO 241. Alternate options to GEO 241 are CED 201 and GIS 325. Students must have a B or better in both ENG 201 and SPE 100/102; completion of CED 201 and at least 36 credits including CIS 395, GIS 261, and MAT 209 in order to take GIS 325.</td></tr>
+            <tr><td>11</td><td>Please consult with an academic or faculty advisor.</td></tr>
+            <tr><td>12</td><td>Select any Creative Expression Pathways course except SPE 100 or SPE 102.</td></tr>
+            <tr><td>13</td><td>A Writing Intensive course is needed to graduate.</td></tr>
+        </table>
+        {% endif %}
+    {% else %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <a href="{% url 'coursesearch' %}">Back to Course Search page</a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="ibm-h1">Edit Club</h1>
+<form method="POST" class="ibm-row-form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Save" class="ibm-btn-pri">
+</form>
+{% endblock %}

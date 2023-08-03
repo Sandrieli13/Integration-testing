@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Matchmaking Results</h1>
+  
+  <h2>Current User:</h2>
+  <p><strong>First Name:</strong> {{ user.first_name }}</p>
+  <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+  <p><strong>Preferred Language:</strong> {{ user.preferred_language }}</p>
+  <p><strong>Major:</strong> {{ user.major }}</p>
+
+  {% if user.is_mentee %}
+    {% if mentors %}
+      <h2>Recommended Mentors:</h2>
+      <ol>  <!-- Use <ol> tag for numbered list -->
+        {% for mentor in mentors %}
+          <li>
+            <strong>Mentor:</strong> {{ mentor.first_name }} {{ mentor.last_name }}
+            <strong>Matching Points:</strong> {{ mentor.matching_points }}
+            <!-- Additional mentor information here -->
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p>No recommended mentors found.</p>
+    {% endif %}
+  {% elif user.is_mentor %}
+    {% if mentees %}
+      <h2>Recommended Mentees:</h2>
+      <ol>  <!-- Use <ol> tag for numbered list -->
+        {% for mentee in mentees %}
+          <li>
+            <strong>Mentee:</strong> {{ mentee.first_name }} {{ mentee.last_name }}
+            <strong>Matching Points:</strong> {{ mentee.matching_points }}
+            <!-- Additional mentee information here -->
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p>No recommended mentees found.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

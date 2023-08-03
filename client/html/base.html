@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMCConnect</title>
+  <!-- Add your CSS and JavaScript links here -->
+  <link rel="stylesheet"  href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+  <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+  <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- Add your navigation menu code here -->     
+          <header id="navbar">
+            <nav class="navbar-container container">
+              <a href="{% url 'index' %}" class="home-link">
+                <div class="navbar-logo"><img src="{% static 'Logo.png' %}"></div>
+                onnect
+              </a>
+              <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <div id="navbar-menu" class="detached">
+                <ul class="navbar-links">
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
+                  <li class="navbar-item">
+                    <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
+                      {% if user.is_authenticated %}
+                        Profile
+                      {% else %}
+                        Sign In
+                      {% endif %}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+        </header>
+
+  <!-- Content section -->
+  <div class="content">
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- Add your footer code here -->
+  <div class="footer">
+        <div class="column-2">
+          <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
+        </div>
+        <div class="copyright">
+          <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:white;"><div class="text-6">Copyright &copy <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship
+          </div>
+          </a>
+        </div>
+    </div>
+  </div>
+
+  <!-- Add your JavaScript code here -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'scripts.js' %}"></script>
+</body>
+</html>

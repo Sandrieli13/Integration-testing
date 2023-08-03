@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Add your CSS and other headers if needed -->
+    <style>
+        .searchButton{
+            margin-bottom: 450px;
+            display: inline-block;
+  background-color: rgba(0, 65, 150, 1);
+  text-decoration: none;
+  color: #fff;
+  text-align: center;  
+  font-size: 34px;
+  text-decoration: none;
+  padding: 20px 50px;
+  border-bottom: #999e9e solid 7px;
+  border-right: #999e9e solid 7px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.searchButton:hover{
+  background-color: rgba(255, 102, 0, 1);
+  color: rgba(0, 65, 150, 1);
+  padding-bottom: 21px;
+  padding-right: 52px;
+  border-bottom: #4f5151 solid 6px;
+  border-right: #4f5151 solid 5px;
+}
+    </style>
+</head>
+<body>
+    <h2>Course Search</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="major">Select your major:</label>
+        <select name="major" id="major">
+            {% for major in majors %}
+                <option value="{{ major.major_id }}">{{ major.major_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <input class="searchButton" type="submit" name="search" value="Search">
+    </form>
+</body>
+</html>
+{% endblock %}

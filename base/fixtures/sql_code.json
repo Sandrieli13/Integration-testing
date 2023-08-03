@@ -1,0 +1,658 @@
+{
+    "Majors": [
+      {
+        "major_id": 1,
+        "major_name": "Computer Science"
+      },
+      {
+        "major_id": 2,
+        "major_name": "Computer Information Systems"
+      },
+      {
+        "major_id": 3,
+        "major_name": "Computer Network Technology"
+      },
+      {
+        "major_id": 4,
+        "major_name": "Geographic Information Science"
+      }
+    ],
+    "Courses": [
+      {
+        "course_id": 1,
+        "course_name": "MAT 206.5 Intermediate Algebra and Precalculus",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 2,
+        "course_name": "ENG 101 English Composition",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 3,
+        "course_name": "CSC 101 Principles in Information Technology and Computation",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 4,
+        "course_name": "XXX xxx Individual and Society",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 5,
+        "course_name": "XXX xxx U.S. Experience in Its Diversity",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 6,
+        "course_name": "ENG 201 Introduction to Literature",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 7,
+        "course_name": "CSC 111 Introduction to Programming",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 8,
+        "course_name": "MAT 301 Analytic Geometry and Calculus I",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 9,
+        "course_name": "SPE 100 Fundamentals of Public Speaking",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 10,
+        "course_name": "PHY 215 University Physics I",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 11,
+        "course_name": "MAT 302 Analytic Geometry and Calculus II",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 12,
+        "course_name": "CSC 211 Advanced Programming Techniques",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 13,
+        "course_name": "CSC231 Discrete Structures and Applications to Computer Science",
+        "major_id": 1,
+        "credits": 4
+      },
+      {
+        "course_id": 14,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 15,
+        "course_name": "CSC 215 Fundamentals of Computer Systems",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 16,
+        "course_name": "CSC 331 Data Structures",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 17,
+        "course_name": "CSC 350 Software Development",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 18,
+        "course_name": "XXX xxx World Cultures and Global Issues",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 19,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 1,
+        "credits": 3
+      },
+      {
+        "course_id": 20,
+        "course_name": "SPE 100 Fundamentals of Public Speaking",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 21,
+        "course_name": "ACC 122 Accounting Principles I",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 22,
+        "course_name": "ENG 101 English Composition",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 23,
+        "course_name": "CSC 101 Principles in Information Technology and Computation",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 24,
+        "course_name": "BUS 104 Introduction to Business",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 25,
+        "course_name": "ENG 201 Introduction to Literature",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 26,
+        "course_name": "AST 110 General Astronomy",
+        "major_id": 2,
+        "credits": 4
+      },
+      {
+        "course_id": 27,
+        "course_name": "MAT 150 Introduction to Statistics",
+        "major_id": 2,
+        "credits": 4
+      },
+      {
+        "course_id": 28,
+        "course_name": "CSC 110 Computer Programming I",
+        "major_id": 2,
+        "credits": 4
+      },
+      {
+        "course_id": 29,
+        "course_name": "CSC 210 Computer Programming II",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 30,
+        "course_name": "CIS 395 Database Systems I",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 31,
+        "course_name": "CIS 385 Web Programming I",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 32,
+        "course_name": "CIS 345 Telecommunication Network I",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 33,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 34,
+        "course_name": "CIS 440 Unix",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 35,
+        "course_name": "CIS 495 Database System II",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 36,
+        "course_name": "CIS 485 Web Programming II",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 37,
+        "course_name": "XXX xxx Elective",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 38,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 2,
+        "credits": 3
+      },
+      {
+        "course_id": 39,
+        "course_name": "ENG 101 English Composition",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 40,
+        "course_name": "BUS 104 Introduction to Business",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 41,
+        "course_name": "ACC 122 Accounting Principles I",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 42,
+        "course_name": "CSC 101 Principles in Information Technology and Computation",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 43,
+        "course_name": "MAT 150 Introduction to Statistics",
+        "major_id": 3,
+        "credits": 4
+      },
+      {
+        "course_id": 44,
+        "course_name": "ENG 201 Introduction to Literature",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 45,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 46,
+        "course_name": "SPE 100 Fundamentals of Public Speaking",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 47,
+        "course_name": "CSC 110 Computer Programming I",
+        "major_id": 3,
+        "credits": 4
+      },
+      {
+        "course_id": 48,
+        "course_name": "CIS 165 Introduction to Operating Systems",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 49,
+        "course_name": "AST 110 General Astronomy",
+        "major_id": 3,
+        "credits": 4
+      },
+      {
+        "course_id": 50,
+        "course_name": "XXX xxx Elective",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 51,
+        "course_name": "CIS 345 Telecommunication Network I",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 52,
+        "course_name": "CIS 255 Computer Software",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 53,
+        "course_name": "CIS 445 Telecommunication Network II",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 54,
+        "course_name": "XXX xxx Elective",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 55,
+        "course_name": "CIS 440 Unix",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 56,
+        "course_name": "CIS 455 Network Security",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 57,
+        "course_name": "XXX xxx Elective",
+        "major_id": 3,
+        "credits": 3
+      },
+      {
+        "course_id": 58,
+        "course_name": "ENG 101 English Composition",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 59,
+        "course_name": "GEO 100 Introduction to Human Geography",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 60,
+        "course_name": "GLY 210 Geology I",
+        "major_id": 4,
+        "credits": 4
+      },
+      {
+        "course_id": 61,
+        "course_name": "MAT 206.5 Intermediate Algebra and Precalculus",
+        "major_id": 4,
+        "credits": 4
+      },
+      {
+        "course_id": 62,
+        "course_name": "CSC 101 Principles in Information Technology and Computation",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 63,
+        "course_name": "CSC 110 Computer Programming I",
+        "major_id": 4,
+        "credits": 4
+      },
+      {
+        "course_id": 64,
+        "course_name": "MAT 209 Statistics",
+        "major_id": 4,
+        "credits": 4
+      },
+      {
+        "course_id": 65,
+        "course_name": "GIS 201 Introduction to Geographic Methods",
+        "major_id": 4,
+        "credits": 4
+      },
+      {
+        "course_id": 66,
+        "course_name": "ENG 201 Introduction to Literature",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 67,
+        "course_name": "CIS 395 Database Systems I",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 68,
+        "course_name": "SPE 100 Fundamentals of Public Speaking",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 69,
+        "course_name": "AFL 161 Health Problems in the Urban Community",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 70,
+        "course_name": "GIS 261 Introduction to Geographic Information Science",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 71,
+        "course_name": "GEO 226 Environmental Conservation-Resource Management",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 72,
+        "course_name": "GIS 361 Advanced Geographic Information Science",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 73,
+        "course_name": "XXX xxx Creative Expression",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 74,
+        "course_name": "XXX xxx U.S. Experience in Its Diversity",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 75,
+        "course_name": "XXX xxx Individual and Society",
+        "major_id": 4,
+        "credits": 3
+      },
+      {
+        "course_id": 76,
+        "course_name": "GEO 241 Population Geography",
+        "major_id": 4,
+        "credits": 3
+      }
+    ],
+    "Semester": [
+      {
+        "semester_id": 1,
+        "major_id": 1,
+        "course1": 1,
+        "course2": 2,
+        "course3": 3,
+        "course4": 4,
+        "course5": 5,
+        "course6": null,
+        "total_credits": 16
+      },
+      {
+        "semester_id": 2,
+        "major_id": 1,
+        "course1": 6,
+        "course2": 7,
+        "course3": 8,
+        "course4": 9,
+        "course5": null,
+        "course6": null,
+        "total_credits": 14
+      },
+      {
+        "semester_id": 3,
+        "major_id": 1,
+        "course1": 10,
+        "course2": 11,
+        "course3": 12,
+        "course4": 13,
+        "course5": 14,
+        "course6": null,
+        "total_credits": 18
+      },
+      {
+        "semester_id": 4,
+        "major_id": 1,
+        "course1": 15,
+        "course2": 16,
+        "course3": 17,
+        "course4": 18,
+        "course5": 19,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 1,
+        "major_id": 2,
+        "course1": 24,
+        "course2": 20,
+        "course3": 21,
+        "course4": 22,
+        "course5": 23,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 2,
+        "major_id": 2,
+        "course1": 19,
+        "course2": 25,
+        "course3": 26,
+        "course4": 27,
+        "course5": null,
+        "course6": null,
+        "total_credits": 14
+      },
+      {
+        "semester_id": 3,
+        "major_id": 2,
+        "course1": 28,
+        "course2": 29,
+        "course3": 30,
+        "course4": 31,
+        "course5": 32,
+        "course6": null,
+        "total_credits": 16
+      },
+      {
+        "semester_id": 4,
+        "major_id": 2,
+        "course1": 33,
+        "course2": 34,
+        "course3": 35,
+        "course4": 36,
+        "course5": 37,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 1,
+        "major_id": 3,
+        "course1": 39,
+        "course2": 40,
+        "course3": 41,
+        "course4": 42,
+        "course5": 43,
+        "course6": null,
+        "total_credits": 16
+      },
+      {
+        "semester_id": 2,
+        "major_id": 3,
+        "course1": 44,
+        "course2": 45,
+        "course3": 46,
+        "course4": 47,
+        "course5": 48,
+        "course6": null,
+        "total_credits": 16
+      },
+      {
+        "semester_id": 3,
+        "major_id": 3,
+        "course1": 49,
+        "course2": 50,
+        "course3": 51,
+        "course4": 52,
+        "course5": 54,
+        "course6": null,
+        "total_credits": 16
+      },
+      {
+        "semester_id": 4,
+        "major_id": 3,
+        "course1": 53,
+        "course2": 55,
+        "course3": 56,
+        "course4": 57,
+        "course5": null,
+        "course6": null,
+        "total_credits": 12
+      },
+      {
+        "semester_id": 1,
+        "major_id": 4,
+        "course1": 58,
+        "course2": 59,
+        "course3": 60,
+        "course4": 61,
+        "course5": 62,
+        "course6": null,
+        "total_credits": 17
+      },
+      {
+        "semester_id": 2,
+        "major_id": 4,
+        "course1": 63,
+        "course2": 64,
+        "course3": 65,
+        "course4": 66,
+        "course5": null,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 3,
+        "major_id": 4,
+        "course1": 67,
+        "course2": 68,
+        "course3": 69,
+        "course4": 70,
+        "course5": 71,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 4,
+        "major_id": 4,
+        "course1": 72,
+        "course2": 73,
+        "course3": 74,
+        "course4": 75,
+        "course5": 76,
+        "course6": null,
+        "total_credits": 15
+      }
+    ]
+  }
+  
+  

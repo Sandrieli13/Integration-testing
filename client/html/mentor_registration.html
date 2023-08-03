@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Mentor Registration</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Register</button>
+  </form>
+{% endblock %}

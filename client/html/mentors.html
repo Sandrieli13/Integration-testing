@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>BMCConnect</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Webflow" name="generator">
+    <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <!-- Add your navigation menu code here -->     
+            <header id="navbar">
+              <nav class="navbar-container container">
+                <a href="{% url 'index' %}" class="home-link">
+                  <div class="navbar-logo"><img src="{% static 'Logo.png' %}"></div>
+                  onnect
+                </a>
+                <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div id="navbar-menu" class="detached">
+                  <ul class="navbar-links">
+                    <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
+                    <li class="navbar-item">
+                      <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
+                        {% if user.is_authenticated %}
+                          Profile
+                        {% else %}
+                          Sign In
+                        {% endif %}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+          </header>
+    
+    <div class="team-rectangles">
+      <div class="hero2">
+        <div class="imagecontainer">
+            <div class="bmcconnect2-0">Find Mentors!</div>
+        </div>
+    </div>
+      <a href="{% url 'mentor_registration' %}" id="button1">Become A Mentor</a>
+      <a href="{% url 'mentee_registration' %}" id="button1">Become A Mentee</a>
+      {% if user.is_mentee or user.is_mentor %}
+      <a href="{% url 'matchmaking' %}" id="button1">Match</a>
+      {%endif%}
+    </div>
+    <div class="footer">
+        <div class="footer">
+            <div class="column-2">
+              <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
+            </div>
+            <div class="copyright">
+              <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:white;"><div class="text-6">Copyright &copy <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship
+              </div>
+              </a>
+            </div>
+          </div>
+        </div>
+    </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{% static 'scripts.js' %}"></script>
+  <script src="//code.tidio.co/hyhlo3syulvewq26sx6rt1tnalmeli8a.js" async></script>
+</body>
+</html>

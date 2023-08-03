@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="demo">
+    <h1>DEMO:</h1>
+    <form method="POST" class="ibm-row-form" action="{% url 'signin' %}">
+        <iframe allow="fullscreen;" width="1054" height="593" src="https://www.youtube.com/embed/H1aa96hB7MA">
+        </iframe>
+        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS29QqgCjOP788PlgZrXJ37GqOk1p8cOa50nMfYapuYnpStNqPJ6BUCJptHF_UiFctvhAyHyQEeYgy0/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1054" height="593" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+    <h1>Source Code:</h1>
+    <a href="https://github.com/Team-C-BMCC-Connect/BMCConnect" target="_blank" id="button1"><i class="fab fa-github"></i>  Github</a>
+</div>
+   
+{% endblock %}

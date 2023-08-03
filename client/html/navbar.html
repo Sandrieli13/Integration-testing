@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar</title>
+    <style>
+        header {
+            height: 80px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1c8fa9;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: 150px;
+            height: 40px;
+            margin-left: 20px;
+            border-radius: 10px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .menu-items ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-items li {
+            margin-right: 20px;
+        }
+
+        .menu-items a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 14px 20px;
+            background-color: #1c8fa9;
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+
+        .menu-items a:hover {
+            color: #ddd;
+        }
+ 
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            header {
+                height: auto;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .menu-items {
+                margin: 10px 0;
+            }
+
+           
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu-items">
+                <ul>
+                    <li><a href="#">
+                        <img src="https://raw.githubusercontent.com/lucasstranger1/BMCCintership/main/bmccicon.png" alt="BMCCIcon" class="logo">
+                    </a></li>
+                    <li><a href="{% url 'home2' %}">Home</a></li>
+                    <li><a href="{% url 'coursesearch' %}">Course Search</a></li>
+                    <li><a href="{% url 'courselistpage' %}">Major and Classes List</a></li>
+                    <li><a href="MajorCoursePlanner.html">Major Course Planner</a></li>
+                    <li><a href="piecharts.html">View Enrollment Data</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+    </header>
+</html>
