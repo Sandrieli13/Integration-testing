@@ -30,3 +30,4 @@ navbarLinksContainer.addEventListener("click", (clickEvent) => {
 navbarMenu.addEventListener("click", closeMobileNavbar);
 
 
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>

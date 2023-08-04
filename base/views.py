@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,reverse
 from django.http import HttpResponse
 from .models import Majors, Courses, Semester
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-
+import pandas as pd
+import json
+import csv  
+import os
+from django.contrib.staticfiles import finders
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -88,6 +92,40 @@ def coursePlanner(request):
     except Exception as e:
         # Return an error JSON response if any other exception occurs
         return JsonResponse({'error': str(e)}, status=500)
+def DataAnalysisPage(request, file_name=None):
+    csv_files = [
+        "S&E_technologies_associates_degrees",
+        "Science_and_other_S&E_technologies",
+        "Computer_Science_in_Associate's_Degrees_awarded_data",
+        "Enrollment data for CIS Major",
+        "Enrollment data for CNT Major",
+        "Enrollment_data_for_CIS_department",
+        "Enrollment data for CS Major",
+        "Graduation data for CIS major",
+        "Graduation data for CNT major",
+        "Graduation data for CS major",
+        "Graduation_data_or_CIS_department",
+    ]
 
-def DataAnalysisPage(request):
-    return render(request, 'DataAnalysisPage.html')
+    return render(request, 'DataAnalysisPage.html', {'csv_files': csv_files})
+def get_csv_data(request, file_name=None):
+    if file_name is None:
+        file_name = "default.csv"
+
+    # Construct the file path for the requested CSV file
+    csv_file_path = os.path.join('/static', file_name)
+
+    try:
+        with open(csv_file_path, 'r') as csv_file:
+            # Process the CSV data and convert it to JSON format
+            csv_reader = csv.DictReader(csv_file)
+            csv_data = [row for row in csv_reader]
+
+            # Convert the CSV data to JSON
+            json_data = json.dumps(csv_data)
+
+            # Return the JSON data as the response
+            return HttpResponse(json_data, content_type='application/json')
+    except FileNotFoundError:
+        response_data = {"error": f"CSV file '{file_name}' not found."}
+        return HttpResponse(json.dumps(response_data), content_type='application/json')
