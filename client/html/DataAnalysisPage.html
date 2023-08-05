@@ -7,6 +7,7 @@
     <title>U.S. Nation Graduation Data</title>
     <script src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
  body {
         
@@ -29,14 +30,20 @@
     }
 
     .grid-container {
-        display: flex; /* Use flex to create a row layout for the pie charts */
-        flex-wrap: wrap; /* Allow charts to wrap to the next row if there's not enough space */
+        display: flex; 
+        flex-wrap: wrap;  
+        flex: 2;  
     }
 
     hr {
         border: 2px solid gray;
         border-radius: 5px;
     }
+
+        .chart {
+             width: 400px; /* Adjust the width of the charts as needed */
+            margin: 10px;
+                }
     </style>
 </head>
 
@@ -84,11 +91,12 @@
             and the number of bachelor&apos;s degrees awarded should increase by 3% over the period spanning 2017&ndash;29.
             
             </p>
+          </div>
             <hr style="  border: 2px solid gray;
         border-radius: 5px;">
 
-    <h2>Enrollment / Graduation Data at BMCC 2015-2022</h2>
-    <div class="grid-container">
+    <h2>Enrollment / Graduation Data at BMCC 2016-2022</h2>
+    <!-- <div class="grid-container">
     <div class="chart-container">
         <div id="chartContainer5" style="height: 370px;"></div>
         <br>
@@ -128,30 +136,91 @@
         <div id="chartContainer12" style="height: 370px;"></div>
         <br>
     </div>
+</div> -->
+
+<div class="grid-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+  {% for data, chart_name in all_data %}
+  <div class="chart-container" style="width: 200%;">
+    <div class="chart" >
+      <canvas id="chart{{ forloop.counter }}"></canvas>
+    </div>
+  </div>
+  {% endfor %}
 </div>
+
+
+<h3>Enrollment Data for CIS (Computer Information System) Major at BMCC (2016-2022)</h3>
+<p>
+    The number of students enrolled in the CIS major at BMCC has been fluctuating over the years,
+    with a peak in 2020 (1026 students) and a decline in 2021 (990 students).
+    The overall trend shows a slight decrease in enrollment from 2016 to 2022.
+</p>
+
+
+<p>
+    The number of students graduating from the CIS major at BMCC has shown a steady increase over the years,
+    with a significant rise from 2019 to 2021 (164 graduates to 267 graduates).
+    The graduation data for 2022 shows a slight decline from the previous year, with 142 graduates.
+</p>
+
+
+<p>
+    The CS major at BMCC has seen consistent growth in enrollment over the years,
+    with the highest number of students enrolled in 2022 (1026 students).
+    The data indicates a positive trend, suggesting an increasing interest in the CS major at BMCC.
+</p>
+
+
+<p>
+    The graduation data for the CS major at BMCC has also shown a positive trend,
+    with a gradual increase in the number of graduates from 2017 to 2022 (40 graduates to 58 graduates).
+    The data indicates that the CS major is producing more graduates each year,
+    reflecting its popularity and success.
+</p>
+
+
+<p>
+    The enrollment data for the CNT major at BMCC has been fluctuating,
+    with the highest number of students enrolled in 2017 (390 students) and a decrease in 2022 (157 students).
+    The overall trend suggests a decline in enrollment for the CNT major at BMCC.
+</p>
+
+
+<p>
+    The graduation data for the CNT major at BMCC indicates a decline in the number of graduates over the years,
+    with 157 graduates in 2022 compared to 407 graduates in 2015.
+    The data suggests that the CNT major has experienced challenges in retaining students and producing graduates.
+</p>
     <hr>
 
-    <h2>BMCC Enrollment Data for Enthnicity</h2>
+    <h2>BMCC Enrollment Data for its Enthnicity</h2>
 
     <div class="grid-container">
         <div class="chart-container">
             <div id="PiechartContainer" style="height: 370px;"></div>
             <br>
+            <br>
+            <br>
+            <br>
         </div>
         <div class="chart-container">
             <div id="PiechartContainer1" style="height: 370px;"></div>
+            <br>
             <br>
         </div>
         <div class="chart-container">
             <div id="PiechartContainer2" style="height: 370px;"></div>
             <br>
+            <br>
         </div>
         <div class="chart-container">
             <div id="PiechartContainer3" style="height: 370px;"></div>
             <br>
+            <br>
         </div>
         <div class="chart-container">
             <div id="PiechartContainer4" style="height: 370px;"></div>
+            <br>
             <br>
         </div>
     </div>
@@ -164,7 +233,9 @@
         Completions Survey; National Center for Science and Engineering Statistics, Table Builder.</em>
         <br> link:<a href="https://ncses.nsf.gov/pubs/nsb20223/trends-in-undergraduate-and-graduate-s-e-degree-awards" target="_blank">Click here</a> <br><br> </p>
         <hr>
-    <h2 id="target">S&E majors breakdown</h2>
+        <h2 id="target">S&E Majors breakdown</h2>
+    <div class="majorsBreakdown" style="display: flex; justify-content: center; align-items: center;">
+       
     <table>
         <tr>    
         <th>S&E technologies [All Fields]</th>
@@ -284,7 +355,7 @@
         <td>Rehabilitation and therapeutic professions</td>
         </tr>
         <tr>
-        <td>Science technologies</td>
+        <th>Science technologies</th>
         </tr>
         <tr>
         <td>Science technologies/ technicians, general</td>
@@ -317,6 +388,9 @@
         <td>Military technologies and applied sciences, other</td>
         </tr>
     </table>
+</div>
+
+
     <script>
         // Data for the charts
         window.onload = function () {
@@ -708,272 +782,274 @@ var csAssociatedataPoints4 = [
   chart.render();
 //---------------------------------------------------------------------------------------------------------------
 //Data for Enrollment / Graduation Data at BMCC 2015-2022
-var BMCCdataPoints5 = [
-        { x: 2015, y: 1499 },
-        { x: 2016, y: 1564 },
-        { x: 2017, y: 1624 },
-        { x: 2018, y: 1612 },
-        { x: 2019, y: 1604 },
-        { x: 2020, y: 1528 },
-        { x: 2021, y: 1465 },
-        { x: 2022, y: 1449 },
-  ];
 
-  var chart = new CanvasJS.Chart("chartContainer5", {
-    animationEnabled: true,
-    title: {
-      text: " Enrollment data for CIS [department] at BMCC 2015-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints5,
-      },
-    ],
-  });
 
-  chart.render();
-  var BMCCdataPoints6 = [
-        { x: 2016, y: 149 },
-        { x: 2017, y: 193 },
-        { x: 2018, y: 208 },
-        { x: 2019, y: 233 },
-        { x: 2020, y: 256 },
-        { x: 2021, y: 267 },
-        { x: 2022, y: 260 },
-  ];
+// var BMCCdataPoints5 = [
+//         { x: 2015, y: 1499 },
+//         { x: 2016, y: 1564 },
+//         { x: 2017, y: 1624 },
+//         { x: 2018, y: 1612 },
+//         { x: 2019, y: 1604 },
+//         { x: 2020, y: 1528 },
+//         { x: 2021, y: 1465 },
+//         { x: 2022, y: 1449 },
+//   ];
 
-  var chart = new CanvasJS.Chart("chartContainer6", {
-    animationEnabled: true,
-    title: {
-      text: " Graduation data for CIS [department] at BMCC 2016-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints6,
-      },
-    ],
-  });
+//   var chart = new CanvasJS.Chart("chartContainer5", {
+//     animationEnabled: true,
+//     title: {
+//       text: " Enrollment data for CIS [department] at BMCC 2015-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints5,
+//       },
+//     ],
+//   });
 
-  chart.render();
-  var BMCCdataPoints7 = [
-        { x: 2015, y: 709 },
-        { x: 2016, y: 800 },
-        { x: 2017, y: 876 },
-        { x: 2018, y: 960 },
-        { x: 2019, y: 985 },
-        { x: 2020, y: 1016 },
-        { x: 2021, y: 990 },
-        { x: 2022, y: 1026 },
-  ];
+//   chart.render();
+//   var BMCCdataPoints6 = [
+//         { x: 2016, y: 149 },
+//         { x: 2017, y: 193 },
+//         { x: 2018, y: 208 },
+//         { x: 2019, y: 233 },
+//         { x: 2020, y: 256 },
+//         { x: 2021, y: 267 },
+//         { x: 2022, y: 260 },
+//   ];
 
-  var chart = new CanvasJS.Chart("chartContainer7", {
-    animationEnabled: true,
-    title: {
-      text: " Enrollment data for CS (Computer Science)Major at BMCC 2015-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints7,
-      },
-    ],
-  });
+//   var chart = new CanvasJS.Chart("chartContainer6", {
+//     animationEnabled: true,
+//     title: {
+//       text: " Graduation data for CIS [department] at BMCC 2016-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints6,
+//       },
+//     ],
+//   });
 
-  chart.render();
-  var BMCCdataPoints8 = [
-        { x: 2016, y: 43 },
-        { x: 2017, y: 63 },
-        { x: 2018, y: 57 },
-        { x: 2019, y: 96 },
-        { x: 2020, y: 127 },
-        { x: 2021, y: 164 },
-        { x: 2022, y: 142 },
-  ];
+//   chart.render();
+//   var BMCCdataPoints7 = [
+//         { x: 2015, y: 709 },
+//         { x: 2016, y: 800 },
+//         { x: 2017, y: 876 },
+//         { x: 2018, y: 960 },
+//         { x: 2019, y: 985 },
+//         { x: 2020, y: 1016 },
+//         { x: 2021, y: 990 },
+//         { x: 2022, y: 1026 },
+//   ];
 
-  var chart = new CanvasJS.Chart("chartContainer8", {
-    animationEnabled: true,
-    title: {
-      text: " Graduation data for CS (Computer Science)Major at BMCC 2016-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints8,
-      },
-    ],
-  });
+//   var chart = new CanvasJS.Chart("chartContainer7", {
+//     animationEnabled: true,
+//     title: {
+//       text: " Enrollment data for CS (Computer Science)Major at BMCC 2015-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints7,
+//       },
+//     ],
+//   });
 
-  chart.render();
-  var BMCCdataPoints9 = [
-        { x: 2015, y: 370 },
-        { x: 2016, y: 377 },
-        { x: 2017, y: 345 },
-        { x: 2018, y: 321 },
-        { x: 2019, y: 334 },
-        { x: 2020, y: 263 },
-        { x: 2021, y: 275 },
-        { x: 2022, y: 256 },
-  ];
+//   chart.render();
+//   var BMCCdataPoints8 = [
+//         { x: 2016, y: 43 },
+//         { x: 2017, y: 63 },
+//         { x: 2018, y: 57 },
+//         { x: 2019, y: 96 },
+//         { x: 2020, y: 127 },
+//         { x: 2021, y: 164 },
+//         { x: 2022, y: 142 },
+//   ];
 
-  var chart = new CanvasJS.Chart("chartContainer9", {
-    animationEnabled: true,
-    title: {
-      text: " Enrollment data for CIS (Computer Information System)'Major' at BMCC 2015-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints9,
-      },
-    ],
-  });
+//   var chart = new CanvasJS.Chart("chartContainer8", {
+//     animationEnabled: true,
+//     title: {
+//       text: " Graduation data for CS (Computer Science)Major at BMCC 2016-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints8,
+//       },
+//     ],
+//   });
 
-    chart.render();
-  var BMCCdataPoints10 = [
-        { x: 2016, y: 40 },
-        { x: 2017, y: 54 },
-        { x: 2018, y: 66 },
-        { x: 2019, y: 54 },
-        { x: 2020, y: 65 },
-        { x: 2021, y: 51 },
-        { x: 2022, y: 58 },
-  ];
-  var chart = new CanvasJS.Chart("chartContainer10", {
-    animationEnabled: true,
-    title: {
-      text: "  Graduation data for CIS (Computer Information System)'Major' at BMCC 2016-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints10,
-      },
-    ],
-  });
+//   chart.render();
+//   var BMCCdataPoints9 = [
+//         { x: 2015, y: 370 },
+//         { x: 2016, y: 377 },
+//         { x: 2017, y: 345 },
+//         { x: 2018, y: 321 },
+//         { x: 2019, y: 334 },
+//         { x: 2020, y: 263 },
+//         { x: 2021, y: 275 },
+//         { x: 2022, y: 256 },
+//   ];
 
-  chart.render();
-  var BMCCdataPoints11 = [
-        { x: 2015, y: 407 },
-        { x: 2016, y: 375 },
-        { x: 2017, y: 390 },
-        { x: 2018, y: 319 },
-        { x: 2019, y: 276 },
-        { x: 2020, y: 244 },
-        { x: 2021, y: 194 },
-        { x: 2022, y: 157 },
-  ];
-  var chart = new CanvasJS.Chart("chartContainer11", {
-    animationEnabled: true,
-    title: {
-      text: "  Enrollment data for CNT  (Computer Network Technology)Majorat BMCC 2015-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints11,
-      },
-    ],
-  });
+//   var chart = new CanvasJS.Chart("chartContainer9", {
+//     animationEnabled: true,
+//     title: {
+//       text: " Enrollment data for CIS (Computer Information System)'Major' at BMCC 2015-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints9,
+//       },
+//     ],
+//   });
 
-  chart.render();
-  var BMCCdataPoints12 = [
-        { x: 2015, y: 407 },
-        { x: 2016, y: 375 },
-        { x: 2017, y: 390 },
-        { x: 2018, y: 319 },
-        { x: 2019, y: 276 },
-        { x: 2020, y: 244 },
-        { x: 2021, y: 194 },
-        { x: 2022, y: 157 },
-  ];
-  var chart = new CanvasJS.Chart("chartContainer12", {
-    animationEnabled: true,
-    title: {
-      text: "  Graduation data for CNT  (Computer Network Technology)Majorat BMCC 2016-2022",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "column",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: BMCCdataPoints12,
-      },
-    ],
-  });
+//     chart.render();
+//   var BMCCdataPoints10 = [
+//         { x: 2016, y: 40 },
+//         { x: 2017, y: 54 },
+//         { x: 2018, y: 66 },
+//         { x: 2019, y: 54 },
+//         { x: 2020, y: 65 },
+//         { x: 2021, y: 51 },
+//         { x: 2022, y: 58 },
+//   ];
+//   var chart = new CanvasJS.Chart("chartContainer10", {
+//     animationEnabled: true,
+//     title: {
+//       text: "  Graduation data for CIS (Computer Information System)'Major' at BMCC 2016-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints10,
+//       },
+//     ],
+//   });
 
-  chart.render();
+//   chart.render();
+//   var BMCCdataPoints11 = [
+//         { x: 2015, y: 407 },
+//         { x: 2016, y: 375 },
+//         { x: 2017, y: 390 },
+//         { x: 2018, y: 319 },
+//         { x: 2019, y: 276 },
+//         { x: 2020, y: 244 },
+//         { x: 2021, y: 194 },
+//         { x: 2022, y: 157 },
+//   ];
+//   var chart = new CanvasJS.Chart("chartContainer11", {
+//     animationEnabled: true,
+//     title: {
+//       text: "  Enrollment data for CNT  (Computer Network Technology)Majorat BMCC 2015-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints11,
+//       },
+//     ],
+//   });
+
+//   chart.render();
+//   var BMCCdataPoints12 = [
+//         { x: 2015, y: 407 },
+//         { x: 2016, y: 375 },
+//         { x: 2017, y: 390 },
+//         { x: 2018, y: 319 },
+//         { x: 2019, y: 276 },
+//         { x: 2020, y: 244 },
+//         { x: 2021, y: 194 },
+//         { x: 2022, y: 157 },
+//   ];
+//   var chart = new CanvasJS.Chart("chartContainer12", {
+//     animationEnabled: true,
+//     title: {
+//       text: "  Graduation data for CNT  (Computer Network Technology)Majorat BMCC 2016-2022",
+//     },
+//     axisY: {
+//       title: "Number of Students",
+//       includeZero: true,
+//       crosshair: {
+//         enabled: true,
+//         snapToDataPoint: true,
+//       },
+//     },
+//     data: [
+//       {
+//         type: "column",
+//         toolTipContent: "{label}: {y} students",
+//         dataPoints: BMCCdataPoints12,
+//       },
+//     ],
+//   });
+
+//   chart.render();
  
 //---------------------------------------------------------------------------------------------------------------
         //  Data for the pie charts
@@ -1129,6 +1205,58 @@ var BMCCdataPoints5 = [
         renderPieCharts();
     };
     </script>
+
+{% for data, chart_name in all_data %}
+<script>
+  var data{{ forloop.counter }} = {{ data|safe }};
+  var years{{ forloop.counter }} = data{{ forloop.counter }}.map(item => item[0]);
+  var values{{ forloop.counter }} = data{{ forloop.counter }}.map(item => parseInt(item[1]));
+
+  var ctx{{ forloop.counter }} = document.getElementById('chart{{ forloop.counter }}').getContext('2d');
+  var myChart{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
+    type: 'line', // Use a line chart to visualize the data
+    data: {
+      labels: years{{ forloop.counter }},
+      datasets: [{
+        label: '{{ chart_name }}',
+        data: values{{ forloop.counter }},
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        borderWidth: 1,
+        fill: false, // Fill the area under the line
+        fontSize: 25
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Graduation Data for ' + '{{ chart_name }}',
+        fontSize: 18 // Set the font size for the chart title
+      },
+      scales: {
+        x: {
+          ticks: {
+            fontSize: 14 // Set the font size for the x-axis labels
+          }
+        },
+        y: {
+          ticks: {
+            fontSize: 14 // Set the font size for the y-axis labels
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          titleFontSize: 16, // Set the font size for the tooltip title
+          bodyFontSize: 14 // Set the font size for the tooltip body
+        }
+      },
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+</script>
+{% endfor %}
 </body>
 
 </html>

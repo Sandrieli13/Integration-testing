@@ -1,0 +1,201 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+        }
+        .chart {
+            width: 400px; /* Adjust the width of the charts as needed */
+            margin: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% for data in all_data %}
+    <div class="chart-container">
+        <div class="chart">
+            <canvas id="chart{{ forloop.counter }}"></canvas>
+        </div>
+    </div>
+    <script>
+        var data{{ forloop.counter }} = {{ data|safe }};
+        var years{{ forloop.counter }} = data{{ forloop.counter }}.map(item => item[0]);
+        var values{{ forloop.counter }} = data{{ forloop.counter }}.map(item => parseInt(item[1]));
+
+        var ctx{{ forloop.counter }} = document.getElementById('chart{{ forloop.counter }}').getContext('2d');
+        var myChart{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
+            type: 'line',
+            data: {
+                labels: years{{ forloop.counter }},
+                datasets: [{
+                    label: 'Chart {{ forloop.counter }} Data',
+                    data: values{{ forloop.counter }},
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // Add any additional chart options here
+            }
+        });
+    </script>
+    {% endfor %}
+</body>
+</html> -->
+<!-- <!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <script>
+        window.onload = function () {
+            var data = JSON.parse('{{ data|safe }}');
+            var dataPoints = data.map(item => ({ x: parseInt(item[0]), y: parseInt(item[1]) }));
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                theme: "light1",
+                title: {
+                    text: "Simple Column Chart with Index Labels"
+                },
+                axisY: {
+                    includeZero: true
+                },
+                data: [{
+                    type: "column",
+                    indexLabelFontColor: "#5A5757",
+                    indexLabelFontSize: 16,
+                    indexLabelPlacement: "outside",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+    </script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+</body>
+</html> -->
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+        }
+        .chart {
+            width: 400px; /* Adjust the width of the charts as needed */
+            margin: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% for data, chart_name in all_data %}
+    <div class="chart-container">
+        <div class="chart">
+            <canvas id="chart{{ forloop.counter }}"></canvas>
+        </div>
+    </div>
+    <script>
+        var data{{ forloop.counter }} = {{ data|safe }};
+        var years{{ forloop.counter }} = data{{ forloop.counter }}.map(item => item[0]);
+        var values{{ forloop.counter }} = data{{ forloop.counter }}.map(item => parseInt(item[1]));
+
+        var ctx{{ forloop.counter }} = document.getElementById('chart{{ forloop.counter }}').getContext('2d');
+        var myChart{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
+            type: 'bar', // You can change the chart type as needed
+            data: {
+                labels: years{{ forloop.counter }},
+                datasets: [{
+                    label: '{{ chart_name }}', // Set the chart name dynamically
+                    data: values{{ forloop.counter }},
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Graduation Data for ' + '{{ chart_name }}' // Set the chart title dynamically
+                },
+                tooltips: {
+                    mode: 'index', // Show all data points when hovering
+                    intersect: false
+                },
+                responsive: true, // Enable responsiveness
+                maintainAspectRatio: false // Disable maintaining aspect ratio
+            }
+        });
+    </script>
+    {% endfor %}
+</body>
+</html>
+
+ -->
+ <!DOCTYPE html>
+ <html>
+ <head>
+     <style>
+         .chart-container {
+             display: flex;
+             justify-content: center;
+         }
+         .chart {
+             width: 400px; /* Adjust the width of the charts as needed */
+             margin: 10px;
+         }
+     </style>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ </head>
+ <body>
+     {% for data, chart_name in all_data %}
+     <div class="chart-container">
+         <div class="chart">
+             <canvas id="chart{{ forloop.counter }}"></canvas>
+         </div>
+     </div>
+     <script>
+         var data{{ forloop.counter }} = {{ data|safe }};
+         var years{{ forloop.counter }} = data{{ forloop.counter }}.map(item => item[0]);
+         var values{{ forloop.counter }} = data{{ forloop.counter }}.map(item => parseInt(item[1]));
+ 
+         var ctx{{ forloop.counter }} = document.getElementById('chart{{ forloop.counter }}').getContext('2d');
+         var myChart{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
+             type: 'line', // Use a line chart to visualize the data
+             data: {
+                 labels: years{{ forloop.counter }},
+                 datasets: [{
+                     label: '{{ chart_name }}',
+                     data: values{{ forloop.counter }},
+                     borderColor: 'rgba(75, 192, 192, 1)',
+                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                     borderWidth: 1,
+                     fill: true // Fill the area under the line
+                 }]
+             },
+             options: {
+                 title: {
+                     display: true,
+                     text: 'Graduation Data for ' + '{{ chart_name }}'
+                 },
+                 tooltips: {
+                     mode: 'index',
+                     intersect: false
+                 },
+                 responsive: true,
+                 maintainAspectRatio: false
+             }
+         });
+     </script>
+     {% endfor %}
+ </body>
+ </html>
+ 
