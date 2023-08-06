@@ -6,7 +6,7 @@ urlpatterns = [
     path('course_search/', views.course_search, name='coursesearch'),
     path('CampusInfo/', views.CampusInfo, name='CampusInfo'),
     path('coursePlanner/', views.coursePlanner, name='coursePlanner'),
-    path('DataAnalysisPage/', views.DataAnalysisPage, name='DataAnalysisPage'),    
-    # path('chart_view/', views.chart_view, name='chart_view'),
-    path('testDatachart/', views.testDatachart, name='testDatachart'),
+    path('DataAnalysisPage/', views.DataAnalysisPage, name='DataAnalysisPage'),
+    path('fetch_courses/', views.fetch_courses, name='fetch_courses'),
+    path('move_course/', views.move_course, name='move_course'),
 ]
