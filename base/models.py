@@ -30,3 +30,36 @@ class Semester(models.Model):
 
     def __str__(self):
         return f'Semester {self.semester_id} - Major {self.major.major_name}'
+
+class IndividualAndSociety(models.Model):
+    id = models.AutoField(primary_key=True)
+    credit = models.IntegerField()
+    course_name = models.CharField(max_length=255)
+    description = models.TextField()
+    class Meta:
+        db_table = 'Individual and Society'
+
+class USExperienceInItsDiversity(models.Model):
+    id = models.AutoField(primary_key=True)
+    credit = models.IntegerField()
+    course_name = models.CharField(max_length=255)
+    description = models.TextField()
+    class Meta:
+        db_table = 'US Experience In ItsDiversity'
+
+class WorldCulturesAndGlobalIssues(models.Model):
+    id = models.AutoField(primary_key=True)
+    credit = models.IntegerField()
+    course_name = models.CharField(max_length=255)
+    description = models.TextField()
+    class Meta:
+        db_table = 'World Cultures And GlobalIssues'
+
+
+class ProgramElectives(models.Model):
+    id = models.AutoField(primary_key=True)
+    credit = models.IntegerField()
+    course_name = models.CharField(max_length=255)
+    description = models.TextField()
+    class Meta:
+        db_table = 'Program Electives'

@@ -3,8 +3,8 @@
 
 {% block content %}
 
-<!DOCTYPE html>
-<html>
+ 
+ 
 <head>
     <!-- Add your CSS and other headers if needed -->
     <style>
@@ -34,8 +34,55 @@
 }
     </style>
 </head>
-<body>
-    <h2>Course Search</h2>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0;">
+
+    
+    <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
+<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
+<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
+<link rel="stylesheet" type="text/css" href="/files/main_style.css?1668096927" title="wsite-theme-css" />
+ 
+<script>
+var STATIC_BASE = '//cdn1.editmysite.com/';
+var ASSETS_BASE = '//cdn2.editmysite.com/';
+var STYLE_PREFIX = 'wsite';
+</script>
+<script src='https://cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
+
+<script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
+<script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript">
+      
+     </script>
+   <script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
+ 
+ 
+
+
+</script>
+ 
+    <div class="banner-wrap">
+        <div class="wsite-elements wsite-not-footer wsite-header-elements">
+    <div class="wsite-section-wrap">
+    <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
+        <div class="wsite-section-content">
+            
+            <div class="banner">
+                <div class="banner-inner">
+                <div class="wsite-section-elements">
+                    <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;">Course Search</h2>
+                </div>
+            </div>
+            </div>
+        
+        </div>
+        <div class=""></div>
+    </div>
+</div>
+
+</div>
+    </div>
+    <h2>Search your major courses and prerequisit classes</h2>
     <form method="post">
         {% csrf_token %}
         <label for="major">Select your major:</label>
@@ -47,6 +94,6 @@
         <br><br>
         <input class="searchButton" type="submit" name="search" value="Search">
     </form>
-</body>
-</html>
+ 
+ 
 {% endblock %}

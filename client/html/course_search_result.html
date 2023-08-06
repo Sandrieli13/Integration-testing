@@ -5,8 +5,10 @@
 {% block title %}
     <title>Course Search Result</title>
 {% endblock %}
+
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
 {% endblock %}
 {% block content %}
     {% if major %}
@@ -107,5 +109,7 @@
     {% else %}
         <p>{{ error_message }}</p>
     {% endif %}
+    <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
     <a href="{% url 'coursesearch' %}">Back to Course Search page</a>
 {% endblock %}

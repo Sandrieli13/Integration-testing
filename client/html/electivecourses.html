@@ -1,0 +1,134 @@
+
+
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+<!-- templates/courses.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Elective_Courses</title>
+    <style>
+        .content {
+                
+                font-family: Arial, Helvetica, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                display: flex; /* This makes your body a flex container */
+                justify-content: center; /* Centers content horizontally */
+                align-items: center; /* Centers content vertically */
+                flex-direction: column; /* Stacks content vertically */
+            }
+        table {
+            width: 100%;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+        background-color: #ddd;} 
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+
+</head>
+<body>
+    <div class="content"> 
+    <h1 >Elective Courses</h1>
+    <h3>Note: The table is the list of elective courses that shows four categories: Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives.</h3>
+
+    <h2 onclick="toggleCourseList('individualAndSociety')">Individual and Society <i id="arrow-icon-individualAndSociety" class="fa fa-chevron-down"></i></h2>
+<div id="course-list-individualAndSociety" style="display: none;">
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+        </tr>
+        {% for course in individual_and_society_courses %}
+            <tr>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+<h2 onclick="toggleCourseList('usExperience')">US Experience in Its Diversity <i id="arrow-icon-usExperience" class="fa fa-chevron-down"></i></h2>
+<div id="course-list-usExperience" style="display: none;">
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+        </tr>
+        {% for course in us_experience_courses %}
+            <tr>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+<h2 onclick="toggleCourseList('worldCultures')">World Cultures and Global Issues <i id="arrow-icon-worldCultures" class="fa fa-chevron-down"></i></h2>
+<div id="course-list-worldCultures" style="display: none;">
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+        </tr>
+        {% for course in world_cultures_courses %}
+            <tr>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    </div>
+    <h2 onclick="toggleCourseList('programElectives')">Program Electives <i id="arrow-icon-programElectives" class="fa fa-chevron-down"></i></h2>
+    <div id="course-list-programElectives" style="display: none;">
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Credits</th>
+            <th>Description</th>
+        </tr>
+        {% for course in program_electives %}
+            <tr>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.credit }}</td>
+                <td>{{ course.description }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    </div>
+ 
+    <script>
+        // Function to toggle visibility of course lists
+        function toggleCourseList(categoryId) {
+            const courseList = document.getElementById(`course-list-${categoryId}`);
+            const arrowIcon = document.getElementById(`arrow-icon-${categoryId}`);
+    
+            if (courseList.style.display === 'none') {
+                courseList.style.display = 'block';
+                arrowIcon.classList.remove('fa-chevron-down');
+                arrowIcon.classList.add('fa-chevron-up');
+            } else {
+                courseList.style.display = 'none';
+                arrowIcon.classList.remove('fa-chevron-up');
+                arrowIcon.classList.add('fa-chevron-down');
+            }
+        }
+    </script>
+    </div>
+</body>
+</html>
+{% endblock %}

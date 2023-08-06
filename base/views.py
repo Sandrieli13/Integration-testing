@@ -2,6 +2,8 @@ from django.shortcuts import render,reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from .models import Majors, Courses, Semester
+from .models import Majors, Courses, Semester
+from .models import IndividualAndSociety, USExperienceInItsDiversity, WorldCulturesAndGlobalIssues, ProgramElectives
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 import json
@@ -121,7 +123,7 @@ def fetch_courses(request):
     course_list = []
 
     for course in courses:
-         course_list.append(f'<div class="item" data-course-id="{course.course_id}" data-credits="{course.credits}">{course.course_name}</div>')
+        course_list.append(f'<div class="item" data-course-id="{course.course_id}" data-credits="{course.credits}">{course.course_name}</div>')
 
     return HttpResponse(''.join(course_list))
 
@@ -129,12 +131,13 @@ def fetch_courses(request):
 
 def move_course(request):
     course_id = request.GET.get('courseId')
-    course = get_object_or_404(Course, id=course_id)
+    course = get_object_or_404(Courses, course_id=course_id)
 
     # Perform the necessary operations to move the course
     # For example, you can update the course's status or move it to a different table
 
     return HttpResponse('Course moved successfully')
+
 def coursePlanner(request):
 
     # Fetch the list of majors from the database
@@ -147,5 +150,22 @@ def coursePlanner(request):
         'majors': majors,
         'courses': courses,
     }
- 
+
     return render(request, 'coursePlanner.html', context)     
+
+def electivecourses(request):
+    individual_and_society_courses = IndividualAndSociety.objects.all()
+    us_experience_courses = USExperienceInItsDiversity.objects.all()
+    world_cultures_courses = WorldCulturesAndGlobalIssues.objects.all()
+    program_electives = ProgramElectives.objects.all()
+
+    context = {
+        'individual_and_society_courses': individual_and_society_courses,
+        'us_experience_courses': us_experience_courses,
+        'world_cultures_courses': world_cultures_courses,
+        'program_electives': program_electives,
+    }
+
+    return render(request, 'electivecourses.html', context)
+def studentprograms(request):
+    return render(request, 'studentprograms.html')

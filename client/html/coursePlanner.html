@@ -1,3 +1,7 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
 {%load static %}
 <html>
     <body>
@@ -58,7 +62,7 @@
  
 .arrow button {
   margin: 5px 0;
-  background-color: #21a9be;
+  background-color: #2a55f1;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -125,44 +129,26 @@ tr:hover {
   font-weight: bold;
 }
  
- 
+#congratulations-message {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
          h2{color: #3f828e;
          text-align: center;}
- .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: #3f828e;
-            color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            font-size: 14px;
-            z-index: 1;
-        }
+  
         .icon {
             width: 150px;
             height: 40px;
             margin-right: 10px;
             }
-
-            .Topbar {
-        position: fixed;
-        list-style-type: none;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        background-color: #1c8fa9;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
-        }
+ 
 
        
     h4 a {
-        color: #3f828e;
+        color: #2b6de6;
     }          
      .courseResults{
           display: flex;
@@ -171,8 +157,64 @@ tr:hover {
            }   
             </style>
 
-            
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ 
+
+    
+    <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
+<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
+<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
+ 
+<link href='//cdn2.editmysite.com/fonts/Maven_Pro/font.css?2' rel='stylesheet' type='text/css' />
+<link href='//cdn2.editmysite.com/fonts/Playfair_Display/font.css?2' rel='stylesheet' type='text/css' />
+
+ 
+<script>
+var STATIC_BASE = '//cdn1.editmysite.com/';
+var ASSETS_BASE = '//cdn2.editmysite.com/';
+var STYLE_PREFIX = 'wsite';
+</script>
+<script src='https://cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
+
+<script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
+<script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript"></script>
+    <script type="text/javascript"> _W = _W || {}; _W.securePrefix='freshmanroadmap.weebly.com'; </script><script>_W = _W || {};
+         _W.customerLocale = "en_US";
+         _W.storeName = null;
+         _W.isCheckoutReskin = false;
+         _W.storeCountry = "US";
+         _W.storeCurrency = "USD";
+         _W.storeEuPrivacyPolicyUrl = "";
+         com_currentSite = "623578126324040655";
+         com_userID = "143641134";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
+<script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668539559&"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
+ 
+ 
+
+
+</script>
         </head>
+        <div class="banner-wrap">
+          <div class="wsite-elements wsite-not-footer wsite-header-elements">
+      <div class="wsite-section-wrap">
+      <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
+          <div class="wsite-section-content">
+              
+              <div class="banner">
+                  <div class="banner-inner">
+                  <div class="wsite-section-elements">
+                      <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;">Course Planner</h2>
+                  </div>
+              </div>
+              </div>
+          
+          </div>
+          <div class=""></div>
+      </div>
+  </div>
+
+  </div>
+      </div>
         <body data-fetch-courses-url="{% url 'fetch_courses' %}">
             <h1>Course Planner</h1>
         
@@ -181,6 +223,8 @@ tr:hover {
         
             <h3>Degree Completion:</h3>
             <p id="completion-percentage"></p>
+            <div id="graduation-message"></div>
+
             <h3>Taken Credits:</h3>
             <p id="taken-credits"></p>
 
@@ -250,10 +294,12 @@ tr:hover {
                     </tbody>
                 </table>
             </div>
-        
+            <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+              on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
             <script src="{% static 'coursePlanner.js' %}"></script>
             <script>  
                 document.getElementById('major-form').addEventListener('submit', loadCourseList);
             </script>
         </body>
         </html>
+        {% endblock %}
