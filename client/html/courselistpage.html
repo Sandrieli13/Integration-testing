@@ -104,7 +104,7 @@
         
         <div class="banner">
             <div class="banner-inner">
-            <div class="wsite-section-elements">
+            <div class="wsite-section-elements" >
                 <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;">Course List</h2>
             </div>
         </div>
@@ -114,8 +114,11 @@
     <div class=""></div>
 </div>
 </div>
+<hr>
 <div class="content"> 
-    <hr>
+    <h4 style="margin: 0; padding:auto; " >Note: The table shows  four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
+    
     <div class="table-container">
         <table>
             <thead>
@@ -144,8 +147,7 @@
             </tbody>
         </table>
     </div>
-    <h4 style="margin: 0; padding:auto; " >Note: The table shows <br> four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
-        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
+
 </div>
 </html>
 {% endblock %}
