@@ -1,6 +1,4 @@
-
-
-
+ 
     {% extends 'base.html' %}
 
     {% block content %}
@@ -19,6 +17,10 @@
                 justify-content: center; /* Centers content horizontally */
                 align-items: center; /* Centers content vertically */
                 flex-direction: column; /* Stacks content vertically */
+                font-family: Arial, Helvetica, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
             }
         table {
             width: 100%;
@@ -30,6 +32,60 @@
         }
         tr:hover {
         background-color: #ddd;} 
+        .toggle-arrow {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-arrow.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* Search filter styles */
+        #myInput {
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        #myTable th,
+        #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #myTable tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #myTable tr.header,
+        #myTable tr:hover {
+            background-color: #f1f1f1;
+        }
+        * {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
 
@@ -38,6 +94,7 @@
     <div class="content"> 
     <h1 >Elective Courses</h1>
     <h3>Note: The table is the list of elective courses that shows four categories: Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives.</h3>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses.." title="Type in a course name">
 
     <h2 onclick="toggleCourseList('individualAndSociety')">Individual and Society <i id="arrow-icon-individualAndSociety" class="fa fa-chevron-down"></i></h2>
 <div id="course-list-individualAndSociety" style="display: none;">
@@ -127,6 +184,27 @@
                 arrowIcon.classList.add('fa-chevron-down');
             }
         }
+        function myFunction() {
+    var input, filter, tables, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    tables = document.querySelectorAll("table");  // Get all tables
+
+    for (table of tables) {
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+}
     </script>
     </div>
 </body>

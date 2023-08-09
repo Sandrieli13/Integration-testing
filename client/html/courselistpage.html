@@ -63,6 +63,21 @@
             
             margin-top: 100px;
         }
+        * {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url("static/search.png");
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 50%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+ 
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0;">
@@ -115,10 +130,12 @@
 </div>
 </div>
 <hr>
+<body>
 <div class="content"> 
     <h4 style="margin: 0; padding:auto; " >Note: The table shows  four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
         on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
-    
+    <br>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses.." title="Type in a course name">
     <div class="table-container">
         <table>
             <thead>
@@ -149,5 +166,29 @@
     </div>
 
 </div>
+<script>
+function myFunction() {
+    var input, filter, tables, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    tables = document.querySelectorAll("table");  // Get all tables
+
+    for (table of tables) {
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+}
+</script>
+</body>
 </html>
 {% endblock %}
