@@ -155,20 +155,25 @@ tr:hover {
           max-width: 1200px;
           margin: auto;
            }   
-            </style>
+           #taken-courses-table, #remaining-courses-table {
+    width: 500px; /* Adjust to desired width */
+    height: 300px; /* Adjust to desired height */
+    overflow: auto; /* Enables scrollbars if content overflows */
+  }
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  #taken-courses-table td, #taken-courses-table th, #remaining-courses-table td, #remaining-courses-table th {
+    width: 250px; /* Adjust to desired width. Make sure it adds up to table width or less */
+    height: 50px;
+  }
  
+            </style>
 
     
     <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
 <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
-<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
- 
+<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" /> 
 <link href='//cdn2.editmysite.com/fonts/Maven_Pro/font.css?2' rel='stylesheet' type='text/css' />
-<link href='//cdn2.editmysite.com/fonts/Playfair_Display/font.css?2' rel='stylesheet' type='text/css' />
-
- 
+<link href='//cdn2.editmysite.com/fonts/Playfair_Display/font.css?2' rel='stylesheet' type='text/css' /> 
 <script>
 var STATIC_BASE = '//cdn1.editmysite.com/';
 var ASSETS_BASE = '//cdn2.editmysite.com/';
@@ -179,14 +184,14 @@ var STYLE_PREFIX = 'wsite';
 <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
 <script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript"></script>
     <script type="text/javascript"> _W = _W || {}; _W.securePrefix='freshmanroadmap.weebly.com'; </script><script>_W = _W || {};
-         _W.customerLocale = "en_US";
-         _W.storeName = null;
-         _W.isCheckoutReskin = false;
-         _W.storeCountry = "US";
-         _W.storeCurrency = "USD";
-         _W.storeEuPrivacyPolicyUrl = "";
-         com_currentSite = "623578126324040655";
-         com_userID = "143641134";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
+    _W.customerLocale = "en_US";
+    _W.storeName = null;
+    _W.isCheckoutReskin = false;
+    _W.storeCountry = "US";
+    _W.storeCurrency = "USD";
+    _W.storeEuPrivacyPolicyUrl = "";
+    com_currentSite = "623578126324040655";
+    com_userID = "143641134";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
 <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668539559&"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
  
  
@@ -197,7 +202,7 @@ var STYLE_PREFIX = 'wsite';
         <div class="banner-wrap">
           <div class="wsite-elements wsite-not-footer wsite-header-elements">
       <div class="wsite-section-wrap">
-      <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
+      <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover; " >
           <div class="wsite-section-content">
               
               <div class="banner">
@@ -209,12 +214,14 @@ var STYLE_PREFIX = 'wsite';
               </div>
           
           </div>
-          <div class=""></div>
+      
       </div>
   </div>
 
   </div>
       </div>
+      <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
         <body data-fetch-courses-url="{% url 'fetch_courses' %}">
             <h1>Course Planner</h1>
         
@@ -294,8 +301,7 @@ var STYLE_PREFIX = 'wsite';
                     </tbody>
                 </table>
             </div>
-            <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
-              on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
+
             <script src="{% static 'coursePlanner.js' %}"></script>
             <script>  
                 document.getElementById('major-form').addEventListener('submit', loadCourseList);

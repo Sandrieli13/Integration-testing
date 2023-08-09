@@ -11,6 +11,11 @@
 
 {% endblock %}
 {% block content %}
+<br>
+<hr>
+<h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
+    on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
+
     {% if major %}
         <h2>Your Major: {{ major.major_name }}</h2>
         <h3>Course Requirements:</h3>
@@ -109,7 +114,6 @@
     {% else %}
         <p>{{ error_message }}</p>
     {% endif %}
-    <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
-        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
+
     <a href="{% url 'coursesearch' %}">Back to Course Search page</a>
 {% endblock %}
