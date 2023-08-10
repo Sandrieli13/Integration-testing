@@ -26,6 +26,7 @@ from apps.clubs.views import chart_view
 from myapp.views import mentors_view
 from django.contrib import admin
 from django.urls import path, include
+from events.views import events_list_view, join_event
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,4 +48,6 @@ urlpatterns = [
     path('profile/edit/', edit_profile_view, name='edit_profile'),
     path('matchmaking/', matchmaking_view, name='matchmaking'),
     path('',include('base.urls')),
+    path('events/', events_list_view, name='events'),
+    path('events/join/<int:event_id>/', join_event, name='join_event'),
 ]

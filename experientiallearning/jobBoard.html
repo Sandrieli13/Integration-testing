@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Board</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <section class="sub6-header">
+        <nav>
+            <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="jobBoard.html">Job Board</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="careerInfo.html">Career Info</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>JOB BOARD</h1>
+    </section>
+
+
+    <nav>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <a href="research.html"> Research Opportunities</a>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    
+    <section>
+        <h2>Internship Opportunities</h2>
+        <ul id="job-list"></ul>
+        
+    </section>
+
+    
+   
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>       
+        </div>
+    </section>
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+
+        const jobs = [
+            {
+                title: "Paid Work-Study Internships",
+                company: "NYC Public Service Corps",
+                location: "United States",
+                description: "Placements include internships in law, research, finance, social services, accounting, office administration, education, health, information systems, graphic arts, journalism, engineering, architectural and computer technology.",
+                qualifications: "Currently Enrolled & Eligible for Work-Study.",
+                additionalDetails: {
+                    majors: "Early Childhood Education (ECE),Business Management - Finance & Banking (FNB),Business Management - Travel & Tourism (TTA),Computer Network Technology (CNT),Children and Youth Studies (CYS),Community Health Education (COH),ACCOUNTING AAS,Engineering Science (ESC),Computer Operations (CMO)",
+                    salary: "$15.75 -$16.00",
+                    duration: "Summer & Academic Year",
+                    hoursPerWeek: "20",
+                    deadline: "December 19, 2025"
+                }
+            },
+            {
+                title: "Entry-Level Software Engineer(On-Job Training)",
+                company: "Revature",
+                location: "New York, NY",
+                description: "At Revature, the #1 Employer of Emerging Technology Talent, we are currently hiring Seniors entering their final semester and Alumni with their associate's or bachelor's degree. Our mission is to create a pathway where university graduates with diverse backgrounds can build the knowledge, skills and abilities to reach their potential as technology professionals and leverage those talents to contribute to the growth and success of our customers.",
+                qualifications: "No Technology experience is needed, and all majors are welcome to participate. Must have Associates or Bachelors degree, in any study matter, or be a Senior entering your final semester.",
+                additionalDetails: {
+                    majors: "All Majors",
+                    salary: "47k-57k First Year, Annual Raises and Bonuses",
+                    duration: "Not defined",
+                    hoursPerWeek: "40",
+                    deadline: "August 1, 2023"
+                }
+            },
+            {
+                title: "Video Game Developer Intern",
+                company: "A Free Bird",
+                location: "United States",
+                description: "A Free Bird is a 501(C)(3) non-profit organization based in New York City. Our organization provides children diagnosed with cancer the opportunity to explore their artistic passions. Artistic expression has been proven to play an instrumental role in the healing process. We support children affected by cancer in their exploration of a range of self expression through art, music, acting, poetry, writing, singing and other creative mediums.",
+                qualifications: "1-2+ years experience in related field",
+                additionalDetails: {
+                    majors: "All Majors",
+                    salary: "Paid",
+                    duration: "3 months",
+                    hoursPerWeek: "10",
+                    deadline: "September 30, 2023"
+                }
+            },
+            // Add more internship data here...
+        ];
+
+        function displayJobs() {
+            const jobList = document.getElementById("job-list");
+            jobList.innerHTML = "";
+
+            jobs.forEach((job) => {
+                const listItem = document.createElement("li");
+
+                const jobTitle = document.createElement("h3");
+                jobTitle.classList.add("job-title");
+                jobTitle.textContent = job.title;
+
+                const jobCompany = document.createElement("p");
+                jobCompany.classList.add("job-company");
+                jobCompany.innerHTML = "<strong>Company:</strong> " + job.company;
+                
+
+                const jobLocation = document.createElement("p");
+                jobLocation.classList.add("job-location");
+                jobLocation.innerHTML = "<strong>Location:</strong> " + job.location;
+
+                const jobDescriptionLabel = document.createElement("p");
+                jobDescriptionLabel.classList.add("job-description-label");
+                jobDescriptionLabel.textContent = "Description:";
+
+                const jobDescription = document.createElement("p");
+                jobDescription.classList.add("job-description");
+                jobDescription.innerHTML = "<strong>Description:</strong>" + job.description;
+
+                const jobQualificationsLabel = document.createElement("p");
+                jobQualificationsLabel.classList.add("job-qualifications-label");
+                jobQualificationsLabel.textContent = "Qualifications:";
+
+                const jobQualifications = document.createElement("p");
+                jobQualifications.classList.add("job-qualifications");
+                jobQualifications.innerHTML = "<strong>Qualifications: </strong>" + job.qualifications;
+
+                const additionalDetails = document.createElement("div");
+                additionalDetails.classList.add("additional-details");
+                additionalDetails.innerHTML = `
+                    <h4>Additional Job Details:</h4>
+                    <ul>
+                        <li><strong>Desired Majors:</strong> ${job.additionalDetails.majors}</li>
+                        <li><strong>Salary Level:</strong> ${job.additionalDetails.salary}</li>
+                        <li><strong>Duration:</strong> ${job.additionalDetails.duration}</li>
+                        <li><strong>Approximate Hours Per Week:</strong> ${job.additionalDetails.hoursPerWeek}</li>
+                        <li><strong>Application Deadline:</strong> ${job.additionalDetails.deadline}</li>
+                    </ul>
+                `;
+
+                listItem.appendChild(jobTitle);
+                listItem.appendChild(jobCompany);
+                listItem.appendChild(jobLocation);
+                listItem.appendChild(jobDescription);
+                listItem.appendChild(jobQualifications);
+                listItem.appendChild(additionalDetails);
+
+                jobList.appendChild(listItem);
+            });
+        }
+
+        displayJobs();
+    </script>
+</body>
+</html>
