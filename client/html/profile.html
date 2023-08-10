@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+  .user-informatio{
+    background-color: aquamarine;
+    border-radius: 45%;
+    border-color: black;
+  }
+</style>
 <div class="profile-header">
     <img class="profile-image" src="{% static 'pfp.jpg' %}" alt="profile-picture">
   <div><h2>{{ user.username }}</h2>
