@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Info</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub3-header">
+        <nav>
+            <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="jobBoard.html">Job Board</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="careerInfo.html">Career Info</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>CAREER INFO</h1>
+    </section>
+
+    <!-- Career Info Content -->
+    <section class="career-info">
+        <h1>Job Information</h1>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for a job...">
+            <button class="search-btn" onclick="searchJob()">Search</button>
+        </div>
+        
+        <div id="recommendationList"></div>
+        <div class="job-list">
+            <div class="job-box">
+                <h3>Software Developers</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $61/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 17,595</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 155,272</p>
+                <p class="job-details">Top Skills: Communications,Java(Programming Language), Agile Methodology,SQL(Programming Language), Computer Science</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Web Developers</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $35/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,565</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 12,960</p>
+                <p class="job-details">Top Skills: JavaScript(Programming Language), Agile Methodology, User Experience(UX) , Communications , Cascading Style Sheets (CSS)</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Computer Systems Analysts</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $51/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 4,633</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 47,063</p>
+                <p class="job-details">Top Skills: Communications , Management , Problem Solving , SQL(Programming Language) , Project Management</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Information Security Analysts</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $61/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,938</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 16,423</p>
+                <p class="job-details">Top Skills: Communications , Management , Cyber Security, Auditing , Computer Science</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Computer Programmers</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $45/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,867</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 20,908</p>
+                <p class="job-details">Top Skills: Communications , Management , SQL(Programming Language) ,Computer Science , Leardership</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Clinical Data Managers</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $59/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings:1,803</p>
+                <p class="job-details">Currently Employed: 15,448</p>
+                <p class="job-details">Top Skills: Communications , Management , Data Management, Project Management , Clinical Trials</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Database Administrators</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $53/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 940</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 9,746</p>
+                <p class="job-details">Top Skills: Communications ,Data Engineering, Python(Programming Language) , SQL(Programming Language) ,Extract Transform Load(ETL)</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Computer Network Architects</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $63/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,689</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 19,212</p>
+                <p class="job-details">Top Skills: Communications , Management , Troubleshooting(Problem Solving) ,Network Engineering, Management Firewall</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Web and Digital Interface Designers</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $42/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,773</p>
+                <p class="job-details">Currently Employed: 13,422</p>
+                <p class="job-details">Top Skills: Communications ,Design, User Experience (UX) Research ,  User Experience (UX) Agile Methodology </p>
+            </div>
+
+            <div class="job-box">
+                <h3>Computer Systems Engineers/Architects</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $42/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 3,150</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 29,435</p>
+                <p class="job-details">Top Skills: Communications , Management , Systems Engineering, Computer Science , Troubleshooting(Problem Solving)</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Geographic Information Systems Technologists and Technicians</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $42/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 3,150</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 29,435</p>
+                <p class="job-details">Top Skills: Communications , Marketing, Management ,HyperText Markup Language(HTML) , Project Management</p>
+            </div>
+
+            <div class="job-box">
+                <h3>Business Intelligence  Analysts</h3>
+                <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: $59/hour</p>
+                <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: 1,803</p>
+                <p class="job-details"><i class="fa fa-users"></i>Currently Employed: 15,448</p>
+                <p class="job-details">Top Skills: Communications , Management , Data Analysis , SQL(Programming Language) ,Python(Programming Language)</p>
+            </div>
+
+           
+        </div>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>       
+        </div>
+    </section>
+
+    <script>
+        var jobList = [
+            {
+                title: "Software Developers",
+                salary: "$61 per hour",
+                jobOpenings: "17,595",
+                currentlyEmployed: "155,272",
+                topSkills: "Communications, Java (Programming Language), Agile Methodology, SQL (Programming Language), Computer Science"
+            },
+            {
+                title: "Web Developers",
+                salary: "$35 per hour",
+                jobOpenings: "1,565",
+                currentlyEmployed: "12,960",
+                topSkills: "JavaScript (Programming Language), Agile Methodology, User Experience (UX), Communications, Cascading Style Sheets (CSS)"
+            },
+            {
+                title: "Computer Systems Analysts",
+                salary: "$51 per hour",
+                jobOpenings: "4,633",
+                currentlyEmployed: "47,063",
+                topSkills: "Communications , Management , Problem Solving , SQL(Programming Language) , Project Management"
+            },
+            {
+                title: "Information Security Analysts",
+                salary: "$61 per hour",
+                jobOpenings: "1,938",
+                currentlyEmployed: "16,423",
+                topSkills: "Communications , Management , Cyber Security, Auditing , Computer Science"
+            },
+            {
+                title: "Computer Programmers",
+                salary: "$45 per hour",
+                jobOpenings: "1,867",
+                currentlyEmployed: "20,908",
+                topSkills: "Communications , Management , SQL(Programming Language) ,Computer Science , Leardership"
+            },
+            {
+                title: "Clinical Data Managers",
+                salary: "$59 per hour",
+                jobOpenings: "1,803",
+                currentlyEmployed: "15,448",
+                topSkills: "Communications , Management , Data Management, Project Management , Clinical Trials"
+            },
+            {
+                title: "Database Administrators",
+                salary: "$53 per hour",
+                jobOpenings: "940",
+                currentlyEmployed: "9,746",
+                topSkills: "Communications ,Data Engineering, Python(Programming Language) , SQL(Programming Language) ,Extract Transform Load(ETL)"
+            },
+            {
+                title: "Computer Network Architects",
+                salary: "$63 per hour",
+                jobOpenings: "1,689",
+                currentlyEmployed: "19,212",
+                topSkills: "Communications , Management , Troubleshooting(Problem Solving) ,Network Engineering, Management FirewallvaScript (Programming Language), Agile Methodology, User Experience (UX), Communications, Cascading Style Sheets (CSS)"
+            },
+            {
+                title: "Web and Digital Interface Designers",
+                salary: "$42 per hour",
+                jobOpenings: "1,773",
+                currentlyEmployed: "13,422",
+                topSkills: "Communications ,Design, User Experience (UX) Research ,  User Experience (UX) Agile Methodology "
+            },
+            {
+                title: "Computer Systems Engineers/Architects",
+                salary: "$42 per hour",
+                jobOpenings: "3,150",
+                currentlyEmployed: "29,435",
+                topSkills: "Communications , Management , Systems Engineering, Computer Science , Troubleshooting(Problem Solving)"
+            },
+            {
+                title: "Geographic Information Systems Technologists and Technicians",
+                salary: "$42 per hour",
+                jobOpenings: "3,150",
+                currentlyEmployed: "29,435",
+                topSkills: "Communications , Marketing, Management ,HyperText Markup Language(HTML) , Project Management"
+            },
+            {
+                title: "Business Intelligence  Analysts",
+                salary: "$59 per hour",
+                jobOpenings: "1,803",
+                currentlyEmployed: "15,448",
+                topSkills: "Communications , Management , Data Analysis , SQL(Programming Language) ,Python(Programming Language)"
+            },
+            // Add more job objects as needed
+        ];
+
+        function searchJob() {
+            var searchInput = document.getElementById("searchInput").value.toLowerCase();
+            var recommendationList = document.getElementById("recommendationList");
+            recommendationList.innerHTML = "";
+
+            if (searchInput !== "") {
+                var matchingJobs = jobList.filter(function (job) {
+                    return job.title.toLowerCase().includes(searchInput);
+                });
+
+                matchingJobs.forEach(function (job) {
+                    var jobBox = document.createElement("div");
+                    jobBox.classList.add("job-box");
+                    jobBox.innerHTML = `
+                        <h3>${job.title}</h3>
+                        <p class="job-details"><i class="fa fa-dollar"></i>Median Salary: ${job.salary}</p>
+                        <p class="job-details"><i class="fa fa-briefcase"></i>Job Openings: ${job.jobOpenings}</p>
+                        <p class="job-details"><i class="fa fa-users"></i>Currently Employed: ${job.currentlyEmployed}</p>
+                        <p class="job-details">Top Skills: ${job.topSkills}</p>
+                    `;
+                    recommendationList.appendChild(jobBox);
+                });
+            }
+        }
+
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+    
+</body>
+</html>

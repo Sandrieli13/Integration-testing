@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub3-header">
+        <nav>
+            <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="">Job Board</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="">Career Info</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>LOGIN</h1>
+    </section>
+
+    <!-- Login Content -->
+    <section class="form-section">
+        <h2>Login</h2>
+        <form action="login.php" method="POST">
+            <div class="form-group">
+                <label for="cuny-id">CunyID</label>
+                <input type="text" id="cuny-id" name="cunyEMPLD" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-submit-btn">Login</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>       
+        </div>
+    </section>
+</body>
+</html>

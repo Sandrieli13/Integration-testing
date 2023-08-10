@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub-header">
+      <nav>
+        <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="jobBoard.html">Job Board</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="careerInfo.html">Career Info</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+  </nav><br>
+        
+        <h1>UPDATE ACCOUNT</h1><br>
+    </section>
+
+    <section class="form-container">
+        <form action="update_account.php" method="post">
+        <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="sName" required>
+            </div>
+            <div class="form-group">
+                <label for="bmcc-email">BMCC Email</label>
+                <input type="email" id="bmcc-email" name="sEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" id="phone-number" name="sTelephone" required>
+            </div>
+            <div class="form-group">
+                <label for="cuny-id">CUNY ID</label>
+                <input type="text" id="cuny-id" name="cunyEMPLD" required>
+            </div>
+
+            <!-- Current Academic Information -->
+            <h2>Current Academic Information</h2>
+            <div class="form-group">
+                Current Academic Year:
+                <select name="sYear">
+                    <option value="" disabled selected></option>
+                    <option value="Freshman">Freshman</option>
+                    <option value="Sophomore">Sophomore</option>
+                </select>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="major">Major:</label>
+                <select name="sMajor">
+                    <option value="" disabled selected></option>
+                    <option value="CIS">Computer Information Systems</option>
+                    <option value="CS">Computer Science</option>
+                    <option value="GIS">Geographical Information Science</option>
+                    <option value="CNT">Computer Network Technology</option>
+                </select>
+                <br>
+            </div>
+            <div class="form-group">
+                <label for="sGPA">GPA</label>
+                <input type="text" id="gpa" name="sGPA">
+            </div>
+            <div class="form-group">
+                <label for="sGradDate">Expected Graduation:</label>
+                <input type="date" name="sGradDate"><br>
+            </div>
+
+            <!-- Career Interests -->
+            <h2>Career Interests</h2>
+            <div class="form-group">
+                <label for="career-path">What is your desired career path or field of interest?</label>
+                <input type="checkbox" name="sInterests[]" value="SoftwareDev">&nbspSoftware Development<br>
+                <input type="checkbox" name="sInterests[]" value="WebDev">&nbspWeb Development<br>
+                <input type="checkbox" name="sInterests[]" value="DataSci">&nbspData Science<br>
+                <input type="checkbox" name="sInterests[]" value="DBAdmin">&nbspDatabase Administration<br>
+                <input type="checkbox" name="sInterests[]" value="CybSec">&nbspCyber Security Analysis<br>
+                <input type="checkbox" name="sInterests[]" value="CloudSolu">&nbspCloud Solutions<br>
+                <input type="checkbox" name="sInterests[]" value="AI/MachineL">&nbspArtificial Intelligence/Machine Learning<br>
+                <input type="checkbox" name="sInterests[]" value="UX">&nbspUser Experience (UX) Design<br>
+                <input type="checkbox" name="sInterests[]" value="ITCon">&nbspIT Consulting<br>
+                <input type="checkbox" name="sInterests[]" value="mobileApp">&nbspMobile App Development<br>
+                <input type="checkbox" name="sInterests[]" value="BIA">&nbspBusiness Intelligence Analysis<br>
+                <input type="checkbox" name="sInterests[]" value="netAdmin">&nbspNetwork Administration<br>
+            </div>
+            <div class="form-group">
+                <label for="companies-aspiration">Are there any companies or organizations you aspire to work for?</label>
+                <textarea id="companies-aspiration" name="companies-aspiration" rows="3"></textarea>
+            </div>
+
+            <!-- Skills and Abilities -->
+            <h2>Skills and Abilities</h2>
+            <div class="form-group">
+                <label for="skills">Check off any skills you already have! Then tell us how comfortable you are with that skill:</label>
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="sSkills[]" value="Python">
+                        <label>Python</label>
+                        <select name="skillLevel[]">
+                            <option value="" disabled selected></option>
+                            <option value="Novice">Novice</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="sSkills[]" value="Java">
+                        <label>Java</label>
+                        <select name="skillLevel[]">
+                            <option value="" disabled selected></option>
+                            <option value="Novice">Novice</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="sSkills[]" value="JavaScript">
+                        <label>JavaScript</label>
+                        <select name="skillLevel[]">
+                            <option value="" disabled selected></option>
+                            <option value="Novice">Novice</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Expert">Expert</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="C">
+                      <label>C</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="C++">
+                      <label>C++</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="C#">
+                      <label>C#</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="Swift">
+                      <label>Swift</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="PHP">
+                      <label>PHP</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="Go">
+                      <label>Go(Google)</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="Algorithms">
+                      <label>Algorithms</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="OOP">
+                      <label>Object Oriented Programming</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="DBManage">
+                      <label>Database Management</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="WebDev">
+                      <label>Web Development Skills</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="SoftwareDev">
+                      <label>Software Development</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="OS">
+                      <label>Operating Systems</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="Network">
+                      <label>Networking</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="CybSec">
+                      <label>Cyber Security</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="DataAnaly">
+                      <label>Data Analysis</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="DataVis">
+                      <label>Data Visualization</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+              
+                    <div class="checkbox-item">
+                      <input type="checkbox" name="sSkills[]" value="mobileApp">
+                      <label>Mobile App Development</label>
+                      <select name="skillLevels[]">
+                        <option value="" disabled selected></option>
+                        <option value="Novice">Novice</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div><br><br>
+
+                    <!-- Other skill items... -->
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="certifications">Do you have any certifications, licenses, or specialized training?<br> If so, when do they expire?</label>
+                <input type="checkbox" name="sCert[]" value="compTIA+">&nbspCompTIA A+<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="compTIAnet">&nbspCompTIA Network+<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="CISSP">&nbspCertified Information Security Professional<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="CEH">&nbspCertified Ethical Hacker<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="PMP">&nbspProject Manager Professional<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="Amazon">&nbspAmazon Web Services Certified<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="Google">&nbspGoogle Certified<br>
+                <input type="date" name="certExp[]"><br>
+                <input type="checkbox" name="sCert[]" value="Microsoft">&nbspMicrosoft Certified<br>
+                <input type="date" name="certExp[]"><br>
+            </div>
+
+            <!-- Experience -->
+            <h2>Experience</h2>
+            <div class="form-group">
+                <label for="field-experience">Have you had any internships or jobs related to your field of interest? If yes, please provide brief details.</label>
+                <textarea id="field-experience" name="field-experience" rows="3"></textarea>
+            </div>
+
+            <!-- Career Readiness -->
+            <h2>Career Readiness</h2>
+            <div class="form-group">
+                <label for="resources-familiarity">Are you familiar with resources available for career exploration (resume, interview)?</label>
+                <input type="radio" name="sExplore" value="Y">Yes<br>
+                <input type="radio" name="sExplore" value="N">No<br>
+            </div>
+
+            <!-- Additional Information -->
+            <h2>Additional Information</h2>
+            <div class="form-group">
+                <label for="additional-questions">Are there any specific questions or anything else you would like to share that could assist us in providing tailored guidance?</label>
+                <textarea id="additional-questions" name="sComments" rows="3"></textarea><br><br>
+            </div>
+            <!-- Form fields and input elements -->
+
+            <input type="submit" value="Update Account" class="submit-btn">
+        </form>
+    </section>
+
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>       
+        </div>
+    </section>
+
+    <script>
+        // JavaScript code for navigation menu
+
+        // Function to show the navigation menu
+        function showMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.style.right = "0";
+        }
+
+        // Function to hide the navigation menu
+        function hideMenu() {
+            var navLinks = document.getElementById("navLinks");
+            navLinks.style.right = "-200px";
+        }
+    </script>
+</body>
+</html>

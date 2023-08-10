@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <section class="sub2-header">
+    <nav>
+      <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+      <div class="nav-links" id="navLinks">
+          <i class="fa fa-times" onclick="hideMenu()"></i>
+          <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="jobBoard.html">Job Board</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="careerInfo.html">Career Info</a></li>
+              <li><a href="login.html">Login</a></li>
+          </ul>
+      </div>
+      <i class="fa fa-bars" onclick="showMenu()"></i>
+  </nav>
+    <h1>EVENTS</h1>
+  </section>
+
+  <section class="events">
+    <h1>Upcoming Events</h1>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search events">
+      <button class="search-btn">Search</button>
+    </div>
+
+    <div class="event-list">
+      <div class="event-box">        
+        <h3><a href ="https://www.bmcc.cuny.edu/event/admissions-information-session-in-person-special-guest-office-of-financial-aid/">Information Session Special Guest: Office of Financial Aid</a></h3>
+        <p class="event-description">Event 1 </p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 12, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 2:30 PM - 3:45 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i>70 Murray St., Room 203</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/cuny-in-the-heights-applicant-workshop-9/">CUNY in the Heights : Applicant Workshop</a></h3>
+        <p class="event-description">Event 2</p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 13, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i>3:00 PM - 3:30 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i>CUNY in the Heights</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/admissions-financial-aid-info-session-cuny-in-harlem-5/">Admissions & Financial Aid Info Session: CUNY in Harlem</a></h3>
+        <p class="event-description">Event 3</p>
+        <p class="event-details"><i class="fa fa-calendar"></i> July 18 , 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 11:30 AM - 3:00 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i> CUNY Center in Harlem</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/admissions-information-session-in-person-special-guest-year-up-at-bmcc/">Admissions Information Session Special Guest: Year Up at BMCC</a></h3>
+        <p class="event-description">Event 4</p>
+        <p class="event-details"><i class="fa fa-calendar"></i> July 19, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i>2:30 PM - 3:45 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i>70 Murray St., Room 203</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/international-admissions-information-session-22/">International Admissions Information Session</a></h3>
+        <p class="event-description">Event 5</p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 20, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 12:30 PM - 1:30 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i> Zoom</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/saturday-information-session-campus-tour-3/">Saturday Information Session & Campus Tour</a></h3>
+        <p class="event-description">Event 6</p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 15, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i>  10:00 AM - 11:30 AM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i> 199 Chambers Street New York, NY 10007  
+            Hudson Room S249</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/bmcc-spotlight-series/">BMCC Spotlight Series</a></h3>
+        <p class="event-description">Event 7</p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 18, 2023</a></p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 2:00 PM - 4:00 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i> Zoom </p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/ihope-program-information-session-sesion-de-informacion-56/">IHOPE Program Information Session</a></h3>
+        <p class="event-description">Event 8</p>
+        <p class="event-details"><i class="fa fa-calendar"></i> July 20, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 5:30 PM - 6:30 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i>Zoom</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <div class="event-box">
+        <h3><a href ="https://www.bmcc.cuny.edu/event/writing-center-workshop-interpreting-vs-retelling-4/">Writing Center Workshop:Interpreting vs.Retelling</a></h3>
+        <p class="event-description">Event 9</p>
+        <p class="event-details"><i class="fa fa-calendar"></i>July 24, 2023</p>
+        <p class="event-details"><i class="fa fa-clock-o"></i> 11:00 AM - 12:00 PM</p>
+        <p class="event-details"><i class="fa fa-map-marker"></i> Zoom</p>
+        <button class="add-event-btn">Add To Calander</button>
+      </div>
+
+      <!-- Add more events as needed -->
+    </div>
+
+    <div class="selected-events">
+      <h2>List of Events Selected</h2>
+      <ul class="selected-events-list">
+        <!-- Selected events will be dynamically added here -->
+      </ul>
+      <div class="form-group">
+        <label for="cuny-id">Enter your cunyEMPLD, then click submit once you registered for the events you would like to attend!</label>
+        <input type="text" id="cuny-id" name="cunyEMPLD" required>
+      </div>
+      <button class="submit-btn">Submit</button>
+    </div>
+  </section>
+
+  <section class="footer">
+    <h4>About Us</h4>
+    <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+    <div class="icons">
+      <i class="fa fa-facebook"></i>
+      <i class="fa fa-twitter"></i>
+      <i class="fa fa-instagram"></i>
+      <i class="fa fa-linkedin"></i>       
+    </div>
+  </section>
+
+  <script>
+    var registeredEvents = [];
+
+    var navLinks = document.getElementById("navLinks");
+
+    function showMenu(){
+      navLinks.style.right = "0";
+    }
+
+    function hideMenu(){
+      navLinks.style.right = "-200px";
+    }
+
+    var addEventButtons = document.querySelectorAll(".add-event-btn");
+    var selectedEventsList = document.querySelector(".selected-events-list");
+    var eventBoxes = Array.from(document.querySelectorAll(".event-box"));
+    var searchInput = document.querySelector(".search-bar input");
+    var submitButton = document.querySelector(".submit-btn");
+
+    addEventButtons.forEach(function(button) {
+     button.addEventListener("click", function() {
+        var eventBox = this.parentNode;
+        var eventTitle = eventBox.querySelector("h3").innerText;
+        var eventDate = eventBox.querySelector(".event-details:nth-child(3)").innerText;
+        var eventTime = eventBox.querySelector(".event-details:nth-child(4)").innerText;
+        var eventLocation = eventBox.querySelector(".event-details:nth-child(5)").innerText;
+
+      registeredEvents.push({
+        title: eventTitle,
+        date: eventDate,
+        time: eventTime,
+        location: eventLocation
+      });
+
+      var listItem = document.createElement("li");
+      var deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete-event-btn");
+      deleteButton.innerText = "Delete";
+      listItem.innerText = eventTitle;
+      listItem.appendChild(deleteButton);
+      selectedEventsList.appendChild(listItem);
+      });
+    });
+
+
+    selectedEventsList.addEventListener("click", function(event) {
+      if (event.target.classList.contains("delete-event-btn")) {
+        var listItem = event.target.parentNode;
+        var eventTitle = listItem.innerText;
+        listItem.parentNode.removeChild(listItem);
+
+        registeredEvents = registeredEvents.filter(function(event) {
+          return event.title !== eventTitle;
+        });
+      }
+    });
+
+    searchInput.addEventListener("input", function(event) {
+      var searchTerm = event.target.value.toLowerCase();
+      eventBoxes.forEach(function(eventBox) {
+        var eventTitle = eventBox.querySelector("h3").innerText.toLowerCase();
+        if (eventTitle.includes(searchTerm)) {
+          eventBox.style.display = "block";
+        } else {
+          eventBox.style.display = "none";
+        }
+      });
+    });
+
+    submitButton.addEventListener("click", function() {
+      if (registeredEvents.length > 0) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "register_events.php");
+
+        registeredEvents.forEach(function(event) {
+          var inputTitle = document.createElement("input");
+          inputTitle.setAttribute("type", "hidden");
+          inputTitle.setAttribute("name", "event_title[]");
+          inputTitle.setAttribute("value", event.title);
+          form.appendChild(inputTitle);
+
+          var inputDate = document.createElement("input");
+          inputDate.setAttribute("type", "hidden");
+          inputDate.setAttribute("name", "event_date[]");
+          inputDate.setAttribute("value", event.date);
+          form.appendChild(inputDate);
+
+          var inputTime = document.createElement("input");
+          inputTime.setAttribute("type", "hidden");
+          inputTime.setAttribute("name", "event_time[]");
+          inputTime.setAttribute("value", event.time);
+          form.appendChild(inputTime);
+
+          var inputLocation = document.createElement("input");
+          inputLocation.setAttribute("type", "hidden");
+          inputLocation.setAttribute("name", "event_location[]");
+          inputLocation.setAttribute("value", event.location);
+          form.appendChild(inputLocation);
+        });
+
+        var cunyEMPLD = document.getElementById("cuny-id").value;
+        var inputCunyEMPLD = document.createElement("input");
+        inputCunyEMPLD.setAttribute("type", "hidden");
+        inputCunyEMPLD.setAttribute("name", "cunyEMPLD");
+        inputCunyEMPLD.setAttribute("value", cunyEMPLD);
+        form.appendChild(inputCunyEMPLD);
+
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        alert("Please select at least one event.");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+  .user-informatio{
+    background-color: aquamarine;
+    border-radius: 45%;
+    border-color: black;
+  }
+</style>
 <div class="profile-header">
     <img class="profile-image" src="{% static 'pfp.jpg' %}" alt="profile-picture">
   <div><h2>{{ user.username }}</h2>
@@ -33,6 +40,18 @@
     </ul>
   {% else %}
     <p>No clubs found.</p>
+  {% endif %}
+</div>
+<div class="clubs-section">
+  <h3>Events</h3>
+  {% if events %}
+    <ul>
+      {% for event in events %}
+        <li>{{ event.eventName }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No events found.</p>
   {% endif %}
 </div>
 <div class="edit-section">

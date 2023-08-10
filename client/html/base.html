@@ -37,6 +37,8 @@
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'DataAnalysisPage' %}">Data Analysis</a></li>
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'studentprograms' %}">Student Programs</a></li>
                   <li class="navbar-item"><a class="navbar-link" href="{% url 'checklist' %}">Check List</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'events' %}">Events</a></li>
+
                   <li class="navbar-item">
                     <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
                       {% if user.is_authenticated %}
