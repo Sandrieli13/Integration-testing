@@ -1,4 +1,56 @@
-
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMCConnect</title>
+  <!-- Add your CSS and JavaScript links here -->
+  <link rel="stylesheet"  href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+  <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+  <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <!-- Add your navigation menu code here -->     
+          <header id="navbar">
+            <nav class="navbar-container container">
+              <a href="{% url 'index' %}" class="home-link">
+                <div class="navbar-logo"><img src="{% static 'Logo.png' %}"></div>
+                onnect
+              </a>
+              <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <div id="navbar-menu" class="detached">
+                <ul class="navbar-links">
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'CampusInfo' %}">Campus Information</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursePlanner' %}">Course Planner</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'DataAnalysisPage' %}">Data Analysis</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'studentprograms' %}">Student Programs</a></li>
+                  <li class="navbar-item"><a class="navbar-link" href="{% url 'checklist' %}">Check List</a></li>
+                  <li class="navbar-item">
+                    <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
+                      {% if user.is_authenticated %}
+                        Profile
+                      {% else %}
+                        Sign In
+                      {% endif %}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+        </header>
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,22 +64,27 @@
     <style>
  body {
         
-        max-width: 1200px;
+         
         margin: 0 auto;
         padding: 20px;
     }
-
+    .bodycontent{
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      
+    }
     h1, h2, h3 {
         text-align: center;
         margin-top: 30px;
     }
 
     .chart-container {
-        /* Display charts as inline-blocks with 48% width to create two columns */
+       
         display: inline-block;
         width: 48%;
         margin: 0 1%;
-        vertical-align: top; /* Align charts to the top of the container */
+        vertical-align: top; 
     }
 
     .grid-container {
@@ -42,7 +99,7 @@
     }
 
         .chart {
-             width: 400px; /* Adjust the width of the charts as needed */
+             width: 400px; 
             margin: 10px;
                 }
     </style>
@@ -50,6 +107,7 @@
 </head>
  
 <body>
+  <div class="bodycontent">
     <h1 style="text-align:center; margin-top: 80px;"> U.S. nation Graduation Data of S&E (Science & Engineering) Marjors in Associate's Degrees from 2000 to 2019.</h1>
     <div class="text" style="max-width: 800px; margin: 0 auto; text-align: center;">
     
@@ -391,7 +449,7 @@
         </tr>
     </table>
 </div>
-
+</div>
 
     <script>
         // Data for the charts
@@ -1257,8 +1315,24 @@ var csAssociatedataPoints4 = [
       maintainAspectRatio: false
     }
   });
+  
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'scripts.js' %}"></script>
 {% endfor %}
+
 </body>
 
-</html>
+
+{% endblock %}
+<div class="footer">
+  <div class="column-2">
+    <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
+  </div>
+  <div class="copyright">
+    <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:white;"><div class="text-6">Copyright &copy <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship
+    </div>
+    </a>
+  </div>
+</div>
+</div></html>
