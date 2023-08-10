@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <section class="sub6-header">
+        <nav>
+            <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="jobBoard.html">Job Board</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="careerInfo.html">Career Info</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Research Opportunities</h1>
+    </section>
+
+    <nav>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <a href="jobBoard.html">Internship Opportunities</a>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <section>
+        <h2> Research Opportunities</h2>
+        <ul id="job-list"></ul>
+    </section>
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>       
+        </div>
+    </section>
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+
+        const jobs = [
+            {
+                title: "CUNY Research Scholars Program (CRSP)",
+                collegeName: "Borough of Manhattan Community College",
+                location: "199 Chambers St. New York , NY",
+                description: "The CUNY Research Scholars Program (CRSP) aims to increase the participation of high achieving CUNY community college students in faculty-mentored research in science and technology. ",
+                requirements: "Full time with at least 12 credits completed ,GPA must be 3.0 or above,STEM Major (Science, Technology, Engineering and Math),Must be a U.S. Citizen or Permanent Resident,Must have an existing relationship with the BMCC STEM faculty member you have chosen to be your mentor. Ideally, the research between mentor and student has already been established prior to entering the CRSP.,Must be willing to commit to one year/ at least 400 hours of research related activity with their mentor as a BMCC student",
+                additionalDetails: {
+                    benefits: "Stipend for student researchers,Faculty mentored research ,Opportunity to present research projects ,Career development seminars,Producing a publication-quality research poster",
+                    salary: "CRSP provides $4,000 for a 1-year commitment to mentored research through one academic year and summer",
+                    duration: "1 year",
+                    hoursPerWeek: "Fall: 100 hours: 10 hours a week /Spring: 100 hours: 10 hours a week /Summer: 200 hours: 25 hours a week",
+                    contact: "Contact vandrews@bmcc.cuny.edu"
+                }
+            },
+            {
+                title: "BMCC Foundation Fund for Undergraduate Research",
+                collegeName: "Borough of Manhattan Community College",
+                location: "199 Chambers St. New York , NY",
+                description: "The BMCC Foundation Fund (BFF) Research Program supports 30 exceptional students in STEM and Humanities based  faculty-mentored research per year.",
+                requirements: "Full-time student with at least 12 credits completed , Minimum GPA of 3.0 ,Must be a U.S. Citizen or Permanent Resident to receive the full stipend amount,Must be willing to commit to 100 hours (10 hours a week) of research related activity with their mentor for an entire semester",
+                additionalDetails: {
+                    benefits: "Stipend of $1000 for one-time participation in program,Participate in faculty mentored research project,Present research at BMCC Annual Research Symposium (BARS)",
+                    salary: "$1000",
+                    duration: "Not defined",
+                    hoursPerWeek: "40",
+                    contact: "aagha@bmcc.cuny.edu"
+                }
+            },
+            {
+                title: "Louis Stokes Alliance for Minority Participation(LSAMP) ",
+                collegeName: "Borough of Manhattan Community College",
+                location: "199 Chambers St. New York , NY",
+                description: "The Louis Stokes Alliance for Minority Participation (LSAMP) aims to diversify the fields of science, technology, engineering and mathematics (STEM) by fostering the success of historically and currently underrepresented Native American, African American, Hispanic/Latino and Pacific Islander students in those fields.",
+                requirements: "Full-time student with at least 12 credits completed , Minimum GPA of 2.5,US citizen, permanent resident, or have an Employment Authorization Document (EAD; i.e., work permit),Must be willing to commit to 100 hours (10 hours a week) of research with their mentor for an entire semester",
+                additionalDetails: {
+                    benefits: "Participate in faculty mentored research project ,Receive  guidance, advising and training in STEM-specific professional development through regular meetings with Faculty Coordinators,Stipend of $3000 for the year,Opportunity to present research at conferences, such as the BMCC Annual Research Symposium (BARS)",
+                    salary: "$3000",
+                    duration: "1 year",
+                    hoursPerWeek: "10",
+                    contact: "vandrews@bmcc.cuny.edu"
+                }
+            },
+            // Add more internship data here...
+        ];
+
+        function displayJobs() {
+            const jobList = document.getElementById("job-list");
+            jobList.innerHTML = "";
+
+            jobs.forEach((job) => {
+                const listItem = document.createElement("li");
+
+                const jobTitle = document.createElement("h3");
+                jobTitle.classList.add("job-title");
+                jobTitle.textContent = job.title;
+
+                const jobCollegeName = document.createElement("p");
+                jobCollegeName.classList.add("job-collegeName");
+                jobCollegeName.innerHTML = "<strong>CollegeName:</strong> " + job.collegeName;
+                
+
+                const jobLocation = document.createElement("p");
+                jobLocation.classList.add("job-location");
+                jobLocation.innerHTML = "<strong>Location:</strong> " + job.location;
+
+                const jobDescriptionLabel = document.createElement("p");
+                jobDescriptionLabel.classList.add("job-description-label");
+                jobDescriptionLabel.textContent = "Description:";
+
+                const jobDescription = document.createElement("p");
+                jobDescription.classList.add("job-description");
+                jobDescription.innerHTML = "<strong>Description:</strong>" + job.description;
+
+                const jobRequirementsLabel = document.createElement("p");
+                jobRequirementsLabel.classList.add("job-requirements-label");
+                jobRequirementsLabel.textContent = "Requirements:";
+
+                const jobRequirements = document.createElement("p");
+                jobRequirements.classList.add("job-requirements");
+                jobRequirements.innerHTML = "<strong>Requirements: </strong>" + job.requirements;
+
+                const additionalDetails = document.createElement("div");
+                additionalDetails.classList.add("additional-details");
+                additionalDetails.innerHTML = `
+                    <h4>Additional Job Details:</h4>
+                    <ul>
+                        <li><strong>Benefits:</strong> ${job.additionalDetails.benefits}</li>
+                        <li><strong>Salary Level:</strong> ${job.additionalDetails.salary}</li>
+                        <li><strong>Duration:</strong> ${job.additionalDetails.duration}</li>
+                        <li><strong>Approximate Hours Per Week:</strong> ${job.additionalDetails.hoursPerWeek}</li>
+                        <li><strong>Contact:</strong> ${job.additionalDetails.contact}</li>
+                    </ul>
+                `;
+
+                listItem.appendChild(jobTitle);
+                listItem.appendChild(jobCollegeName);
+                listItem.appendChild(jobLocation);
+                listItem.appendChild(jobDescription);
+                listItem.appendChild(jobRequirements);
+                listItem.appendChild(additionalDetails);
+
+                jobList.appendChild(listItem);
+            });
+        }
+
+        displayJobs();
+    </script>
+</body>
+</html>

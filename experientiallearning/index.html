@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+<link rel ="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
+<link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="images/internshipPhoto8.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="jobBoard.html">Job Board</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="careerInfo.html">Career Info</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+<div class="text-box">
+    <h1>Welcome Student! </h1>
+    <p>This is your one stop for all your Career Readiness needs! If you re not sure where to start,
+         begin by having a conversation with our Advisory Chatbot! By answering its questions, you 
+         will be able to create a personalized recommendation of Jobs/Internships, courses to take that can help you land those positions, and even some events happening on campus that might peak your interests! 
+    </p>
+    <a href="about.html" class="hero-btn">"Learn More!" </a>
+
+</div>        
+
+    </section>
+
+<!--------events----------------------->    
+<section class="events">
+    <h1>Check out some of these upcoming events!</h1>
+    <p>Get ready to mark your calendars as we bring you an incredible array of upcoming events!</p>
+
+    <div class="row">
+        <div class=" events-col">
+        <h3> BMCC Spotlight Series</h3>
+        <p> July 20 at 3:00 pm - 4:00 pm | Zoom <br>Join BMCC’s Spotlight Series sessions to talk directly to an Admissions Representative about college questions and
+             academic options. You’ll also discover the different support services BMCC offers to all students.BMCC provides students 
+             with services to become successful both inside and outside of the classroom. These services, resources, and opportunities
+             assist in the personal, intellectual, and emotional development that complements a student’s academic experience in the classroom. </p>
+        </div>
+        <div class=" events-col">
+            <h3> IHOPE Program Information Session</h3>
+            <p> July 20 at 5:30 pm - 6:30 pm | Zoom <br> Want to start your pathway to a career in the fast-growing field of healthcare or information technology? In a matter
+                 of months, you can earn a certificate and create new possibilities for your family and your future through the IHOPE
+                 program. We are looking for single head-of-household parents or guardians living in Upper Manhattan or the Bronx. If 
+                 you have any questions, email us at naristy@bmcc.cuny.edu or call (212) 776-6616.</p>
+            </div>
+            <div class=" events-col">
+                <h3> Admissions Information Session (In-Person) Special Guest: Year Up at BMCC</h3>
+                <p>July 19 at 2:30 pm - 3:45 pm <br> 70 Murray St., Room 203<br>Year Up is a one-year intensive program for students
+                     pursuing an associate degree that combines hands-on skill development and internships at some of America’s top
+                     companies. We assist you in launching a professional career in business, finance, or technology as you work toward
+                     completing your degree at BMCC.  </p>
+               </div>
+    </div>
+
+</section>
+ 
+<<!----CALL TO ACTION---->
+<section class="cta">
+    <h1> Want to check out some quick technology career statistics?</h1>
+    <a href ="careerGraphs.php" class="hero-btn"> Click Here!</a>
+</section>
+
+<!------Footer-->
+
+
+
+<section class="footer">
+    <h4>About Us</h4>
+    <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
+        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
+        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
+        students to make informed decisions and embark on a successful educational journey.<br>
+        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:red;">Copyright &copy 2023 - <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
+    <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-twitter"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>       
+    </div>
+</section>
+
+
+
+
+<!------------JAVASCRIPT FOR TOGGLE MENU------->
+ <script>
+    
+  window.watsonAssistantChatOptions = {
+    integrationID: "7c19be84-3ed8-4121-9367-bdf822e0a36e", // The ID of this integration.
+    region: "us-south", // The region your integration is hosted in.
+    serviceInstanceID: "ab01e710-f262-4813-a442-921c4d220f41", // The ID of your service instance.
+    onLoad: function(instance) { instance.render(); }
+  };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+
+    var navLinks = document.getElementById("navLinks");
+
+    function showMenu(){
+        navLinks.style.right = "0";
+    }
+    function hideMenu(){
+        navLinks.style.right = "-200px";
+    }
+
+ </script>   
+</body>
+</html>    

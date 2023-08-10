@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'myapp',
     'base',
     'internshipProject',
+    'events',
 ]
 
 MIDDLEWARE = [
