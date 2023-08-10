@@ -34,7 +34,8 @@ def chart_view(request):
 def profile_view(request):
     user = request.user
     clubs = user.clubs.all()
-    return render(request, 'profile.html', {'user': user, 'clubs': clubs})
+    events = user.events.all()
+    return render(request, 'profile.html', {'user': user, 'clubs': clubs, 'events': events})
 @login_required
 def delete_club(request, club_id):
     club = get_object_or_404(Club, id=club_id)
