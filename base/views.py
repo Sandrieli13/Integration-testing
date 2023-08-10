@@ -169,4 +169,6 @@ def electivecourses(request):
     return render(request, 'electivecourses.html', context)
 def studentprograms(request):
     return render(request, 'studentprograms.html')
+def checklist(request):
+    return render(request, 'checklist.html')
 
