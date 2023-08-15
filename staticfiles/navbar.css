@@ -229,7 +229,7 @@ body {
 .content{
     align-items: center;
   }
-@media screen and (min-width: 2000px) {
+@media screen and (min-width: 3000px) {
     .navbar-toggle {
         display: none;
     }

@@ -2,6 +2,11 @@
 *{
   font-family: 'Inter', sans-serif;
 }
+.chart-container {
+  width: 200%;
+  padding: 10px;
+  margin-bottom: 40px;
+}
 .list_club a, .list_club button{
   border-radius: 5px;
   background-color: #000;
@@ -40,6 +45,7 @@
 }
 body{
   margin-top: 50px;
+ 
 }
 .navbarcontainer {
   width: 100%;
