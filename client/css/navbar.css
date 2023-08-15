@@ -187,7 +187,8 @@ body {
 
 #navbar.opened .navbar-links {
     padding: 1em;
-    max-height: none;
+    max-height: 92vh;
+    overflow: auto;
 }
 
 .sidebar .navbar-links {
@@ -223,7 +224,7 @@ body {
 
 .navbar-item {
     margin: 0.4em;
-    width: 100%;
+    width: 95%;
 }
 .content{
     align-items: center;

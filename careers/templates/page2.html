@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    <h1>Select a Major and Job</h1>
+
+    {% if major and job %}
+        <div class="result">
+            <h2>Major: {{ major.major }}</h2>
+            <h2>Job: {{ job.job_title }}</h2>
+            <h3>Skills Needed for {{ job.job_title }}:</h3>
+            <ul>
+                {% for skill in job.skills.all %}
+                    <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Skills of {{ major.major }}:</h3>
+            <ul>
+                {% for skill in major.skills.all %}
+                    <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Mismatched Skills:</h3>
+            <ul>
+                {% for skill in mismatched_skills %}
+                    <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Gap Fillers:</h3>
+            <ul>
+                {% for skill_name, gap_name in gapfilling %}
+                    <li>{{ skill_name }} : <br>- {{ gap_name }}</li>
+                {% endfor %}
+            </ul>
+            <p><a href="{% url 'page2' %}">Select Another Major and Job</a></p>
+        </div>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            <label for="major">Choose a major:</label>
+            <select id="major" name="major">
+                {% for major in majors %}
+                    <option value="{{ major.id }}">{{ major.major }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="job">Choose a job:</label>
+            <select id="job" name="job">
+                {% for job in jobs %}
+                    <option value="{{ job.id }}">{{ job.job_title }}</option>
+                {% endfor %}
+            </select>
+            <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Submit</button>
+        </form>
+    {% endif %}
+</body>
+{% endblock %}

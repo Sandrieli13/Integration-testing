@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'base',
     'internshipProject',
     'events',
+    'careers'
 ]
 
 MIDDLEWARE = [
