@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+        /* Add max height to the lists */
+        #skills-list, #courses-list, #selected-skills,#selected-courses, #internship-suggestions {
+            max-height: 200px;
+            width: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            line-height: 2;
+            cursor: pointer;
+        }
+        .container{
+            display:flex;
+        }
+    </style>
+
+<body>
+    <h1>Major Search Page</h1>
+    
+    <form method="POST" action="{% url 'page3' %}">
+        {% csrf_token %}    
+        
+        <!-- Select for available majors -->
+        <label for="major">Select Major:</label>
+        <select id="major" name="major">
+            <option value="" selected disabled>Select a major</option>
+            {% for major in majors %}
+                <option value="{{ major.id }}">{{ major.major }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        
+        <!-- Skills: Clickable list and selected skills -->
+        <label for="skills">Skills:</label>
+        <div id="skills-container" class="container">
+            <div id="skills-list">
+                <ul>
+                    {% for skill in skills|dictsort:"name" %}
+                        <li class="skill" data-skill-id="{{ skill.id }}">{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="selected-skills">
+                <ul id="selected-skills-list"></ul>
+            </div>
+        </div>
+        <br><button type="button" id="clear-selected-skills">Clear Selected Skills</button><br>
+        
+        <!-- Courses: Clickable list and selected courses -->
+        <label for="courses">Courses:</label>
+        <div id="courses-container" class="container">
+            <div id="courses-list">
+                <ul>
+                    {% for course in courses|dictsort:"name" %}
+                        <li class="course" data-course-id="{{ course.id }}">{{ course.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="selected-courses">
+                <ul id="selected-courses-list"></ul>
+            </div>
+        </div>
+        <br><button type="button" id="clear-selected-courses">Clear Selected Courses</button><br>
+        
+        <!-- Search bar for internship -->
+        <label for="internship">Search Internship:</label>
+        <input type="text" id="internship" name="internship" oninput="fetchInternshipSuggestions()">
+        <div id="internship-suggestions" class="suggestions"></div> <!-- Use a class for styling -->
+        <br>
+        
+        <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Submit</button>
+    </form>
+
+    <!-- Display results -->
+    {% if results %}
+        {% for result in results %}
+            {% if result.case_1 %}
+                <h2>Case 1 Results:</h2>
+                <p>Selected Major: {{ result.case_1.selected_major_name }}</p>
+                <h3>Major Skills:</h3>
+                <ul>
+                    {% for skill in result.case_1.major_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+                <!-- Display other details and comparison points for case 1 -->
+            {% endif %}
+            
+            {% if result.case_2 %}
+                <h2>Case 2 Results:</h2>
+                <p>Selected Major: {{ result.case_2.selected_major_name }}</p>
+                <h3>Major Skills:</h3>
+                <ul>
+                    {% for skill in result.case_2.major_skills %}
+                        <li>{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+                <!-- Display other details and comparison points for case 2 -->
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No results to display.</p>
+    {% endif %}
+
+    <!-- ... Rest of your page ... -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // ... Rest of your JavaScript code ...
+    
+        // Function to add selected skill to the selected skills list
+        function addSelectedSkill(skillId, skillName) {
+            const selectedSkillsList = document.getElementById('selected-skills-list');
+            const selectedSkillLi = document.createElement('li');
+            selectedSkillLi.textContent = skillName;
+            selectedSkillLi.setAttribute('data-skill-id', skillId); // Set the data-skill-id attribute
+            selectedSkillsList.appendChild(selectedSkillLi);
+            sortList(selectedSkillsList); // Sort the list
+            $(`.skill[data-skill-id="${skillId}"]`).remove(); // Remove from original list
+        }
+
+        // Function to add selected course to the selected courses list
+        function addSelectedCourse(courseId, courseName) {
+            const selectedCoursesList = document.getElementById('selected-courses-list');
+            const selectedCourseLi = document.createElement('li');
+            selectedCourseLi.textContent = courseName;
+            selectedCourseLi.setAttribute('data-course-id', courseId); // Set the data-course-id attribute
+            selectedCoursesList.appendChild(selectedCourseLi);
+            sortList(selectedCoursesList); // Sort the list
+            $(`.course[data-course-id="${courseId}"]`).remove(); // Remove from original list
+        }
+
+        // Function to sort a list element
+        function sortList(listElement) {
+            const items = Array.from(listElement.children);
+            items.sort((a, b) => a.textContent.localeCompare(b.textContent));
+            items.forEach(item => listElement.appendChild(item));
+        }
+        // Function to remove and return skill from the selected skills list
+        function removeSelectedSkill(skillId, skillName) {
+            const selectedSkillsList = document.getElementById('selected-skills-list');
+            const selectedSkillLi = document.querySelector(`#selected-skills-list li[data-skill-id="${skillId}"]`);
+            if (selectedSkillLi) {
+                selectedSkillsList.removeChild(selectedSkillLi);
+                addToSkillsList(skillId, skillName);
+            }
+        }
+
+        // Function to remove and return course from the selected courses list
+        function removeSelectedCourse(courseId, courseName) {
+            const selectedCoursesList = document.getElementById('selected-courses-list');
+            const selectedCourseLi = document.querySelector(`#selected-courses-list li[data-course-id="${courseId}"]`);
+            if (selectedCourseLi) {
+                selectedCoursesList.removeChild(selectedCourseLi);
+                addToCoursesList(courseId, courseName);
+            }
+        }
+
+
+        // Function to add skill back to the skills list
+        function addToSkillsList(skillId, skillName) {
+            const skillsList = document.getElementById('skills-list').querySelector('ul');
+            const skillLi = document.createElement('li');
+            skillLi.className = 'skill';
+            skillLi.setAttribute('data-skill-id', skillId);
+            skillLi.textContent = skillName;
+
+            // Find the correct position to insert the skill in alphabetical order
+            const skills = Array.from(skillsList.children);
+            let insertIndex = skills.findIndex(skill => skill.textContent.localeCompare(skillName) > 0);
+            if (insertIndex === -1) {
+                skillsList.appendChild(skillLi); // If skillName comes last, append at the end
+            } else {
+                skillsList.insertBefore(skillLi, skills[insertIndex]); // Insert before the skill that comes after skillName
+            }
+        }
+
+        // Function to add course back to the courses list
+        function addToCoursesList(courseId, courseName) {
+            const coursesList = document.getElementById('courses-list').querySelector('ul');
+            const courseLi = document.createElement('li');
+            courseLi.className = 'course';
+            courseLi.setAttribute('data-course-id', courseId);
+            courseLi.textContent = courseName;
+
+            // Find the correct position to insert the course in alphabetical order
+            const courses = Array.from(coursesList.children);
+            let insertIndex = courses.findIndex(course => course.textContent.localeCompare(courseName) > 0);
+            if (insertIndex === -1) {
+                coursesList.appendChild(courseLi); // If courseName comes last, append at the end
+            } else {
+                coursesList.insertBefore(courseLi, courses[insertIndex]); // Insert before the course that comes after courseName
+            }
+        }
+        // Function to add click event listener to selected skills list items
+        function addClickListenersToSelectedSkills() {
+            const selectedSkillsList = document.getElementById('selected-skills-list');
+            selectedSkillsList.addEventListener('click', (event) => {
+                const selectedSkillLi = event.target;
+                const skillId = selectedSkillLi.getAttribute('data-skill-id');
+                const skillName = selectedSkillLi.textContent;
+                console.log(`Selected Skill Clicked: ${skillName} (ID: ${skillId})`);
+                removeSelectedSkill(skillId, skillName);
+            });
+        }
+
+        // Function to add click event listener to selected courses list items
+        function addClickListenersToSelectedCourses() {
+            const selectedCoursesList = document.getElementById('selected-courses-list');
+            selectedCoursesList.addEventListener('click', (event) => {
+                const selectedCourseLi = event.target;
+                const courseId = selectedCourseLi.getAttribute('data-course-id');
+                const courseName = selectedCourseLi.textContent;
+                console.log(`Selected Course Clicked: ${courseName} (ID: ${courseId})`);
+                removeSelectedCourse(courseId, courseName);
+            });
+        }
+        // Attach click listeners to selected skills list items
+        addClickListenersToSelectedSkills();
+
+        // Attach click listeners to selected courses list items
+        addClickListenersToSelectedCourses();
+
+        // Function to fetch and display internship suggestions
+        function fetchInternshipSuggestions() {
+            const internshipInput = document.getElementById('internship');
+            const internshipSuggestions = document.getElementById('internship-suggestions');
+            const inputValue = internshipInput.value;
+
+            // Use AJAX to fetch internship suggestions from the server
+            $.get(`/get_internship_suggestions/?query=${inputValue}`, function(data) {
+                const suggestionsList = data.map(suggestion => `<li class="internship-suggestion">${suggestion}</li>`).join('');
+                internshipSuggestions.innerHTML = suggestionsList ? `<ul>${suggestionsList}</ul>` : '';
+            });
+        }
+        // Attach click event listener to internship suggestions
+        $(document).on('click', '.internship-suggestion', function() {
+            const suggestion = $(this).text();
+            $('#internship').val(suggestion);
+            $('#internship-suggestions').html('');
+        });
+    
+        // Attach click event listener to skills
+        $(document).on('click', '.skill', function() {
+            const skillId = $(this).data('skill-id');
+            const skillName = $(this).text();
+            addSelectedSkill(skillId, skillName);
+        });
+
+        // Attach click event listener to courses
+        $(document).on('click', '.course', function() {
+            const courseId = $(this).data('course-id');
+            const courseName = $(this).text();
+            addSelectedCourse(courseId, courseName);
+        });
+
+
+        // Function to clear the selected skills and return them to the skills list
+        function clearSelectedSkills() {
+            const selectedSkillsList = document.getElementById('selected-skills-list');
+            const skillsList = document.getElementById('skills-list').querySelector('ul');
+
+            const selectedSkills = Array.from(selectedSkillsList.children);
+
+            selectedSkills.forEach(selectedSkill => {
+                const skillId = selectedSkill.getAttribute('data-skill-id');
+                const skillName = selectedSkill.textContent;
+                addToSkillsList(skillId, skillName);
+            });
+
+            selectedSkillsList.innerHTML = ''; // Clear the selected skills list
+        }
+
+        // Function to clear the selected courses and return them to the courses list
+        function clearSelectedCourses() {
+            const selectedCoursesList = document.getElementById('selected-courses-list');
+            const coursesList = document.getElementById('courses-list').querySelector('ul');
+
+            const selectedCourses = Array.from(selectedCoursesList.children);
+
+            selectedCourses.forEach(selectedCourse => {
+                const courseId = selectedCourse.getAttribute('data-course-id');
+                const courseName = selectedCourse.textContent;
+                addToCoursesList(courseId, courseName);
+            });
+
+            selectedCoursesList.innerHTML = ''; // Clear the selected courses list
+        }
+
+        // Attach click event listeners to the "Clear Selection" buttons
+        document.getElementById('clear-selected-skills').addEventListener('click', clearSelectedSkills);
+        document.getElementById('clear-selected-courses').addEventListener('click', clearSelectedCourses);
+    </script>
+</body>
+{% endblock %}

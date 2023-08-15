@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+
+    {% if major %}
+    <h1>Result</h1>
+        <div class="result">
+            <h2>Major Description</h2>
+            <p>{{ major.description }}</p>
+
+            <h2>Jobs Related to {{ major.major }}</h2>
+            <h3>click on job title to see average base salary on indeed</h3>
+            <ul>
+                {% for job in major.jobs_From_Bmcc.all %}
+                <li><a href="https://www.indeed.com/career/{{ job.job_title }}/salaries">{{ job.job_title }}</a></li>
+                {% endfor %}
+            </ul>
+
+            
+            <p><a href="{% url 'page1' %}">Select Another Major</a></p>
+        </div>
+    {% else %}
+    <h1>Select a Major</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="major">Choose a major:</label>
+            <select id="major" name="major">
+                {% for major in majors %}
+                    <option value="{{ major.id }}">{{ major.major }}</option>
+                {% endfor %}
+            </select>
+            <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Submit</button>
+        </form>
+    {% endif %}
+</body>
+{% endblock %}
