@@ -1016,4 +1016,17 @@ var csAssociatedataPoints4 = [
   </div>
 </div>
 </div>
+<script>
+  window.watsonAssistantChatOptions = {
+    integrationID: "ca3979cb-7ded-4fde-8cb2-6e34f933a2f1", // The ID of this integration.
+    region: "us-south", // The region your integration is hosted in.
+    serviceInstanceID: "0df18117-9251-4626-adea-21f86e3b22a6", // The ID of your service instance.
+    onLoad: function(instance) { instance.render(); }
+  };
+  setTimeout(function(){
+    const t=document.createElement('script');
+    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+    document.head.appendChild(t);
+  });
+</script>
 </html>
