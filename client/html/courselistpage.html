@@ -152,6 +152,7 @@
             <thead>
                 <tr>
                     <th>Major</th>
+                    <th>Semester</th>
                     <th>Course 1</th>
                     <th>Credits</th>
                     <th>Course 2</th>
@@ -169,20 +170,22 @@
                 {% for semester in semesters %}
                     <tr>
                         <td>{{ semester.major.major_name }}</td>
+                        <td>{{ semester.semester_id }}</td> <!-- Add this cell -->
                         <td>{{ semester.course1.course_name }}</td>
-                        <td>{{ semester.course1.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course1.credits }}</td>
                         <td>{{ semester.course2.course_name }}</td>
-                        <td>{{ semester.course2.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course2.credits }}</td>
                         <td>{{ semester.course3.course_name }}</td>
-                        <td>{{ semester.course3.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course3.credits }}</td>
                         <td>{{ semester.course4.course_name }}</td>
-                        <td>{{ semester.course4.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course4.credits }}</td>
                         <td>{{ semester.course5.course_name }}</td>
-                        <td>{{ semester.course5.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course5.credits }}</td>
                         <td>{{ semester.total_credits }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
+            
         </table>
     </div>
 
