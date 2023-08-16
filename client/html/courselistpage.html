@@ -139,7 +139,13 @@
     <h4 style="margin: 0; padding:auto; " ><br>Note: The table shows  four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
         on the page <a href="{% url 'electivecourses' %}">Elective Courses </a><br> This page only shows our CIS department 'Four' majors <hr style="height: 1px; background-color: #ccc; border: none; margin: 20px 0; ">  </h4>
     <br>
-    
+    <select id="majorDropdown">
+        <option value="">Select a Major</option>
+        {% for major in majors %}
+            <option value="{{ major.major_id }}">{{ major.major_name }}</option>
+        {% endfor %}
+    </select>
+    <p>OR</p>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for majors.." title="Type in a course name">
     <div class="table-container">
         <table>
@@ -147,10 +153,15 @@
                 <tr>
                     <th>Major</th>
                     <th>Course 1</th>
+                    <th>Credits</th>
                     <th>Course 2</th>
+                    <th>Credits</th>
                     <th>Course 3</th>
+                    <th>Credits</th>
                     <th>Course 4</th>
+                    <th>Credits</th>
                     <th>Course 5</th>
+                    <th>Credits</th>
                     <th>Total Credits</th>
                 </tr>
             </thead>
@@ -159,10 +170,15 @@
                     <tr>
                         <td>{{ semester.major.major_name }}</td>
                         <td>{{ semester.course1.course_name }}</td>
+                        <td>{{ semester.course1.credits }}</td> <!-- Add this cell -->
                         <td>{{ semester.course2.course_name }}</td>
+                        <td>{{ semester.course2.credits }}</td> <!-- Add this cell -->
                         <td>{{ semester.course3.course_name }}</td>
+                        <td>{{ semester.course3.credits }}</td> <!-- Add this cell -->
                         <td>{{ semester.course4.course_name }}</td>
-                        <td>{{ semester.course5.course_name }}</td>                    
+                        <td>{{ semester.course4.credits }}</td> <!-- Add this cell -->
+                        <td>{{ semester.course5.course_name }}</td>
+                        <td>{{ semester.course5.credits }}</td> <!-- Add this cell -->
                         <td>{{ semester.total_credits }}</td>
                     </tr>
                 {% endfor %}
@@ -193,6 +209,32 @@ function myFunction() {
         }
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.getElementById('majorDropdown');
+    var tableRows = document.querySelectorAll('table tbody tr');
+    
+    dropdown.addEventListener('change', function() {
+        var selectedMajorName = this.options[this.selectedIndex].text;
+        console.log("Selected Major:", selectedMajorName);
+        
+        // Iterate through table rows and show/hide based on selected major
+        for (var i = 0; i < tableRows.length; i++) {
+            var row = tableRows[i];
+            var majorNameCell = row.querySelector('td:first-child');
+            var rowMajorName = majorNameCell.textContent.trim();
+            console.log("Row Major:", rowMajorName);
+            
+            if (!selectedMajorName || rowMajorName === selectedMajorName) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+});
+
+
+
 </script>
 </body>
 </html>

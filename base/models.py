@@ -22,10 +22,11 @@ class Semester(models.Model):
     course3 = models.ForeignKey(Courses, related_name='course3_semester', on_delete=models.CASCADE, null=True)
     course4 = models.ForeignKey(Courses, related_name='course4_semester', on_delete=models.CASCADE, null=True)
     course5 = models.ForeignKey(Courses, related_name='course5_semester', on_delete=models.CASCADE, null=True)
-    course6 = models.ForeignKey(Courses, related_name='course6_semester', on_delete=models.CASCADE, null=True)
+
     total_credits = models.IntegerField()
 
     class Meta:
+        ordering = ['major', 'semester_id']
         unique_together = (('semester_id', 'major'),)
 
     def __str__(self):
