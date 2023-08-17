@@ -1,7 +1,11 @@
-{% extends 'base.html' %}
-
-{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page 1</title>
+</head>
 <body>
+    <a href="{% url 'home' %}">Back to Home</a>
+    
 
     {% if major %}
     <h1>Result</h1>
@@ -13,7 +17,7 @@
             <h3>click on job title to see average base salary on indeed</h3>
             <ul>
                 {% for job in major.jobs_From_Bmcc.all %}
-                <li><a href="https://www.indeed.com/career/{{ job.job_title }}/salaries">{{ job.job_title }}</a></li>
+                <li><a href="https://www.indeed.com/career/{{ job.job_title }}/salaries" target="_blank">{{ job.job_title }}</a></li>
                 {% endfor %}
             </ul>
 
@@ -30,8 +34,8 @@
                     <option value="{{ major.id }}">{{ major.major }}</option>
                 {% endfor %}
             </select>
-            <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Submit</button>
+            <button type="submit">Submit</button>
         </form>
     {% endif %}
 </body>
-{% endblock %}
+</html>
