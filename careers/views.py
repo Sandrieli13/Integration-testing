@@ -5,6 +5,7 @@ from django.db import connection
 from django.db.models import F
 from django.db.models import Count
 from operator import itemgetter
+from django.http import JsonResponse
 
 def home(request):
     return render(request, 'home.html')
@@ -64,71 +65,145 @@ def page2(request):
 
 
 
-
 def page3(request):
-    majors = Major.objects.all()
-    skills = Skill.objects.all()
-    courses = Course.objects.all()
-    internships = Intern.objects.all()
-
     if request.method == 'POST':
-        selected_major_id = request.POST.get('major')
-        selected_major = Major.objects.get(pk=selected_major_id)
+        intern = request.POST.get('internship','')
+        if not intern:
+            intr_des = "Best Matched"
 
-        selected_skills_ids = request.POST.getlist('selected_skills')
-        selected_courses_ids = request.POST.getlist('selected_courses')
-        internship_query = request.POST.get('internship')
+            major_id = request.POST['major']
+            skills_id_list = request.POST.get('skill_ids', '').split(',')
+            courses_id_list = request.POST.get('course_ids', '').split(',')
+            intern_id = None
 
-        selected_skills = Skill.objects.filter(pk__in=selected_skills_ids)
-        selected_courses = Course.objects.filter(pk__in=selected_courses_ids)
+            selected_major = Major.objects.get(id__in=major_id)
+            selected_skill_major = selected_major.skills.all()
+            selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
+            selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
 
-        if internship_query:
-            internships = internships.filter(title__icontains=internship_query)
+            selected_skills = Skill.objects.filter(id__in=skills_id_list)
+            selected_skill_names = [skill.name for skill in selected_skills]
 
-        # Case 1: Compare with all major skills and courses
-        case_1_results = compare_internships(selected_major.skills.all(), selected_skills, selected_courses, internships)
+            selected_courses = Course.objects.filter(id__in=courses_id_list)
+            selected_course_names = [course.name for course in selected_courses]
 
-        # Case 2: Compare with selected major skills and courses
-        case_2_results = compare_internships(selected_skills, selected_skills, selected_courses, internships)
+            combined_skills_list = list(set(selected_skill_names_major))+ selected_skill_names
+
+            
+
+            print('major ID:\n',major_id,'\n',"major skills:", selected_skill_names_major, "\n")
+            print('skills IDs:\n',selected_skill_names,'\n')
+            print('courses IDs:\n',selected_course_names ,'\n')
+            print('intern ID:\n',intern_id,'\n')
+            print('All Skills:\n ', combined_skills_list)
+
+            intern_id = find_best_intern(combined_skills_list,selected_course_names)
+
+            if intern_id:
+                print("Best internship tite:", intern_id.title)
+                print("Description:", intern_id.description)
+                
+                print("skills:")
+                for skill in intern_id.skills.all():
+                    print(skill.name)
+                
+                print("courses:")
+                for course in intern_id.courses.all():
+                    print(course.name)
+        else:
+            intr_des = "Selected"
+
+            major_id = request.POST['major']
+            skills_id_list = request.POST.get('skill_ids', '').split(',')
+            courses_id_list = request.POST.get('course_ids', '').split(',')
+            intern_id = Intern.objects.get(title=intern)
+
+            selected_major = Major.objects.get(id__in=major_id)
+            selected_skill_major = selected_major.skills.all()
+            selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
+            selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
+
+            selected_skills = Skill.objects.filter(id__in=skills_id_list)
+            selected_skill_names = [skill.name for skill in selected_skills]
+
+            selected_courses = Course.objects.filter(id__in=courses_id_list)
+            selected_course_names = [course.name for course in selected_courses]
+
+            combined_skills_list = list(set(selected_skill_names_major))+ selected_skill_names
+
+            
+
+            print('major ID:\n',major_id,'\n',"major skills:", selected_skill_names_major, "\n")
+            print('skills IDs:\n',selected_skill_names,'\n')
+            print('courses IDs:\n',selected_course_names ,'\n')
+            print('intern ID:\n',intern_id,'\n')
+            print('All Skills:\n ', combined_skills_list)
+
+            if intern_id:
+                print("Best internship tite:", intern_id.title)
+                print("Description:", intern_id.description)
+                
+                print("skills:")
+                for skill in intern_id.skills.all():
+                    print(skill.name)
+                
+                print("courses:")
+                for course in intern_id.courses.all():
+                    print(course.name)
 
         return render(request, 'page3.html', {
-            'majors': majors,
-            'skills': skills,
-            'courses': courses,
-            'selected_skills': selected_skills,
-            'selected_courses': selected_courses,
-            'case_1_results': case_1_results,
-            'case_2_results': case_2_results,
+            'majors': selected_major,
+            'skills': selected_skill_names,
+            'courses': selected_course_names,
+            'intern': intern_id,
+            'intr_des': intr_des,
+            'done': 1,
         })
 
-    return render(request, 'page3.html', {'majors': majors, 'skills': skills, 'courses': courses})
+    else:
 
-def compare_internships(ref_skills, selected_skills, selected_courses, internships):
-    results = []
-
-    for internship in internships:
-        intern_skills = internship.skills.all()
-        intern_courses = internship.courses.all()
-
-        common_skills = selected_skills.intersection(intern_skills)
-        common_courses = selected_courses.intersection(intern_courses)
-
-        skills_ratio = len(common_skills) / len(ref_skills)
-        courses_ratio = len(common_courses) / len(selected_courses)
-
-        results.append({
-            'internship': internship,
-            'common_skills': common_skills,
-            'common_courses': common_courses,
-            'skills_ratio': skills_ratio,
-            'courses_ratio': courses_ratio,
+        return render(request, 'page3.html', {
+            'majors': Major.objects.all(),
+            'skills': Skill.objects.all(),
+            'courses': Course.objects.all(),
         })
 
-    return results
+def calculate_skill_compat(skill1, skill2):
+    if(skill1 == skill2):
+        return 1
+    else:
+        return 0
+    
+def find_best_intern(combined_skills_list_names,courses_list_names):
+    combined_skills_list = Skill.objects.filter(name__in=combined_skills_list_names)
+    courses_list = Course.objects.filter(name__in=courses_list_names)
+    best_intern = None
+    best_score = 0
+    
+    for intern in Intern.objects.all():
+        score = 0
+        intern_skills = intern.skills.all()
+        intern_courses = intern.courses.all()
+        
+        for skill in combined_skills_list:
+            for intern_skill in intern_skills:
+                compatibility_score = calculate_skill_compat(skill, intern_skill)
+                score += compatibility_score
+
+        for course in courses_list:
+            for intern_course in intern_courses:
+                compatibility_score = calculate_skill_compat(course, intern_course)
+                score += compatibility_score
+        
+        if score > best_score:
+            best_score = score
+            best_intern = intern
+            print('\n score +1')
+    
+    return best_intern
 
 
 
-from django.http import JsonResponse
 
 def get_internship_suggestions(request):
     query = request.GET.get('query')
