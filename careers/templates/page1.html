@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+
+{% block content %}
 <head>
     <title>Page 1</title>
+    <style>
+        .pg1 {
+            margin-bottom: 1000px;
+        }
+    </style>
 </head>
-<body>
-    <a href="{% url 'home' %}">Back to Home</a>
+<body class="pg1">
     
 
     {% if major %}
@@ -38,4 +43,4 @@
         </form>
     {% endif %}
 </body>
-</html>
+{% endblock %}

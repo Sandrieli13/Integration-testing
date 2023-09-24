@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+
+{% block content %}
 <head>
     <title>Page 3</title>
     <style>
@@ -19,7 +20,6 @@
     </style>
 </head>
 <body stule="background">
-    <a href="{% url 'home' %}">Back to Home</a>
     <h1>Internship Search Page</h1>
     {% if done %}
     <div class="container" >
@@ -47,7 +47,7 @@
             <h2>{{ intr_des }} Internship:</h2>
             <h4>Title: {{ intern.title }}</h4>
             <h4>Description: </h4><p>{{ intern.description }}</p>
-            <h4>Link:</h4><a href="{{ intern.link }}" target="_blank">{{ intern.link }}</a>
+            <h4>Link:</h4><a href="http://{{ intern.link }}" target="_blank">{{ intern.link }}</a>
             <h4>Skills:</h4>
             <ul>
                 {% for skill in intern.skills.all %}
@@ -87,7 +87,7 @@
         
         <!-- Select for available majors -->
         <label for="major">Select Major:</label>
-        <select id="major" name="major">
+        <select id="major" name="major" required>
             <option value="" selected disabled>Select a major</option>
             {% for major in majors %}
                 <option value="{{ major.id }}">{{ major.major }}</option>
@@ -362,4 +362,5 @@
     </script>
     {% endif %}
 </body>
-</html>
+
+{% endblock %}

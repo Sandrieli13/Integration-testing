@@ -81,11 +81,21 @@ def page3(request):
             selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
             selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
 
-            selected_skills = Skill.objects.filter(id__in=skills_id_list)
-            selected_skill_names = [skill.name for skill in selected_skills]
+            if skills_id_list[0] == '':
+                # The first element is an empty string
+                selected_skill_names = ['']
+            else:
+                # Either the list is empty or the first element is not an empty string
+                selected_skills = Skill.objects.filter(id__in=skills_id_list)
+                selected_skill_names = [skill.name for skill in selected_skills]
 
-            selected_courses = Course.objects.filter(id__in=courses_id_list)
-            selected_course_names = [course.name for course in selected_courses]
+            if courses_id_list[0] == '':
+                # The first element is an empty string
+                selected_course_names = ['']
+            else:
+                # Either the list is empty or the first element is not an empty string
+                selected_courses = Course.objects.filter(id__in=courses_id_list)
+                selected_course_names = [course.name for course in selected_courses]
 
             combined_skills_list = list(set(selected_skill_names_major))+ selected_skill_names
 
@@ -123,11 +133,21 @@ def page3(request):
             selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
             selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
 
-            selected_skills = Skill.objects.filter(id__in=skills_id_list)
-            selected_skill_names = [skill.name for skill in selected_skills]
+            if skills_id_list[0] == '':
+                # The first element is an empty string
+                selected_skill_names = ['']
+            else:
+                # Either the list is empty or the first element is not an empty string
+                selected_skills = Skill.objects.filter(id__in=skills_id_list)
+                selected_skill_names = [skill.name for skill in selected_skills]
 
-            selected_courses = Course.objects.filter(id__in=courses_id_list)
-            selected_course_names = [course.name for course in selected_courses]
+            if courses_id_list[0] == '':
+                # The first element is an empty string
+                selected_course_names = ['']
+            else:
+                # Either the list is empty or the first element is not an empty string
+                selected_courses = Course.objects.filter(id__in=courses_id_list)
+                selected_course_names = [course.name for course in selected_courses]
 
             combined_skills_list = list(set(selected_skill_names_major))+ selected_skill_names
 
@@ -174,32 +194,35 @@ def calculate_skill_compat(skill1, skill2):
     else:
         return 0
     
-def find_best_intern(combined_skills_list_names,courses_list_names):
+def find_best_intern(combined_skills_list_names, courses_list_names):
     combined_skills_list = Skill.objects.filter(name__in=combined_skills_list_names)
     courses_list = Course.objects.filter(name__in=courses_list_names)
     best_intern = None
     best_score = 0
-    
+
     for intern in Intern.objects.all():
         score = 0
         intern_skills = intern.skills.all()
         intern_courses = intern.courses.all()
-        
-        for skill in combined_skills_list:
-            for intern_skill in intern_skills:
-                compatibility_score = calculate_skill_compat(skill, intern_skill)
-                score += compatibility_score
 
-        for course in courses_list:
-            for intern_course in intern_courses:
-                compatibility_score = calculate_skill_compat(course, intern_course)
-                score += compatibility_score
-        
+        # Calculate skill compatibility score only if there are selected skills
+        if combined_skills_list:
+            for skill in combined_skills_list:
+                for intern_skill in intern_skills:
+                    compatibility_score = calculate_skill_compat(skill, intern_skill)
+                    score += compatibility_score
+
+        # Calculate course compatibility score only if there are selected courses
+        if courses_list:
+            for course in courses_list:
+                for intern_course in intern_courses:
+                    compatibility_score = calculate_skill_compat(course, intern_course)
+                    score += compatibility_score
+
         if score > best_score:
             best_score = score
             best_intern = intern
-            print('\n score +1')
-    
+
     return best_intern
 
 
