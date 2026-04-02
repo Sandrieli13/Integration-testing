@@ -12,11 +12,11 @@
   {% include '_career_hub_nav.html' %}
 
   {% if major %}
-    <header class="careers-hub__hero">
-      <div class="careers-hub__hero-panel">
-        <p class="careers-hub__eyebrow">Major profile</p>
+    <header class="bmc-page-hero">
+      <div class="bmc-page-hero__panel">
+        <p class="bmc-page-hero__eyebrow">Major profile</p>
         <h1>{{ major.major }}</h1>
-        <p class="careers-hub__lede">
+        <p class="bmc-page-hero__lede">
           Explore typical roles linked to this program, then compare the skills your major emphasizes with what employers ask for on the
           <a href="{% url 'careers:page2' %}">career skills &amp; gaps</a> page.
         </p>
@@ -73,11 +73,11 @@
     <a class="careers-back" href="{% url 'careers:page1' %}">← Choose another major</a>
 
   {% else %}
-    <header class="careers-hub__hero">
-      <div class="careers-hub__hero-panel">
-        <p class="careers-hub__eyebrow">Career exploration</p>
+    <header class="bmc-page-hero">
+      <div class="bmc-page-hero__panel">
+        <p class="bmc-page-hero__eyebrow">Career exploration</p>
         <h1>Learn about majors &amp; careers</h1>
-        <p class="careers-hub__lede">
+        <p class="bmc-page-hero__lede">
           Pick a BMCC-related major to read a short profile, see sample job titles, and jump to tools that connect coursework, skills, and internships.
         </p>
       </div>

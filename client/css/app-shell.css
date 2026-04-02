@@ -533,6 +533,22 @@
   box-sizing: border-box;
 }
 
+/*
+ * Width normalization:
+ * some banners sit inside centered containers (.bmc-page, .careers-hub, .clubs-hub, .page-data).
+ * Pull them to full viewport width so every page matches Enrollment Headcount's banner span.
+ */
+.shell .bmc-page > .bmc-page-hero,
+.shell .bmc-page > .bmc-events-hero,
+.shell .careers-hub > .bmc-page-hero,
+.shell .clubs-hub > .bmc-page-hero,
+.shell .page-data > .bmc-page-hero {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-radius: 0;
+}
+
 .bmc-page-hero__panel {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 1.25rem 1.5rem;

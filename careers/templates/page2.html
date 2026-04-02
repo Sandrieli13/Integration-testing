@@ -12,11 +12,11 @@
   {% include '_career_hub_nav.html' %}
 
   {% if major and job %}
-    <header class="careers-hub__hero">
-      <div class="careers-hub__hero-panel">
-        <p class="careers-hub__eyebrow">Skills alignment report</p>
+    <header class="bmc-page-hero">
+      <div class="bmc-page-hero__panel">
+        <p class="bmc-page-hero__eyebrow">Skills alignment report</p>
         <h1>{{ job.job_title }}</h1>
-        <p class="careers-hub__lede">
+        <p class="bmc-page-hero__lede">
           Compared against <strong>{{ major.major }}</strong>. <em>Overlap</em> shows skills both your major and the role emphasize; <em>gaps</em> are skills the role expects that are not currently tied to your major in this dataset—plus ideas to close them.
         </p>
       </div>
@@ -94,11 +94,11 @@
     </p>
 
   {% else %}
-    <header class="careers-hub__hero">
-      <div class="careers-hub__hero-panel">
-        <p class="careers-hub__eyebrow">Skill gap analysis</p>
+    <header class="bmc-page-hero">
+      <div class="bmc-page-hero__panel">
+        <p class="bmc-page-hero__eyebrow">Skill gap analysis</p>
         <h1>Catch on important skills of careers</h1>
-        <p class="careers-hub__lede">
+        <p class="bmc-page-hero__lede">
           Choose a major and a target job. We list skills the job expects, skills your major emphasizes in this app’s data, where they overlap, and what is still missing—with suggested ways to build missing skills.
         </p>
       </div>
