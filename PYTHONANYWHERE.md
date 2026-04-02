@@ -4,13 +4,23 @@
 
 ```bash
 cd ~
-git clone https://github.com/Sandrieli13/Integration-testing.git
+git clone -b LucasYao_this_branch_for_myself https://github.com/Sandrieli13/Integration-testing.git
 cd Integration-testing
 python3.10 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install --no-cache-dir -r requirements.txt
 ```
+
+### Disk quota (free account)
+
+The default `requirements.txt` is **minimal** (no NumPy/Pandas/Matplotlib) so installs fit small quotas. If you still see **Disk quota exceeded**:
+
+- `rm -rf ~/.cache/pip`
+- `du -h ~ | sort -h | tail -15` — delete unused large folders (old clones, duplicate venvs)
+- Re-run: `pip install --no-cache-dir -r requirements.txt`
+
+Optional local analytics stack: `requirements-dev.txt` (do not install on PA unless you upgrade disk).
 
 Use the same Python version you selected for the web app (3.9–3.11 is fine).
 

@@ -1,27 +1,22 @@
-from django.shortcuts import render,reverse
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-from .models import Majors, Courses, Semester
-from .models import IndividualAndSociety, USExperienceInItsDiversity, WorldCulturesAndGlobalIssues, ProgramElectives
-from .models import DepartmentMetric
-from .department_metrics import ENROLLMENT_CHART_DEFINITIONS, read_year_value_csv, static_csv_abspath
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
-import json
-import csv
-import os
-import io
-from django.conf import settings
-import base64
-import matplotlib
-matplotlib.use('Agg')  # Add this line before importing pyplot
-import matplotlib.pyplot as plt
-from django.http import HttpResponse
-from django.template import loader
-from django.contrib.staticfiles.storage import staticfiles_storage
-import pandas as pd
-import seaborn as sns
-from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .department_metrics import (
+    ENROLLMENT_CHART_DEFINITIONS,
+    read_year_value_csv,
+    static_csv_abspath,
+)
+from .models import (
+    Courses,
+    DepartmentMetric,
+    IndividualAndSociety,
+    Majors,
+    ProgramElectives,
+    Semester,
+    USExperienceInItsDiversity,
+    WorldCulturesAndGlobalIssues,
+)
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html')

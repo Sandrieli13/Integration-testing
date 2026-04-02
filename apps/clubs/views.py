@@ -1,35 +1,31 @@
-from django.shortcuts import render, redirect
-from .models import Club
-from .forms import ClubForm
-from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from myapp.models import CustomUser
+from django.db import connection
 from django.http import JsonResponse
-import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
-from django.db import connection as con
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import ClubForm
+from .models import Club
+
 
 def chart_view(request):
-    query = """SELECT CC.club_id, CL.name, count(*) as club_members 
+    """Club member counts without pandas/matplotlib (small disk footprint on PA)."""
+    query = """
+        SELECT CL.name, COUNT(*) AS club_members
         FROM myapp_customuser_clubs CC
-        INNER Join myapp_customuser CU
-        On CC.customuser_id = CU.id
-        Inner join clubs_club CL
-        On CC.club_id = CL.id
-        Group by cc.club_id, cl.name
-        order by club_members desc
-        """
-    chartdata = pd.read_sql_query(query, con)
-    
-    sns.set(style="darkgrid")
-    fig, ax = plt.subplots(figsize=(7, 7))
-    sns.barplot(data=chartdata, x='club_members', y='name', ax=ax)
-
-    # Save the plot as SVG file
-    plt.savefig("client/images/seaborn_plot.svg", format='svg', bbox_inches='tight')
-    # Render the plot in the template
-    return render(request, 'data.html', {'plot_path': '/client/images/seaborn_plot.svg'})
+        INNER JOIN myapp_customuser CU ON CC.customuser_id = CU.id
+        INNER JOIN clubs_club CL ON CC.club_id = CL.id
+        GROUP BY cc.club_id, CL.name
+        ORDER BY club_members DESC
+    """
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+    max_members = max((r[1] for r in rows), default=1)
+    clubs_chart = [
+        {"name": r[0], "members": r[1], "pct": round(100 * r[1] / max_members)}
+        for r in rows
+    ]
+    return render(request, "data.html", {"clubs_chart": clubs_chart})
 @login_required
 def profile_view(request):
     user = request.user

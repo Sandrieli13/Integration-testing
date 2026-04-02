@@ -3,7 +3,41 @@
 
 {% block title %}Clubs data{% endblock %}
 
+{% block extra_head %}
+<style>
+  .club-chart { max-width: 720px; margin: 1rem auto; }
+  .club-chart-row {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .club-chart-name { flex: 0 0 160px; text-align: right; }
+  .club-chart-bar-wrap {
+    flex: 1; height: 22px; background: #eee; border-radius: 4px; overflow: hidden;
+  }
+  .club-chart-bar {
+    height: 100%; background: #2563eb; border-radius: 4px;
+    min-width: 4px;
+  }
+  .club-chart-count { flex: 0 0 48px; font-weight: 600; }
+</style>
+{% endblock %}
+
 {% block content %}
 <h1>Clubs data</h1>
-<img src="{% static 'seaborn_plot.svg' %}" alt="Chart of club data">
+<p>Members per club (from your database).</p>
+{% if clubs_chart %}
+<div class="club-chart">
+  {% for row in clubs_chart %}
+  <div class="club-chart-row">
+    <span class="club-chart-name">{{ row.name }}</span>
+    <div class="club-chart-bar-wrap" aria-hidden="true">
+      <div class="club-chart-bar" style="width: {{ row.pct }}%;"></div>
+    </div>
+    <span class="club-chart-count">{{ row.members }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p>No club membership data yet.</p>
+{% endif %}
 {% endblock %}
