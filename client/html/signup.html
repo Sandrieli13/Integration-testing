@@ -3,10 +3,24 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-<h1>Sign up</h1>
-<form method="post" class="ibm-row-form">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="navbar-button w-nav-link text-3" type="submit">Sign up</button>
-</form>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Account</p>
+        <h1>Create an account</h1>
+        <p class="bmc-page-hero__lede">Join BMCC Connect to use clubs, mentors, and more.</p>
+  </div>
+</header>
+
+  <div class="bmc-card" style="max-width: 36rem;">
+    <form method="post" class="bmc-form ibm-row-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="bmc-form__actions">
+        <button type="submit" class="bmc-btn bmc-btn--primary">Sign up</button>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'signin' %}">Already have an account</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

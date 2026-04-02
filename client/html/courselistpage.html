@@ -1,244 +1,90 @@
 {% extends 'base.html' %}
 
+{% block title %}Major and course list{% endblock %}
+
+{% block extra_head %}
+<style>
+  #myInput { max-width: 420px; }
+</style>
+{% endblock %}
+
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Course List</title>
-    <style>
-        .content {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin:  10;
-            padding: 0;
-        }
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Academics</p>
+        <h1>Major &amp; course list</h1>
+        <p class="bmc-page-hero__lede">CIS majors and semester plans. Elective pathways are on <a href="{% url 'electivecourses' %}">Elective courses</a>.</p>
+  </div>
+</header>
 
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        h2 {
-            color: #555;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        ul li {
-            margin: 5px 0;
-        }
-
-        .table-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 80%;            
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #ddd;
-        }
-        #Courses{
-            
-            margin-top: 100px;
-        }
-        * {
-  box-sizing: border-box;
-}
-
-#myInput {
-  background-image: url("static/search.png");
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 50%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
- 
-    </style>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0;">
-    
-        
-    <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
-    <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
-    <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
-    <link rel="stylesheet" type="text/css" href="/files/main_style.css?1668096927" title="wsite-theme-css" />
- 
-    
-    <script>
-    var STATIC_BASE = '//cdn1.editmysite.com/';
-    var ASSETS_BASE = '//cdn2.editmysite.com/';
-    var STYLE_PREFIX = 'wsite';
-    </script>
-    <script src='https://cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
-    
-    <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
-        <script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript"> </script>
-        <script type="text/javascript"> _W = _W || {}; _W.securePrefix='freshmanroadmap.weebly.com'; </script><script>_W = _W || {};
-             _W.customerLocale = "en_US";
-             _W.storeName = null;
-             _W.isCheckoutReskin = false;
-             _W.storeCountry = "US";
-             _W.storeCurrency = "USD";
-             _W.storeEuPrivacyPolicyUrl = "";
-             com_currentSite = "623578126324040655";
-             com_userID = "143641134";</script><script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
-    <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668539559&"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
-
-    </script>
-</head>
-<div class="banner-wrap">
-    <div class="wsite-elements wsite-not-footer wsite-header-elements">
-<div class="wsite-section-wrap">
-<div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
-    <div class="wsite-section-content">
-        
-        <div class="banner">
-            <div class="banner-inner">
-            <div class="wsite-section-elements" >
-                <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;text-align: center; font-family: Koh Santepheap;line-height: normal;">Course List</h2>
-            </div>
-        </div>
-        </div>
-    
-    </div>
-    <div class=""></div>
-</div>
-</div>
-
-<hr>
-
-<body>
- 
-<div class="content"> 
-
-    <h4 style="margin: 0; padding:auto; " ><br>Note: The table shows  four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
-        on the page <a href="{% url 'electivecourses' %}">Elective Courses </a><br> This page only shows our CIS department 'Four' majors <hr style="height: 1px; background-color: #ccc; border: none; margin: 20px 0; ">  </h4>
-    <br>
-    <select id="majorDropdown">
-        <option value="">Select a Major</option>
-        {% for major in majors %}
-            <option value="{{ major.major_id }}">{{ major.major_name }}</option>
-        {% endfor %}
+  <div class="bmc-card">
+    <label for="majorDropdown" style="display:block;margin-bottom:0.35rem;">Filter by major</label>
+    <select id="majorDropdown" style="max-width: 24rem; padding: 0.5rem; font-family: var(--bmc-font); border-radius: 10px; border: 1px solid var(--bmc-line);">
+      <option value="">All majors</option>
+      {% for major in majors %}
+        <option value="{{ major.major_id }}">{{ major.major_name }}</option>
+      {% endfor %}
     </select>
-    <p>OR</p>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for majors.." title="Type in a course name">
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Major</th>
-                    <th>Semester</th>
-                    <th>Course 1</th>
-                    <th>Credits</th>
-                    <th>Course 2</th>
-                    <th>Credits</th>
-                    <th>Course 3</th>
-                    <th>Credits</th>
-                    <th>Course 4</th>
-                    <th>Credits</th>
-                    <th>Course 5</th>
-                    <th>Credits</th>
-                    <th>Total Credits</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for semester in semesters %}
-                    <tr>
-                        <td>{{ semester.major.major_name }}</td>
-                        <td>{{ semester.semester_id }}</td> <!-- Add this cell -->
-                        <td>{{ semester.course1.course_name }}</td>
-                        <td>{{ semester.course1.credits }}</td>
-                        <td>{{ semester.course2.course_name }}</td>
-                        <td>{{ semester.course2.credits }}</td>
-                        <td>{{ semester.course3.course_name }}</td>
-                        <td>{{ semester.course3.credits }}</td>
-                        <td>{{ semester.course4.course_name }}</td>
-                        <td>{{ semester.course4.credits }}</td>
-                        <td>{{ semester.course5.course_name }}</td>
-                        <td>{{ semester.course5.credits }}</td>
-                        <td>{{ semester.total_credits }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-            
-        </table>
-    </div>
+    <p style="margin: 1rem 0 0.35rem;"><strong>Or search</strong></p>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search majors…" title="Filter cards" style="display:block;padding:0.65rem 0.85rem;border:1px solid var(--bmc-line);border-radius:10px;width:100%;max-width:420px;font-family:var(--bmc-font);">
+  </div>
 
+  <div class="semester-cards" id="semesterCards">
+    {% for semester in semesters %}
+      <article class="semester-card" data-major-name="{{ semester.major.major_name }}">
+        <div class="semester-card__head">
+          <span class="semester-card__major">{{ semester.major.major_name }}</span>
+          <span class="semester-card__meta">Semester {{ semester.semester_id }}</span>
+          <span class="semester-card__total">{{ semester.total_credits }} cr. total</span>
+        </div>
+        <div class="semester-card__courses">
+          <div class="semester-card__row">
+            <span>{{ semester.course1.course_name }}</span>
+            <span class="semester-card__cred">{{ semester.course1.credits }} cr.</span>
+          </div>
+          <div class="semester-card__row">
+            <span>{{ semester.course2.course_name }}</span>
+            <span class="semester-card__cred">{{ semester.course2.credits }} cr.</span>
+          </div>
+          <div class="semester-card__row">
+            <span>{{ semester.course3.course_name }}</span>
+            <span class="semester-card__cred">{{ semester.course3.credits }} cr.</span>
+          </div>
+          <div class="semester-card__row">
+            <span>{{ semester.course4.course_name }}</span>
+            <span class="semester-card__cred">{{ semester.course4.credits }} cr.</span>
+          </div>
+          <div class="semester-card__row">
+            <span>{{ semester.course5.course_name }}</span>
+            <span class="semester-card__cred">{{ semester.course5.credits }} cr.</span>
+          </div>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
 </div>
 <script>
 function myFunction() {
-    var input, filter, tables, table, tr, td, i, j, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    tables = document.querySelectorAll("table");  // Get all tables
-
-    for (table of tables) {
-        tr = table.getElementsByTagName("tr");
-        for (i = 1; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-        }
-    }
+  var filter = document.getElementById("myInput").value.toUpperCase();
+  document.querySelectorAll(".semester-card").forEach(function (card) {
+    var name = (card.getAttribute("data-major-name") || "").toUpperCase();
+    card.style.display = name.indexOf(filter) > -1 ? "" : "none";
+  });
 }
 document.addEventListener('DOMContentLoaded', function() {
-    var dropdown = document.getElementById('majorDropdown');
-    var tableRows = document.querySelectorAll('table tbody tr');
-    
-    dropdown.addEventListener('change', function() {
-        var selectedMajorName = this.options[this.selectedIndex].text;
-        console.log("Selected Major:", selectedMajorName);
-        
-        // Iterate through table rows and show/hide based on selected major
-        for (var i = 0; i < tableRows.length; i++) {
-            var row = tableRows[i];
-            var majorNameCell = row.querySelector('td:first-child');
-            var rowMajorName = majorNameCell.textContent.trim();
-            console.log("Row Major:", rowMajorName);
-            
-            if (!selectedMajorName || rowMajorName === selectedMajorName) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        }
+  var dropdown = document.getElementById('majorDropdown');
+  dropdown.addEventListener('change', function() {
+    var selected = this.options[this.selectedIndex].text.trim();
+    document.querySelectorAll('.semester-card').forEach(function (card) {
+      var rowMajor = (card.getAttribute('data-major-name') || '').trim();
+      if (!selected || selected === 'All majors' || rowMajor === selected) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
     });
+  });
 });
-
-
-
 </script>
-</body>
-</html>
 {% endblock %}

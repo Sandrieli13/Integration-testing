@@ -1,69 +1,74 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block content %}
-<style>
-  .user-informatio{
-    background-color: aquamarine;
-    border-radius: 45%;
-    border-color: black;
-  }
-</style>
-<div class="profile-header">
-    <img class="profile-image" src="{% static 'pfp.jpg' %}" alt="profile-picture">
-  <div><h2>{{ user.username }}</h2>
 
-  {% if user.is_mentor %}
-        <h5>Mentor</h5>
-    {% elif user.is_mentee %}
-        <h5>Mentee</h5>
-    {% endif %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Account</p>
+      <h1>Your profile</h1>
+      <p class="bmc-page-hero__lede">Clubs, mentors, and events tied to your BMCC Connect account.</p>
   </div>
-</div>
-  
-  <div class="profile-body">
-    <div class="user-information">
-  <h3>User Information</h3>
-  <p><strong>Username:</strong> {{ user.username }}</p>
-  <p><strong>Email:</strong> {{ user.email }}</p>
-  <p><strong>First Name:</strong> {{ user.first_name }}</p>
-  <p><strong>Last Name:</strong> {{ user.last_name }}</p>
-  <p><strong>Major:</strong> {{ user.major }}</p>
-  <p><strong>Preferred Language:</strong> {{ user.preferred_language }}</p>
-</div>
-<div class="clubs-section">
-  <h3>Clubs</h3>
-  {% if clubs %}
-    <ul>
-      {% for club in clubs %}
-        <li>{{ club.name }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No clubs found.</p>
-  {% endif %}
-</div>
-<div class="clubs-section">
-  <h3>Events</h3>
-  {% if events %}
-    <ul>
-      {% for event in events %}
-        <li>{{ event.eventName }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No events found.</p>
-  {% endif %}
-</div>
-<div class="edit-section">
-  <h3>Edit Information</h3>
-  <form method="POST" class="ibm-row-form">
-    {% csrf_token %}
-    {{ form.as_p }}
-  </form>
-  <a class="navbar-button w-nav-link text-3" href="{% url 'edit_profile'%}">Edit Profile</a>
-  <a href="{% url 'signout' %}" class="navbar-button w-nav-link text-3">
-      Log Out
-  </a>
-</div>
+</header>
+<div class="bmc-profile">
+  <div class="bmc-profile__head">
+    <img class="bmc-profile__avatar" src="{% static 'pfp.jpg' %}" alt="">
+    <div>
+      <h2 style="margin: 0; font-size: 1.35rem;">{{ user.username }}</h2>
+      {% if user.is_mentor %}
+        <p style="margin: 0.25rem 0 0; color: var(--bmc-muted); font-weight: 600;">Mentor</p>
+      {% elif user.is_mentee %}
+        <p style="margin: 0.25rem 0 0; color: var(--bmc-muted); font-weight: 600;">Mentee</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="bmc-profile__main">
+    <div class="bmc-card">
+      <h3>Contact &amp; profile</h3>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+      <p><strong>Major:</strong> {{ user.major }}</p>
+      <p><strong>Preferred language:</strong> {{ user.preferred_language }}</p>
+    </div>
+
+    <div class="bmc-profile__grid">
+      <div class="bmc-card">
+        <h3>Clubs</h3>
+        {% if clubs %}
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            {% for club in clubs %}
+              <li>{{ club.name }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p style="margin: 0; color: var(--bmc-muted);">You are not in any clubs yet.</p>
+          <a class="bmc-btn bmc-btn--ghost" style="margin-top: 0.75rem;" href="{% url 'clubs-list' %}">Browse clubs</a>
+        {% endif %}
+      </div>
+      <div class="bmc-card">
+        <h3>Events</h3>
+        {% if events %}
+          <ul style="margin: 0; padding-left: 1.2rem;">
+            {% for event in events %}
+              <li>{{ event.eventName }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p style="margin: 0; color: var(--bmc-muted);">No saved events.</p>
+          <a class="bmc-btn bmc-btn--ghost" style="margin-top: 0.75rem;" href="{% url 'events' %}">View events</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="bmc-card">
+      <h3>Account actions</h3>
+      <div class="bmc-form__actions" style="margin: 0;">
+        <a class="bmc-btn bmc-btn--primary" href="{% url 'edit_profile' %}">Edit profile</a>
+        <a class="bmc-btn bmc-btn--danger" href="{% url 'signout' %}">Log out</a>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

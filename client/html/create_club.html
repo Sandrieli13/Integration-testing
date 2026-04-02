@@ -1,10 +1,26 @@
 {% extends 'base.html' %}
 
+{% block title %}Create club{% endblock %}
+
 {% block content %}
-  <h1>Create Club</h1>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-  </form>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Clubs</p>
+        <h1>Create a club</h1>
+        <p class="bmc-page-hero__lede">Staff only — add a new listing to the directory.</p>
+  </div>
+</header>
+
+  <div class="bmc-card" style="max-width: 40rem;">
+    <form method="post" class="bmc-form ibm-row-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="bmc-form__actions">
+        <button type="submit" class="bmc-btn bmc-btn--primary">Create club</button>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'clubs-list' %}">Back to clubs</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

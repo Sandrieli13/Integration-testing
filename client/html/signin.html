@@ -3,18 +3,33 @@
 {% block title %}Sign in{% endblock %}
 
 {% block content %}
-<h1>Sign in</h1>
-<form method="post" class="ibm-row-form" action="{% url 'signin' %}">
-  {% csrf_token %}
-  {% if next %}
-  <input type="hidden" name="next" value="{{ next }}">
-  {% endif %}
-  {% if error %}
-  <p class="error">{{ error }}</p>
-  {% endif %}
-  <input type="text" name="username" placeholder="Username" autocomplete="username">
-  <input type="password" name="password" placeholder="Password" autocomplete="current-password">
-  <input class="navbar-button w-nav-link text-3" type="submit" value="Sign in">
-</form>
-<p><a class="navbar-button w-nav-link text-3 footer-ting" href="{% url 'signup' %}">Create an account</a></p>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Account</p>
+        <h1>Sign in</h1>
+        <p class="bmc-page-hero__lede">Use your BMCC Connect username and password.</p>
+  </div>
+</header>
+
+  <div class="bmc-card" style="max-width: 28rem;">
+    <form method="post" class="bmc-form ibm-row-form" action="{% url 'signin' %}">
+      {% csrf_token %}
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+      {% if error %}
+        <p class="bmc-error">{{ error }}</p>
+      {% endif %}
+      <label for="id_username">Username</label>
+      <input id="id_username" type="text" name="username" autocomplete="username" required>
+      <label for="id_password">Password</label>
+      <input id="id_password" type="password" name="password" autocomplete="current-password" required>
+      <div class="bmc-form__actions">
+        <button type="submit" class="bmc-btn bmc-btn--primary">Sign in</button>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'signup' %}">Create an account</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

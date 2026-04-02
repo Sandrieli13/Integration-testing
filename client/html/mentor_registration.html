@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 
+{% block title %}Mentor registration{% endblock %}
+
 {% block content %}
-  <h1>Mentor Registration</h1>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Register</button>
-  </form>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Mentors</p>
+        <h1>Mentor registration</h1>
+        <p class="bmc-page-hero__lede">Tell us about yourself so mentees can find you.</p>
+  </div>
+</header>
+  <div class="bmc-card" style="max-width: 40rem;">
+    <form method="post" class="bmc-form ibm-row-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="bmc-form__actions">
+        <button type="submit" class="bmc-btn bmc-btn--primary">Register</button>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'mentors' %}">Back</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

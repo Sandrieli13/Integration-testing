@@ -6,7 +6,7 @@
 {% block extra_head %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     .da {
@@ -17,10 +17,10 @@
       --da-border: #e2e8f0;
       --da-accent: #0c4a6e;
       --da-accent-soft: #e0f2fe;
-      font-family: "DM Sans", system-ui, sans-serif;
+      font-family: "Outfit", system-ui, sans-serif;
       color: var(--da-ink);
       background: var(--da-bg);
-      min-height: 100vh;
+      min-height: auto;
     }
     .da__inner {
       max-width: 1120px;
@@ -191,16 +191,15 @@
 {% endblock %}
 
 {% block content %}
+<header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">BMCC · CIS</p>
+      <h1>Enrollment headcount analysis</h1>
+      <p class="bmc-page-hero__lede">Degree-seeking headcount over time for CS, CIS A.A.S., CNT, and department aggregate — from your app database or synced extracts.</p>
+  </div>
+</header>
 <div class="da">
   <div class="da__inner">
-    <header>
-      <p class="da__eyebrow">Borough of Manhattan Community College · CIS</p>
-      <h1 class="da__title">Enrollment headcount analysis</h1>
-      <p class="da__lede">
-        A concise view of degree-seeking enrollment over time for Computer Science and related programs housed under the Department of Computer Information Systems.
-        Each series is plotted as reported in institutional files synced into this application’s database.
-      </p>
-    </header>
 
       <div class="da-grid2">
         <div class="da-panel">

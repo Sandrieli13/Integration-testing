@@ -1,99 +1,30 @@
 {% extends 'base.html' %}
 
+{% block title %}Course search{% endblock %}
 
 {% block content %}
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Academics</p>
+        <h1>Course search</h1>
+        <p class="bmc-page-hero__lede">Choose your major to see courses and prerequisites.</p>
+  </div>
+</header>
 
- 
- 
-<head>
-    <!-- Add your CSS and other headers if needed -->
-    <style>
-        .searchButton{
-            margin-bottom: 450px;
-            display: inline-block;
-  background-color: rgba(0, 65, 150, 1);
-  text-decoration: none;
-  color: #fff;
-  text-align: center;  
-  font-size: 34px;
-  text-decoration: none;
-  padding: 20px 50px;
-  border-bottom: #999e9e solid 7px;
-  border-right: #999e9e solid 7px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.searchButton:hover{
-  background-color: rgba(255, 102, 0, 1);
-  color: rgba(0, 65, 150, 1);
-  padding-bottom: 21px;
-  padding-right: 52px;
-  border-bottom: #4f5151 solid 6px;
-  border-right: #4f5151 solid 5px;
-}
-    </style>
-</head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0;">
-
-    
-    <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
-<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
-<link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
-<link rel="stylesheet" type="text/css" href="/files/main_style.css?1668096927" title="wsite-theme-css" />
- 
-<script>
-var STATIC_BASE = '//cdn1.editmysite.com/';
-var ASSETS_BASE = '//cdn2.editmysite.com/';
-var STYLE_PREFIX = 'wsite';
-</script>
-<script src='https://cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
-
-<script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
-<script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript">
-      
-     </script>
-   <script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
- 
- 
-
-
-</script>
- 
-    <div class="banner-wrap">
-        <div class="wsite-elements wsite-not-footer wsite-header-elements">
-    <div class="wsite-section-wrap">
-    <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
-        <div class="wsite-section-content">
-            
-            <div class="banner">
-                <div class="banner-inner">
-                <div class="wsite-section-elements">
-                    <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;text-align: center; font-family: Koh Santepheap;line-height: normal;">Course Search</h2>
-                </div>
-            </div>
-            </div>
-        
-        </div>
-        <div class=""></div>
-    </div>
-</div>
-
-</div>
-    </div>
-    <h2>Search your major courses and prerequisit classes</h2>
-    <form method="post">
-        {% csrf_token %}
-        <label for="major">Select your major:</label>
-        <select name="major" id="major">
-            {% for major in majors %}
-                <option value="{{ major.major_id }}">{{ major.major_name }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
-        <input class="searchButton" type="submit" name="search" value="Search">
+  <div class="bmc-card" style="max-width: 32rem;">
+    <form method="post" class="bmc-form">
+      {% csrf_token %}
+      <label for="major">Major</label>
+      <select name="major" id="major">
+        {% for major in majors %}
+          <option value="{{ major.major_id }}">{{ major.major_name }}</option>
+        {% endfor %}
+      </select>
+      <div class="bmc-form__actions">
+        <button type="submit" name="search" value="1" class="bmc-btn bmc-btn--primary">Search</button>
+      </div>
     </form>
- 
- 
+  </div>
+</div>
 {% endblock %}

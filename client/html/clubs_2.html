@@ -4,9 +4,6 @@
 {% block title %}Clubs · BMCC Connect{% endblock %}
 
 {% block extra_head %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   .clubs-hub {
     /* Align with global .site-nav-offset (navbar.css --site-nav-offset-total) */
@@ -39,8 +36,28 @@
   }
 
   .clubs-hub__hero {
-    padding: 0.5rem 0 1.75rem;
     scroll-margin-top: var(--ch-header-clear);
+    min-height: 378px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin: 0 0 1.5rem;
+    border-radius: 0 0 var(--ch-radius) var(--ch-radius);
+    background-color: #3d4a5c;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-sizing: border-box;
+  }
+
+  .clubs-hub__hero-panel {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1.25rem 1.5rem;
+    max-width: min(1100px, 94vw);
+    box-sizing: border-box;
   }
 
   .clubs-hub__eyebrow {
@@ -48,23 +65,23 @@
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--ch-warm);
+    color: rgba(247, 248, 249, 0.92);
     margin: 0 0 0.35rem;
   }
 
   .clubs-hub__title {
-    font-size: clamp(1.85rem, 4.5vw, 2.35rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--ch-navy);
+    font-size: clamp(2.25rem, 7vw, 5rem);
+    font-weight: 400;
+    letter-spacing: normal;
+    color: rgb(247, 248, 249);
     margin: 0 0 0.5rem;
-    line-height: 1.15;
+    line-height: 1.05;
   }
 
   .clubs-hub__lede {
-    font-size: 1.02rem;
+    font-size: 1rem;
     line-height: 1.55;
-    color: var(--ch-muted);
+    color: rgb(247, 248, 249);
     max-width: 34rem;
     margin: 0;
   }
@@ -437,14 +454,16 @@
 {% block content %}
 <div class="clubs-hub">
   <header class="clubs-hub__hero">
-    <p class="clubs-hub__eyebrow">Campus life</p>
-    <h1 class="clubs-hub__title">Find your club</h1>
-    <p class="clubs-hub__lede">
-      Browse by category, open a club to see contacts and meeting details, and join the ones that fit you.
-    </p>
-    {% if not user.is_authenticated %}
-      <p class="clubs-hub__hint"><strong>Tip:</strong> Sign in to join or leave clubs.</p>
-    {% endif %}
+    <div class="clubs-hub__hero-panel">
+      <p class="clubs-hub__eyebrow">Campus life</p>
+      <h1 class="clubs-hub__title">Find your club</h1>
+      <p class="clubs-hub__lede">
+        Browse by category, open a club to see contacts and meeting details, and join the ones that fit you.
+      </p>
+      {% if not user.is_authenticated %}
+        <p class="clubs-hub__hint"><strong>Tip:</strong> Sign in to join or leave clubs.</p>
+      {% endif %}
+    </div>
   </header>
 
   {% if not clubs %}

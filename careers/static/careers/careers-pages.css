@@ -1,9 +1,9 @@
-/* Majors & careers / skills explorer (page1, page2) */
+/* Majors & careers / skills explorer (page1, page2) — aligns with app-shell / Outfit */
 .careers-hub {
   max-width: 920px;
   margin: 0 auto;
   padding: 2rem 1.25rem 4rem;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   color: #1e293b;
   line-height: 1.55;
 }
@@ -36,12 +36,38 @@
   user-select: none;
 }
 
+/* Same banner language as course planner / bmc-page-hero */
+.careers-hub__hero {
+  min-height: 378px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3d4a5c;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 1.5rem 1rem;
+  border-radius: 0 0 12px 12px;
+  margin: 0 0 1.75rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.careers-hub__hero-panel {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1.25rem 1.5rem;
+  max-width: min(1100px, 94vw);
+  box-sizing: border-box;
+}
+
 .careers-hub__hero h1 {
-  font-size: clamp(1.65rem, 4vw, 2.1rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.25rem, 7vw, 5rem);
+  font-weight: 400;
+  letter-spacing: normal;
   margin: 0 0 0.5rem;
-  color: #0f172a;
+  color: rgb(247, 248, 249);
+  line-height: 1.05;
 }
 
 .careers-hub__eyebrow {
@@ -53,11 +79,28 @@
   margin: 0 0 0.35rem;
 }
 
+.careers-hub__hero .careers-hub__eyebrow {
+  color: rgba(247, 248, 249, 0.92);
+}
+
 .careers-hub__lede {
   font-size: 1.05rem;
   color: #475569;
   margin: 0 0 1.75rem;
   max-width: 52ch;
+}
+
+.careers-hub__hero .careers-hub__lede {
+  color: rgb(247, 248, 249);
+  margin: 0.75rem auto 0;
+  max-width: 42rem;
+}
+
+.careers-hub__hero .careers-hub__lede a {
+  color: rgb(247, 248, 249);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .careers-panel {

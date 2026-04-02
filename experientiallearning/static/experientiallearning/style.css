@@ -1,7 +1,23 @@
-*{
+/* Career readiness mini-site — aligned with main BMCConnect tokens */
+:root {
+    --el-navy: #0a1628;
+    --el-blue: #0d47a1;
+    --el-accent: #e85d04;
+    --el-ink: #1a2332;
+    --el-muted: #5c6b7f;
+    --el-line: #d8e1ec;
+    --el-surface: #f5f8fc;
+    --el-radius: 14px;
+}
+
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    color: var(--el-ink);
 }
 .header{
     min-height: 100vh;
@@ -41,11 +57,11 @@ nav img{
 .nav-links ul li ::after{
     content: '';
     width: 0%;
-    height: 5px;
-    background: #f44336;
+    height: 3px;
+    background: var(--el-accent);
     display: block;
     margin: auto;
-    transition: 0.5s;
+    transition: 0.35s ease;
 }
 .nav-links ul li :hover::after{
     width: 100%;
@@ -81,9 +97,9 @@ nav img{
     cursor: pointer;
 }
 .hero-btn:hover{
-    border: 1px solid #f44336;
-    background: #f44336;
-    transition: 1s;
+    border: 1px solid var(--el-accent);
+    background: var(--el-accent);
+    transition: 0.25s ease;
 }
 nav .fa{
     display: none;
@@ -97,14 +113,14 @@ nav .fa{
     }
     .nav-links {
         position: absolute;
-        background: #f44336;
+        background: var(--el-navy);
         height: 100vh;
         width: 200px;
         top: 0;
         right:-200px;
         text-align: left;
         z-index: 2;
-        transition: 1s;
+        transition: 0.35s ease;
     }
     nav .fa{
         display: block;
@@ -119,9 +135,12 @@ nav .fa{
 
 }
 .footer {
-  background-color: #f2f2f2;
-  padding: 20px;
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  border-top: 1px solid var(--el-line);
+  padding: 2rem 1.25rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 /*--------events------*/
 
@@ -148,8 +167,9 @@ p{
 }
 .events-col{
     flex-basis: 31%;
-    background: #fff3f3;
-    border-radius: 10px;
+    background: #e3f2fd;
+    border: 1px solid var(--el-line);
+    border-radius: var(--el-radius);
     margin-bottom: 5%;
     padding: 20px 12px;
     box-sizing: border-box;
@@ -242,9 +262,12 @@ h3{
 
 
  .footer {
-  background-color: #f2f2f2;
-  padding: 20px;
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  border-top: 1px solid var(--el-line);
+  padding: 2rem 1.25rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
  /*-----------CSS For the intake form --------*/
@@ -262,11 +285,11 @@ h1, h2 {
 }
 
 h1 {
-  color: #b8600f;
+  color: var(--el-navy);
 }
 
 h2 {
-  color: #333;
+  color: var(--el-navy);
 }
 
 .form-group {
@@ -277,7 +300,7 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: var(--el-muted);
 }
 
 input[type="text"],
@@ -298,7 +321,9 @@ input[type="email"]:focus,
 input[type="tel"]:focus,
 textarea:focus,
 select:focus {
-  border-color: #f44336;
+  border-color: var(--el-blue);
+  outline: 2px solid rgba(13, 71, 161, 0.25);
+  outline-offset: 1px;
 }
 
 select {
@@ -313,17 +338,17 @@ select {
 .form-submit-btn {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #f44336;
+  background-color: var(--el-navy);
   color: #fff;
   font-size: 16px;
+  border-radius: var(--el-radius);
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, filter 0.2s ease;
 }
 
 .form-submit-btn:hover {
-  background-color: #c62828;
+  filter: brightness(1.1);
 }
 
 /* Additional styles for a more modern look */
@@ -356,18 +381,17 @@ select {
 }
 
 .form-submit-btn {
-  background-color: #f44336;
+  background-color: var(--el-navy);
   color: #fff;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 10px rgba(10, 22, 40, 0.2);
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .form-submit-btn:hover {
-  background-color: #c62828;
-  transform: translateY(-2px);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 
 /* Responsive styles */
@@ -400,9 +424,12 @@ select {
   margin-right: 5px;
 }
 .footer {
-  background-color: #f2f2f2;
-  padding: 20px;
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  border-top: 1px solid var(--el-line);
+  padding: 2rem 1.25rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
   
 /* ---------About Page------*/
@@ -653,9 +680,12 @@ select {
     margin-top: 100px;
  }
  .footer {
-  background-color: #f2f2f2;
-  padding: 20px;
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  border-top: 1px solid var(--el-line);
+  padding: 2rem 1.25rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 /*-----------CAREER INFO1-----------*/
 .sub3-header {
@@ -709,9 +739,12 @@ select {
 }
 
 .footer {
-  background-color: #f2f2f2;
-  padding: 20px;
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  border-top: 1px solid var(--el-line);
+  padding: 2rem 1.25rem;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .icons {
@@ -922,5 +955,34 @@ section h2 {
   margin-top: 5px;
 }
 
+/* Nav links on dark hero headers — keep high contrast (some browsers / resets were washing these out) */
+.header nav .nav-links ul li a,
+.sub-header nav .nav-links ul li a,
+.sub1-header nav .nav-links ul li a,
+.sub2-header nav .nav-links ul li a,
+.sub3-header nav .nav-links ul li a,
+.sub6-header nav .nav-links ul li a {
+  color: rgba(255, 255, 255, 0.96) !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
 
+.header nav .nav-links ul li a:hover,
+.sub-header nav .nav-links ul li a:hover,
+.sub1-header nav .nav-links ul li a:hover,
+.sub2-header nav .nav-links ul li a:hover,
+.sub3-header nav .nav-links ul li a:hover,
+.sub6-header nav .nav-links ul li a:hover {
+  color: #fff !important;
+}
+
+.header nav .fa,
+.sub-header nav .fa,
+.sub1-header nav .fa,
+.sub2-header nav .fa,
+.sub3-header nav .fa,
+.sub6-header nav .fa {
+  color: #fff !important;
+}
 

@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Edit club{% endblock %}
+
 {% block content %}
-<h1 class="ibm-h1">Edit Club</h1>
-<form method="POST" class="ibm-row-form">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Save" class="ibm-btn-pri">
-</form>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Clubs</p>
+        <h1>Edit club</h1>
+        <p class="bmc-page-hero__lede">Update details for this listing.</p>
+  </div>
+</header>
+
+  <div class="bmc-card" style="max-width: 40rem;">
+    <form method="post" class="bmc-form ibm-row-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="bmc-form__actions">
+        <input type="submit" value="Save changes" class="bmc-btn bmc-btn--primary" style="border: none;">
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'clubs-list' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

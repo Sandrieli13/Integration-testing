@@ -1,27 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Mentors — BMCConnect{% endblock %}
+{% block title %}Mentors · BMCC Connect{% endblock %}
 
 {% block extra_head %}
-<link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
-<div class="team-rectangles">
-  <div class="hero2">
-    <div class="imagecontainer">
-      <div class="bmcconnect2-0">Find Mentors!</div>
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Mentors</p>
+        <h1>Find mentors</h1>
+        <p class="bmc-page-hero__lede">Register as a mentor or mentee, then use matchmaking when you are signed in.</p>
+  </div>
+</header>
+  <div class="team-rectangles" style="background: transparent; max-width: 720px; margin: 0 auto;">
+    <div class="buttonsrectangle" style="display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0;">
+      <a href="{% url 'mentor_registration' %}" id="button1">Become a mentor</a>
+      <a href="{% url 'mentee_registration' %}" id="button1">Become a mentee</a>
+      {% if user.is_authenticated %}
+        {% if user.is_mentee or user.is_mentor %}
+          <a href="{% url 'matchmaking' %}" id="button1">Match</a>
+        {% endif %}
+      {% endif %}
     </div>
   </div>
-  <a href="{% url 'mentor_registration' %}" id="button1">Become A Mentor</a>
-  <a href="{% url 'mentee_registration' %}" id="button1">Become A Mentee</a>
-  {% if user.is_authenticated %}
-    {% if user.is_mentee or user.is_mentor %}
-      <a href="{% url 'matchmaking' %}" id="button1">Match</a>
-    {% endif %}
-  {% endif %}
 </div>
 {% endblock %}

@@ -1,212 +1,98 @@
- 
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
-    {% block content %}
-<!-- templates/courses.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Elective_Courses</title>
-    <style>
-        .content {
-                
-                font-family: Arial, Helvetica, sans-serif;
-                max-width: 1200px;
-                margin: 0 auto;
-                display: flex; /* This makes your body a flex container */
-                justify-content: center; /* Centers content horizontally */
-                align-items: center; /* Centers content vertically */
-                flex-direction: column; /* Stacks content vertically */
-                font-family: Arial, Helvetica, sans-serif;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-        table {
-            width: 100%;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:hover {
-        background-color: #ddd;} 
-        .toggle-arrow {
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+{% block title %}Elective courses{% endblock %}
 
-        .toggle-arrow.rotate {
-            transform: rotate(180deg);
-        }
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" crossorigin="anonymous" />
+<style>
+  .el-wrap h2 { cursor: pointer; padding: 0.85rem 1rem; margin: 0; background: var(--bmc-blue-soft); color: var(--bmc-navy); border-radius: var(--bmc-radius-sm); border: 1px solid var(--bmc-line); display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 1.05rem; }
+  .el-wrap .el-panel { display: none; margin: 0.5rem 0 1.25rem; border: 1px solid var(--bmc-line); border-radius: var(--bmc-radius-sm); padding: 0.5rem; background: var(--bmc-card); overflow-x: auto; }
+  #myInput { width: 100%; max-width: 420px; padding: 0.65rem 0.85rem; border: 1px solid var(--bmc-line); border-radius: 10px; font-family: var(--bmc-font); margin-bottom: 1rem; }
+</style>
+{% endblock %}
 
-        /* Search filter styles */
-        #myInput {
-            width: 100%;
-            font-size: 16px;
-            padding: 12px 20px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-        }
+{% block content %}
+<div class="bmc-page bmc-prose el-wrap">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Academics</p>
+        <h1>Elective courses</h1>
+        <p class="bmc-page-hero__lede">Four categories: Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives.</p>
+  </div>
+</header>
 
-        #myTable {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #ddd;
-            font-size: 18px;
-        }
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses…" title="Filter by course name">
 
-        #myTable th,
-        #myTable td {
-            text-align: left;
-            padding: 12px;
-        }
+  <h2 onclick="toggleCourseList('individualAndSociety')">Individual and Society <i id="arrow-icon-individualAndSociety" class="fa fa-chevron-down"></i></h2>
+  <div class="el-panel" id="course-list-individualAndSociety">
+    <table class="bmc-result-table">
+      <tr><th>Course name</th><th>Credits</th><th>Description</th></tr>
+      {% for course in individual_and_society_courses %}
+        <tr><td>{{ course.course_name }}</td><td>{{ course.credit }}</td><td>{{ course.description }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
 
-        #myTable tr {
-            border-bottom: 1px solid #ddd;
-        }
+  <h2 onclick="toggleCourseList('usExperience')">US Experience in Its Diversity <i id="arrow-icon-usExperience" class="fa fa-chevron-down"></i></h2>
+  <div class="el-panel" id="course-list-usExperience">
+    <table class="bmc-result-table">
+      <tr><th>Course name</th><th>Credits</th><th>Description</th></tr>
+      {% for course in us_experience_courses %}
+        <tr><td>{{ course.course_name }}</td><td>{{ course.credit }}</td><td>{{ course.description }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
 
-        #myTable tr.header,
-        #myTable tr:hover {
-            background-color: #f1f1f1;
-        }
-        * {
-  box-sizing: border-box;
+  <h2 onclick="toggleCourseList('worldCultures')">World Cultures and Global Issues <i id="arrow-icon-worldCultures" class="fa fa-chevron-down"></i></h2>
+  <div class="el-panel" id="course-list-worldCultures">
+    <table class="bmc-result-table">
+      <tr><th>Course name</th><th>Credits</th><th>Description</th></tr>
+      {% for course in world_cultures_courses %}
+        <tr><td>{{ course.course_name }}</td><td>{{ course.credit }}</td><td>{{ course.description }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <h2 onclick="toggleCourseList('programElectives')">Program Electives <i id="arrow-icon-programElectives" class="fa fa-chevron-down"></i></h2>
+  <div class="el-panel" id="course-list-programElectives">
+    <table class="bmc-result-table">
+      <tr><th>Course name</th><th>Credits</th><th>Description</th></tr>
+      {% for course in program_electives %}
+        <tr><td>{{ course.course_name }}</td><td>{{ course.credit }}</td><td>{{ course.description }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<script>
+function toggleCourseList(categoryId) {
+  var courseList = document.getElementById('course-list-' + categoryId);
+  var arrowIcon = document.getElementById('arrow-icon-' + categoryId);
+  if (courseList.style.display === 'none' || !courseList.style.display) {
+    courseList.style.display = 'block';
+    arrowIcon.classList.remove('fa-chevron-down');
+    arrowIcon.classList.add('fa-chevron-up');
+  } else {
+    courseList.style.display = 'none';
+    arrowIcon.classList.remove('fa-chevron-up');
+    arrowIcon.classList.add('fa-chevron-down');
+  }
 }
-
-#myInput {
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
-}
-
-
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
-
-</head>
-<body>
-    <div class="content"> 
-    <h1 >Elective Courses</h1>
-    <h3>Note: The table is the list of elective courses that shows four categories: Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives.</h3>
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for courses.." title="Type in a course name">
-
-    <h2 onclick="toggleCourseList('individualAndSociety')">Individual and Society <i id="arrow-icon-individualAndSociety" class="fa fa-chevron-down"></i></h2>
-<div id="course-list-individualAndSociety" style="display: none;">
-    <table>
-        <tr>
-            <th>Course Name</th>
-            <th>Credits</th>
-            <th>Description</th>
-        </tr>
-        {% for course in individual_and_society_courses %}
-            <tr>
-                <td>{{ course.course_name }}</td>
-                <td>{{ course.credit }}</td>
-                <td>{{ course.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
-
-<h2 onclick="toggleCourseList('usExperience')">US Experience in Its Diversity <i id="arrow-icon-usExperience" class="fa fa-chevron-down"></i></h2>
-<div id="course-list-usExperience" style="display: none;">
-    <table>
-        <tr>
-            <th>Course Name</th>
-            <th>Credits</th>
-            <th>Description</th>
-        </tr>
-        {% for course in us_experience_courses %}
-            <tr>
-                <td>{{ course.course_name }}</td>
-                <td>{{ course.credit }}</td>
-                <td>{{ course.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
-
-<h2 onclick="toggleCourseList('worldCultures')">World Cultures and Global Issues <i id="arrow-icon-worldCultures" class="fa fa-chevron-down"></i></h2>
-<div id="course-list-worldCultures" style="display: none;">
-    <table>
-        <tr>
-            <th>Course Name</th>
-            <th>Credits</th>
-            <th>Description</th>
-        </tr>
-        {% for course in world_cultures_courses %}
-            <tr>
-                <td>{{ course.course_name }}</td>
-                <td>{{ course.credit }}</td>
-                <td>{{ course.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
-    <h2 onclick="toggleCourseList('programElectives')">Program Electives <i id="arrow-icon-programElectives" class="fa fa-chevron-down"></i></h2>
-    <div id="course-list-programElectives" style="display: none;">
-    <table>
-        <tr>
-            <th>Course Name</th>
-            <th>Credits</th>
-            <th>Description</th>
-        </tr>
-        {% for course in program_electives %}
-            <tr>
-                <td>{{ course.course_name }}</td>
-                <td>{{ course.credit }}</td>
-                <td>{{ course.description }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    </div>
- 
-    <script>
-        // Function to toggle visibility of course lists
-        function toggleCourseList(categoryId) {
-            const courseList = document.getElementById(`course-list-${categoryId}`);
-            const arrowIcon = document.getElementById(`arrow-icon-${categoryId}`);
-    
-            if (courseList.style.display === 'none') {
-                courseList.style.display = 'block';
-                arrowIcon.classList.remove('fa-chevron-down');
-                arrowIcon.classList.add('fa-chevron-up');
-            } else {
-                courseList.style.display = 'none';
-                arrowIcon.classList.remove('fa-chevron-up');
-                arrowIcon.classList.add('fa-chevron-down');
-            }
-        }
-        function myFunction() {
-    var input, filter, tables, table, tr, td, i, j, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    tables = document.querySelectorAll("table");  // Get all tables
-
-    for (table of tables) {
-        tr = table.getElementsByTagName("tr");
-        for (i = 1; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }       
-        }
+function myFunction() {
+  var input = document.getElementById('myInput');
+  var filter = input.value.toUpperCase();
+  var tables = document.querySelectorAll('table');
+  for (var table of tables) {
+    var tr = table.getElementsByTagName('tr');
+    for (var i = 1; i < tr.length; i++) {
+      var td = tr[i].getElementsByTagName('td')[0];
+      if (td) {
+        var txtValue = td.textContent || td.innerText;
+        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? '' : 'none';
+      }
     }
+  }
 }
-    </script>
-    </div>
-</body>
-</html>
+</script>
 {% endblock %}

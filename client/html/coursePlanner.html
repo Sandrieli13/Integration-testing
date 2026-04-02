@@ -3,8 +3,15 @@
 
 {% block content %}
 {% load static %}
+<div class="bmc-page bmc-prose course-planner-root">
 
-        <head>
+  <header class="bmc-page-hero">
+    <div class="bmc-page-hero__panel">
+      <h1>Course Planner</h1>
+    </div>
+  </header>
+
+        <div class="course-planner-style-holder">
             <style>
                 body {
       font-family: Arial, sans-serif;
@@ -195,34 +202,10 @@ var STYLE_PREFIX = 'wsite';
 
 
 </script>
-        </head>
-        <body>
-          
-        <div class="banner-wrap">
-          <div class="wsite-elements wsite-not-footer wsite-header-elements">
-      <div class="wsite-section-wrap">
-      <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover; " >
-          <div class="wsite-section-content">
-              
-              <div class="banner">
-                  <div class="banner-inner">
-                  <div class="wsite-section-elements">
-                      <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3);font-family: Koh Santepheap;text-align: center; font-family: Koh Santepheap;line-height: normal;">Course Planner</h2>
-                  </div>
-              </div>
-              </div>
-          
-          </div>
-      
-      </div>
-  </div>
-
-  </div>
-      </div>
+        </div>
       <h4 >Note: The table shows the four categories:Individual and Society, US Experience in Its Diversity, World Cultures and Global Issues, and Program Electives will be displaying 
         on the page <a href="{% url 'electivecourses' %}">Elective Courses </a> </h4>
-        <body data-fetch-courses-url="{% url 'fetch_courses' %}">
-            <h1>Course Planner</h1>
+        <div data-fetch-courses-url="{% url 'fetch_courses' %}">
         
             <h3>Remaining Credits:</h3>
             <p id="remaining-credits"></p>
@@ -469,6 +452,7 @@ var STYLE_PREFIX = 'wsite';
                 
               </script>
        
-        </body>
+        </div>
 
+</div>
         {% endblock %}

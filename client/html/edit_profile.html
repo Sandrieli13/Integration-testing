@@ -1,12 +1,26 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h2>Edit Profile</h2>
+{% block title %}Edit profile{% endblock %}
 
-  <form method="POST" class="ibm-row-form">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-  
+{% block content %}
+<div class="bmc-page">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Account</p>
+        <h1>Edit profile</h1>
+        <p class="bmc-page-hero__lede">Update the information shown on your profile.</p>
+  </div>
+</header>
+
+  <div class="bmc-card" style="max-width: 40rem;">
+    <form method="post" class="bmc-form ibm-row-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="bmc-form__actions">
+        <button type="submit" class="bmc-btn bmc-btn--primary">Save</button>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'profile' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

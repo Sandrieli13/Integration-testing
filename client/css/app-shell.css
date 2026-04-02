@@ -1,0 +1,715 @@
+/* BMCC Connect — global UI shell (loads after navbar.css). Pages inherit Outfit + shared tokens. */
+
+:root {
+  --bmc-font: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bmc-navy: #0a1628;
+  --bmc-blue: #0d47a1;
+  --bmc-blue-hover: #082f6b;
+  --bmc-blue-soft: #e3f2fd;
+  --bmc-ink: #1a2332;
+  --bmc-muted: #5c6b7f;
+  --bmc-line: #d8e1ec;
+  --bmc-surface: #f5f8fc;
+  --bmc-card: #ffffff;
+  --bmc-warm: #e85d04;
+  --bmc-danger: #b00020;
+  --bmc-radius: 14px;
+  --bmc-radius-sm: 10px;
+  --bmc-shadow: 0 4px 24px rgba(10, 22, 40, 0.07);
+  --bmc-max: 920px;
+}
+
+.shell {
+  font-family: var(--bmc-font);
+  color: var(--bmc-ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell h1 {
+  font-size: clamp(1.65rem, 4vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--bmc-navy);
+  line-height: 1.2;
+  margin: 0 0 0.65rem;
+}
+
+.shell h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--bmc-navy);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.shell h3 {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--bmc-navy);
+  margin: 1rem 0 0.4rem;
+}
+
+.shell p {
+  margin: 0 0 0.85rem;
+  max-width: 70ch;
+}
+
+.shell a:not(.bmc-btn):not(.clubs-hub__btn):not([class*="button"]):not(#button1) {
+  color: var(--bmc-blue);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(13, 71, 161, 0.35);
+}
+
+.shell a:not(.bmc-btn):not(.clubs-hub__btn):not([class*="button"]):not(#button1):hover {
+  border-bottom-color: var(--bmc-blue);
+  color: var(--bmc-blue-hover);
+}
+
+/* Careers hub strip sits on a dark gradient — shell link styles must not force blue-on-navy */
+.shell .careers-hub__nav a {
+  color: rgba(255, 255, 255, 0.92) !important;
+  border-bottom: none !important;
+  font-weight: 500;
+}
+
+.shell .careers-hub__nav a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+.shell .careers-hub__nav-sep {
+  color: rgba(255, 255, 255, 0.42) !important;
+}
+
+/* Standard page column */
+.bmc-page {
+  width: 100%;
+  max-width: var(--bmc-max);
+  margin: 0 auto;
+  padding: 0.35rem 1.25rem 3rem;
+  box-sizing: border-box;
+}
+
+.bmc-hero {
+  margin-bottom: 1.5rem;
+}
+
+.bmc-hero__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bmc-warm);
+  margin: 0 0 0.35rem;
+}
+
+.bmc-hero__lede {
+  font-size: 1.05rem;
+  color: var(--bmc-muted);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* Cards */
+.bmc-card {
+  background: var(--bmc-card);
+  border: 1px solid var(--bmc-line);
+  border-radius: var(--bmc-radius);
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--bmc-shadow);
+}
+
+.bmc-card h2,
+.bmc-card h3 {
+  margin-top: 0;
+}
+
+/* Forms */
+.bmc-form {
+  max-width: 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.bmc-form .bmc-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.bmc-form input[type="text"],
+.bmc-form input[type="email"],
+.bmc-form input[type="password"],
+.bmc-form input[type="number"],
+.bmc-form input[type="url"],
+.bmc-form select,
+.bmc-form textarea {
+  font-family: var(--bmc-font);
+  font-size: 1rem;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--bmc-line);
+  border-radius: var(--bmc-radius-sm);
+  background: var(--bmc-card);
+  color: var(--bmc-ink);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bmc-form input:focus,
+.bmc-form select:focus,
+.bmc-form textarea:focus {
+  outline: 2px solid rgba(13, 71, 161, 0.35);
+  outline-offset: 1px;
+}
+
+.bmc-form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bmc-muted);
+}
+
+.bmc-error {
+  color: var(--bmc-danger);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+/* Buttons */
+.bmc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: var(--bmc-font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--bmc-radius-sm);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.bmc-btn:active {
+  transform: scale(0.98);
+}
+
+.bmc-btn--primary {
+  background: var(--bmc-navy);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(10, 22, 40, 0.2);
+}
+
+.bmc-btn--primary:hover {
+  filter: brightness(1.08);
+  color: #fff;
+  border-bottom: none;
+}
+
+.bmc-btn--ghost {
+  background: var(--bmc-card);
+  color: var(--bmc-blue);
+  border: 1px solid rgba(13, 71, 161, 0.35);
+}
+
+.bmc-btn--ghost:hover {
+  background: var(--bmc-blue-soft);
+  color: var(--bmc-blue-hover);
+  border-bottom: 1px solid rgba(13, 71, 161, 0.35);
+}
+
+.bmc-btn--danger {
+  background: transparent;
+  color: var(--bmc-danger);
+  border: 1px solid rgba(176, 0, 32, 0.35);
+}
+
+.bmc-btn--danger:hover {
+  background: rgba(176, 0, 32, 0.06);
+  color: var(--bmc-danger);
+  border-bottom: 1px solid rgba(176, 0, 32, 0.35);
+}
+
+/* Site footer (global) */
+.site-footer {
+  width: 100%;
+  margin-top: auto;
+  background: linear-gradient(180deg, #0d47a1 0%, #082754 100%);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 2rem 1.25rem 1.75rem;
+  box-sizing: border-box;
+}
+
+.site-footer__inner {
+  max-width: var(--bmc-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.site-footer__logo img {
+  max-width: 260px;
+  height: auto;
+  display: block;
+  filter: brightness(1.05);
+}
+
+.site-footer__legal {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 40rem;
+}
+
+.site-footer__legal a {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  border-bottom: none;
+}
+
+.site-footer__legal a:hover {
+  opacity: 0.92;
+  border-bottom: none;
+}
+
+/* Profile layout */
+.bmc-profile {
+  max-width: var(--bmc-max);
+  margin: 0 auto;
+  padding: 0.5rem 1.25rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .bmc-profile {
+    grid-template-columns: 220px 1fr;
+    align-items: start;
+  }
+}
+
+.bmc-profile__head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bmc-card);
+  border: 1px solid var(--bmc-line);
+  border-radius: var(--bmc-radius);
+  box-shadow: var(--bmc-shadow);
+}
+
+@media (min-width: 768px) {
+  .bmc-profile__head {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.bmc-profile__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bmc-blue-soft);
+}
+
+.bmc-profile__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bmc-profile__grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .bmc-profile__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.shell .team-rectangles {
+  background: linear-gradient(180deg, var(--bmc-surface) 0%, #fff 50%);
+  padding-bottom: 1rem;
+}
+
+.shell #footer2 {
+  background: linear-gradient(180deg, #eef2f7 0%, #e2e8f0 100%);
+  padding: 2.5rem 1rem 3rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--bmc-line);
+}
+
+.shell #footer2 h2 {
+  font-size: 1.1rem;
+}
+
+/* Home: soften giant legacy buttons */
+.shell .home-rec .buttonsrectangle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  align-items: stretch;
+}
+
+.shell #button1 {
+  font-family: var(--bmc-font) !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  padding: 0.85rem 1.25rem !important;
+  white-space: normal !important;
+  line-height: 1.35 !important;
+  max-width: 100% !important;
+  border-radius: var(--bmc-radius-sm) !important;
+  border-bottom: 3px solid rgba(0, 0, 0, 0.12) !important;
+  border-right: 3px solid rgba(0, 0, 0, 0.08) !important;
+  box-sizing: border-box;
+}
+
+.shell .home-rec .body_text1 span {
+  font-family: var(--bmc-font);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--bmc-navy);
+}
+
+.shell .home-rec .body_text2 {
+  color: var(--bmc-ink);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* Long-form / Weebly migration pages */
+.bmc-prose {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.5rem 1rem 3rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--bmc-ink);
+}
+
+.bmc-prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.bmc-prose .subnav {
+  background: var(--bmc-card);
+  border: 1px solid var(--bmc-line);
+  box-shadow: var(--bmc-shadow);
+}
+
+.bmc-prose table,
+.bmc-result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+}
+
+.bmc-prose th,
+.bmc-prose td,
+.bmc-result-table th,
+.bmc-result-table td {
+  border: 1px solid var(--bmc-line);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.bmc-prose th,
+.bmc-result-table th {
+  background: var(--bmc-blue-soft);
+  color: var(--bmc-navy);
+  font-weight: 600;
+}
+
+/* New student checklist (checklist.html) */
+.checklist-page .checklist-note {
+  font-size: 1.05rem;
+  color: var(--bmc-warm);
+  font-weight: 600;
+  margin: 0 0 1rem;
+  max-width: 65ch;
+}
+
+.checklist-page .checklist-divider {
+  border: none;
+  border-top: 1px solid var(--bmc-line);
+  margin: 1.5rem 0;
+}
+
+.checklist-page .checklist-grid {
+  max-width: 56rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  text-align: left;
+  align-items: start;
+}
+
+.checklist-page .checklist-grid--wide {
+  max-width: 72rem;
+}
+
+.checklist-page .checklist-grid img.checklist-thumb {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  justify-self: center;
+}
+
+.checklist-page .checklist-subheading {
+  color: var(--bmc-warm);
+  font-size: 1.15rem;
+}
+
+.checklist-page .library-hours {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.checklist-page .library-hours li {
+  margin: 0.35rem 0;
+}
+
+.checklist-page .library-hours .lib-day {
+  color: var(--bmc-warm);
+  font-weight: 600;
+}
+
+.checklist-page .deposit-hero-img {
+  width: min(300px, 100%);
+  height: auto;
+  margin: 1rem auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .checklist-page .checklist-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*
+ * Page banner — same treatment as course planner (coursePlanner.html):
+ * Manhattan photo, cover, ~378px min height; title copy sits on rgba(0,0,0,0.3) panel only.
+ */
+.bmc-page-hero,
+.bmc-events-hero {
+  --bmc-planner-banner-img: url("https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg");
+  min-height: 378px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3d4a5c;
+  background-image: var(--bmc-planner-banner-img);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-radius: 0 0 var(--bmc-radius) var(--bmc-radius);
+  margin: 0 0 1.5rem;
+  box-sizing: border-box;
+}
+
+.bmc-page-hero__panel {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 1.25rem 1.5rem;
+  max-width: min(1100px, 94vw);
+  box-sizing: border-box;
+}
+
+.bmc-page-hero__eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(247, 248, 249, 0.92);
+  margin: 0 0 0.35rem;
+}
+
+.shell .bmc-page-hero h1,
+.shell .bmc-events-hero h1,
+.bmc-page-hero h1,
+.bmc-events-hero h1 {
+  color: rgb(247, 248, 249);
+  margin: 0;
+  font-size: clamp(2.25rem, 7vw, 5rem);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.05;
+  text-shadow: none;
+}
+
+.bmc-page-hero__lede {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgb(247, 248, 249);
+  margin: 0.75rem auto 0;
+  max-width: 42rem;
+}
+
+.bmc-page-hero__lede a {
+  color: rgb(247, 248, 249);
+  border-bottom-color: rgba(247, 248, 249, 0.45);
+  font-weight: 600;
+}
+
+.bmc-page-hero__lede a:hover {
+  color: rgb(247, 248, 249);
+  border-bottom-color: rgb(247, 248, 249);
+}
+
+/* Optional: swap photo only (same layout as course planner) */
+.bmc-page-hero--urban {
+  --bmc-planner-banner-img: url("https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg");
+}
+
+/* Major & course list — card layout (no inner horizontal scroll) */
+.semester-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.semester-card {
+  background: var(--bmc-card);
+  border: 1px solid var(--bmc-line);
+  border-radius: var(--bmc-radius);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--bmc-shadow);
+  box-sizing: border-box;
+}
+
+.semester-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--bmc-line);
+}
+
+.semester-card__major {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--bmc-navy);
+}
+
+.semester-card__meta {
+  font-size: 0.9rem;
+  color: var(--bmc-muted);
+}
+
+.semester-card__total {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--bmc-warm);
+  background: rgba(232, 93, 4, 0.1);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+.semester-card__courses {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.semester-card__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1rem;
+  font-size: 0.92rem;
+  align-items: start;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--bmc-line);
+}
+
+.semester-card__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.semester-card__cred {
+  color: var(--bmc-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  text-align: right;
+}
+
+/* Campus info legacy grid — responsive without tiny columns */
+.campus-info-root .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 1rem auto;
+}
+
+.campus-info-root .grid-item img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.bmc-event-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem 1rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.bmc-event-card {
+  background: var(--bmc-card);
+  border: 1px solid var(--bmc-line);
+  border-radius: var(--bmc-radius-sm);
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: var(--bmc-shadow);
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.bmc-event-card h3 {
+  margin-top: 0;
+  color: var(--bmc-navy);
+}
+
+.bmc-event-card .bmc-btn {
+  margin-top: 0.5rem;
+}
+
+.ibm-row-form.bmc-form {
+  max-width: none;
+}

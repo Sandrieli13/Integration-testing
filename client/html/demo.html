@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 
+{% block title %}Demo{% endblock %}
+
+{% block extra_head %}
+<style>
+  .demo-embed { max-width: 100%; aspect-ratio: 16/9; width: min(1054px, 100%); height: auto; min-height: 200px; border: 0; border-radius: var(--bmc-radius-sm); }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="demo">
-    <h1>DEMO:</h1>
-    <form method="POST" class="ibm-row-form" action="{% url 'signin' %}">
-        <iframe allow="fullscreen;" width="1054" height="593" src="https://www.youtube.com/embed/H1aa96hB7MA">
-        </iframe>
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vS29QqgCjOP788PlgZrXJ37GqOk1p8cOa50nMfYapuYnpStNqPJ6BUCJptHF_UiFctvhAyHyQEeYgy0/embed?start=false&loop=false&delayms=3000" frameborder="0" width="1054" height="593" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-    <h1>Source Code:</h1>
-    <a href="https://github.com/Team-C-BMCC-Connect/BMCConnect" target="_blank" id="button1"><i class="fab fa-github"></i>  Github</a>
+<div class="bmc-page bmc-prose">
+  <header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Project</p>
+        <h1>Demo</h1>
+        <p class="bmc-page-hero__lede">Recorded walkthrough and slides for BMCConnect.</p>
+  </div>
+</header>
+  <div class="bmc-card" style="display:flex;flex-direction:column;gap:1rem;">
+    <iframe title="Demo video" class="demo-embed" allow="fullscreen" src="https://www.youtube.com/embed/H1aa96hB7MA"></iframe>
+    <iframe title="Slides" class="demo-embed" src="https://docs.google.com/presentation/d/e/2PACX-1vS29QqgCjOP788PlgZrXJ37GqOk1p8cOa50nMfYapuYnpStNqPJ6BUCJptHF_UiFctvhAyHyQEeYgy0/embed?start=false&amp;loop=false&amp;delayms=3000"></iframe>
+  </div>
+  <p><a class="bmc-btn bmc-btn--ghost" href="https://github.com/Team-C-B-MCC-Connect/BMCConnect" target="_blank" rel="noopener noreferrer" id="button1"><i class="fab fa-github"></i> GitHub</a></p>
 </div>
-   
 {% endblock %}

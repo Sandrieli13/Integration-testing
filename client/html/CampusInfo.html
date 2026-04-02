@@ -1,243 +1,74 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block content %}
-<head>
-    <style>                    
-        .content {
-        flex-grow: 1;
-        overflow-y: auto;  
-        padding: 0 auto;
-        }
-        
+{% block title %}Campus information{% endblock %}
 
-        .logo-item {
-            margin-right: 10px;
-        }
+{% block extra_head %}
+<style>
+  .campus-info-root .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 1rem auto;
+  }
+  .campus-info-root .grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .campus-info-root .grid-item img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: var(--bmc-radius-sm, 10px);
+    box-shadow: var(--bmc-shadow, 0 4px 24px rgba(10, 22, 40, 0.07));
+  }
+  .campus-info-root h2 { text-align: center; }
+  .campus-info-root h3 { display: flex; justify-content: center; color: var(--bmc-muted, #5c6b7f); font-size: 1.05rem; }
+  .container2 { display: flex; justify-content: center; margin: 2rem 0; }
+  .content2 {
+    max-width: 1200px;
+    padding: 1.5rem;
+    background: var(--bmc-card, #fff);
+    border-radius: var(--bmc-radius-sm, 10px);
+    border: 1px solid var(--bmc-line, #d8e1ec);
+    box-shadow: var(--bmc-shadow, 0 4px 24px rgba(10, 22, 40, 0.07));
+  }
+  .title2 { font-size: 1.35rem; color: var(--bmc-navy, #0a1628); margin-bottom: 1rem; }
+  .paragraph2 { font-size: 1rem; color: var(--bmc-muted, #5c6b7f); line-height: 1.6; }
+  .button2 {
+    display: inline-block;
+    padding: 0.65rem 1.25rem;
+    background: var(--bmc-blue, #0d47a1);
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: var(--bmc-radius-sm, 10px);
+    font-weight: 600;
+    margin-top: 0.5rem;
+    border-bottom: none !important;
+  }
+  .button2:hover { filter: brightness(1.08); color: #fff !important; }
+  hr.new5 { border: none; border-top: 8px solid var(--bmc-blue-soft, #e3f2fd); margin: 2rem 0; }
+  .department-info { text-align: left; font-size: 0.9rem; }
+  .department-info .department-name, .department-info .contact-name { font-weight: 600; }
+  .campus-info-root ul { list-style: none; padding-left: 0; }
+</style>
+{% endblock %}
 
-        .menu-items {
-            flex-grow: 1;
-            display: flex;
-            justify-content: flex-end;
-        }
- 
- 
+{% block content %}
+<header class="bmc-page-hero">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">BMCC Connect</p>
+      <h1>Campus information</h1>
+      <p class="bmc-page-hero__lede">Explore directions, opportunities, and amenities across BMCC locations.</p>
+  </div>
+</header>
+<div class="bmc-page bmc-prose campus-info-root">
 
-        .logo {
-            margin-top: 40px;
-            max-width: 450px;
-            width: 100%;
-            height: 100%;
-            height: 300px;
-            border: blur;               
-        }     
-        .icon {
-            width: 150px;
-            height: 40px;
-            margin-right: 10px;
-            border-radius: 10px;
-        
-            }
-            h1{  
-                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-                color: #000;
-                text-align: center;              
-                font-size: 62px;
-                font-family: Koh Santepheap;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;                
-            }
-            h2{            
-                color: rgb(91, 86, 86);              
-                text-align: center;
-                font-size: 25px;
-                font-family: Koh Santepheap;             
-                line-height: normal;                
-            }
-            h3{
-                    display: flex;
-                    justify-content: center;
-                    color: #686f70;
-                    font-size: 18px;
-                }  
-            
-            .icon-container {
-                display: flex;
-                align-items: center;
-                margin-bottom: 20px; /* Optional: Adds some spacing between each icon-container */
-                }
-
-                .logo-container {                      
-                        margin-bottom:20px;
-                        margin-top: 50px;
-                    }
-
-                    .banner, .logo {
-                        margin: 0;
-                        padding: 0;
-                        top: 0;
-                        left: 0;
-                    
-                    }
-
-                
-
-                    .grid-container {
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr);
-                    gap:30px;
-                    margin: 10px auto; /* Add this line to center the grid horizontally */
-                    max-width:1200px; /* Adjust the maximum width as needed */
-                }
-
-                .grid-item {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center; /* Add this property */
-                }
-
-                .grid-item .wsite-content-title {
-                    font-size: 4;
-                }
-
-                /* .grid-item .imgPusher {
-                    float: right;
-                    height: 0px;
-                } */
-
-                .grid-item img {
-            width: 200px; /* Adjust the width as needed */
-            height: 200px; /* Adjust the height as needed */
-            object-fit: cover;
-            margin-top: 4px;
-            margin-bottom: 10px;
-            margin-left: auto;
-            margin-right: auto;
-            border-width: 0;
-            max-width: 100%;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);  
-                }
-
-                .grid-item .paragraph {
-                    display: block;
-                }
-
-                .grid-item .span{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center; /* Add this property */
-                }
-                .container2{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-bottom: 50px;
-                text-align: center;
-                background:white;
-                }
-
-                .content2 {
-                max-width: 1200px;
-                padding: 20px;
-                background-color: #fff;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                }
-
-                .title2 {
-                font-size: 24px;
-                color: #333;
-                margin-bottom: 20px;
-                }
-
-                .paragraph2 {
-                font-size: 16px;
-                color: #666;
-                line-height: 1.6;
-                }
-
-                .button2 {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #007bff;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 4px;
-                transition: background-color 0.3s;
-                }
-
-                .button2:hover {
-                background-color: #0056b3;
-                }
-                hr.new5 {
-                border: 10px solid rgb(85, 156, 238);
-                border-radius: 1px;
-                }
-            
-    .department-info {
-        text-align: left;
-        font-size: 14px; /* You might want to adjust this size */
-    }
-
-    .department-info .department-name {
-        font-weight: 600;
-    }
-
-    .department-info .contact-name {
-        font-weight: 600;
-    }
-    ul,li{
-        list-style-type: none;
-    }
- 
-
-    </style>
-
-<link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
-    <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
-    <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
-    <link rel="stylesheet" type="text/css" href="/files/main_style.css?1668096927" title="wsite-theme-css" />
-
-    <script>
-    var STATIC_BASE = '//cdn1.editmysite.com/';
-    var ASSETS_BASE = '//cdn2.editmysite.com/';
-    var STYLE_PREFIX = 'wsite';
-    </script>
-    <script src='https://cdn2.editmysite.com/js/jquery-1.8.3.min.js'></script>
-
-    <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668093892&"></script>
-    <script src="//cdn2.editmysite.com/js/site/main.js?buildTime=1668539559"></script><script type="text/javascript"></script>
-    <script type="text/javascript">_W.configDomain = "www.weebly.com";</script><script>_W.relinquish && _W.relinquish()</script>
-    <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668539559&"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script><script type="text/javascript"> 
-
-    </script>
-                
-</head>
-    <div class="banner-wrap">
-        <div class="wsite-elements wsite-not-footer wsite-header-elements">
-    <div class="wsite-section-wrap">
-    <div  class="wsite-section wsite-header-section wsite-section-bg-image wsite-section-effect-reveal" style="vertical-align: middle;height: 378px;background-image: url(&quot;https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg&quot;) ;background-repeat: no-repeat ;background-position: undefined undefined ;background-size: 100% ;background-color: transparent ;background-size: cover;" >
-        <div class="wsite-section-content">
-            
-            <div class="banner">
-                <div class="banner-inner">
-                <div class="wsite-section-elements">
-                    <h2 class="wsite-content-title" style ="font-size:80px;color: rgb(247, 248, 249);background-color: rgba(0, 0, 0, 0.3)">Campus Information</h2>
-                </div>
-            </div>
-            </div>
-        
-        </div>
-        <div class=""></div>
-    </div>
-</div>
-
-</div>
-    </div>
- 
-    <h3 style="color: rgb(5, 5, 5);">Explore the Campus Directions, Opportunities and Sign Up for Amenities and Events
+    <h3 style="color: var(--bmc-ink, #1a2332);">Explore the Campus Directions, Opportunities and Sign Up for Amenities and Events
     </h3>
     <h2 style="margin-top: 30px;">CAMPUS ADDRESSES:<br></h2>
     <div class="grid-container">             
@@ -610,6 +441,7 @@
     <p >@ Borough of Manhattan Community College | 199 Chambers Street | New York, NY 10007 | Contact Us | Privacy Policy</p>
 
 </div>
-<hr> 
+<hr>
+</div>
 {% endblock %}
 

@@ -6,12 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}BMCConnect{% endblock %}</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
   <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
   {# Bump ?v= when navbar.css changes (browsers/CDN cache). Source of truth: client/css/navbar.css — run collectstatic on the server. #}
   <link href="{% static 'navbar.css' %}?v=sitenav3" rel="stylesheet" type="text/css">
+  <link href="{% static 'app-shell.css' %}?v=5" rel="stylesheet" type="text/css">
   {% block extra_head %}{% endblock %}
 </head>
 <body>
@@ -19,7 +23,7 @@
   {# Fixed #navbar is out of flow; this block reserves real layout height so main text cannot sit under the bar. #}
   <div class="site-nav-offset" aria-hidden="true"></div>
 
-  <div class="content" id="page-content">
+  <div class="content shell" id="page-content">
     {% block content %}{% endblock %}
   </div>
 
