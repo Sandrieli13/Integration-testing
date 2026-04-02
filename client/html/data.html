@@ -13,7 +13,7 @@
     color: #1a1a1a;
     box-sizing: border-box;
     min-width: 0;
-    scroll-margin-top: calc(var(--navbar-height, 72px) + env(safe-area-inset-top, 0px) + 28px);
+    scroll-margin-top: var(--site-nav-offset-total, calc(72px + 24px + env(safe-area-inset-top, 0px)));
   }
   .page-data h1 {
     color: #0a1f45;

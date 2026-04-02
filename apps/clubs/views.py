@@ -67,7 +67,6 @@ def join_club(request, club_id):
     return JsonResponse({"joined": joined, "members_count": members_count})
 
 
-@login_required
 def clubs_list_view(request):
     clubs = (
         Club.objects.annotate(member_count=Count("members", distinct=True))

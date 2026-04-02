@@ -127,6 +127,14 @@ Use the green **Reload** button on the Web tab.
 - `DisallowedHost`: fix `DJANGO_ALLOWED_HOSTS`.
 - CSRF errors on login/forms: ensure `DJANGO_CSRF_TRUSTED_ORIGINS` uses `https://` and matches your site URL exactly.
 
+### Layout or CSS looks unchanged (e.g. text under the navbar)
+
+1. **`git pull`** your branch so `client/css/` and `client/html/` match GitHub.
+2. Run **`python manage.py collectstatic --noinput`** — CSS **source** is under `client/css/`; production usually serves **`static/`** after collectstatic (or WhiteNoise bundles from there). Skipping this step leaves **old** `navbar.css` on disk.
+3. Click **Reload** on the Web tab.
+4. Hard-refresh the browser (**Ctrl+Shift+R** / **Cmd+Shift+R**) or try a private window.
+5. `base.html` adds **`?v=...`** on `navbar.css` to reduce stale caching; if you deploy custom CSS without bumping that query string, bump it in `client/html/base.html` after big layout fixes.
+
 ### “Something went wrong” / blank error (site won’t load)
 
 The app process is crashing. **Open the Web tab → Error log** and scroll to the **bottom**; the last traceback is what matters.

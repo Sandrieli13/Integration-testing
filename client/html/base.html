@@ -10,11 +10,14 @@
   <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
   <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
-  <link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
+  {# Bump ?v= when navbar.css changes (browsers/CDN cache). Source of truth: client/css/navbar.css — run collectstatic on the server. #}
+  <link href="{% static 'navbar.css' %}?v=sitenav3" rel="stylesheet" type="text/css">
   {% block extra_head %}{% endblock %}
 </head>
 <body>
   {% include 'partials/app_navbar.html' %}
+  {# Fixed #navbar is out of flow; this block reserves real layout height so main text cannot sit under the bar. #}
+  <div class="site-nav-offset" aria-hidden="true"></div>
 
   <div class="content" id="page-content">
     {% block content %}{% endblock %}

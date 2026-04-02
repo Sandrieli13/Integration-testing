@@ -18,6 +18,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = '/static/'
+# Served in production from STATIC_ROOT after: python manage.py collectstatic --noinput
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'client', 'css'),
     os.path.join(BASE_DIR, 'client', 'js'),

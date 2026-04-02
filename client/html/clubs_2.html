@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   .clubs-hub {
-    /* Match #page-content offset in navbar.css (uses --navbar-height + safe area + buffer) */
-    --ch-header-clear: calc(var(--navbar-height, 72px) + env(safe-area-inset-top, 0px) + 28px);
+    /* Align with global .site-nav-offset (navbar.css --site-nav-offset-total) */
+    --ch-header-clear: var(--site-nav-offset-total, calc(72px + 24px + env(safe-area-inset-top, 0px)));
     --ch-navy: #0a1628;
     --ch-blue: #0d47a1;
     --ch-blue-soft: #e3f2fd;
@@ -96,6 +96,29 @@
     border-radius: var(--ch-radius);
     color: var(--ch-muted);
     line-height: 1.55;
+  }
+
+  .clubs-hub__empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem;
+    margin-top: 1.35rem;
+  }
+
+  .clubs-hub__empty-actions .clubs-hub__btn {
+    margin: 0;
+  }
+
+  .clubs-hub__empty-lede {
+    margin: 0;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .clubs-hub__empty-title {
+    color: var(--ch-ink);
   }
 
   .clubs-hub__category {
@@ -381,12 +404,14 @@
     font-size: 0.88rem;
   }
 
+  .clubs-hub__empty-actions .clubs-hub__btn--stat,
   .clubs-hub__admin-row .clubs-hub__btn--stat {
     background: var(--ch-warm);
     color: #fff;
     box-shadow: 0 2px 10px rgba(232, 93, 4, 0.35);
   }
 
+  .clubs-hub__empty-actions .clubs-hub__btn--stat:hover,
   .clubs-hub__admin-row .clubs-hub__btn--stat:hover {
     filter: brightness(1.06);
   }
@@ -423,10 +448,24 @@
   </header>
 
   {% if not clubs %}
-    <p class="clubs-hub__empty">
-      No clubs are listed yet.{% if user.is_staff %}
-        Use <strong>Create club</strong> below to add the first one.{% endif %}
-    </p>
+    <div class="clubs-hub__empty">
+      <p class="clubs-hub__empty-lede">
+        <strong class="clubs-hub__empty-title">No clubs are in the directory yet.</strong><br>
+        When clubs are added, open a category and use <strong>Join club</strong> on each listing.
+        If you’re staff, you can create the first club now.
+      </p>
+      <div class="clubs-hub__empty-actions">
+        {% if user.is_authenticated %}
+          <a class="clubs-hub__btn clubs-hub__btn--ghost" href="{% url 'profile' %}">My profile</a>
+        {% else %}
+          <a class="clubs-hub__btn clubs-hub__btn--primary" href="{% url 'signin' %}">Sign in</a>
+        {% endif %}
+        {% if user.is_staff %}
+          <a class="clubs-hub__btn clubs-hub__btn--stat" href="{% url 'create_club' %}">Create club</a>
+          <a class="clubs-hub__btn clubs-hub__btn--ghost" href="{% url 'charts' %}">Club data</a>
+        {% endif %}
+      </div>
+    </div>
   {% endif %}
 
   {% regroup clubs by category as category_list %}
@@ -507,7 +546,7 @@
     </details>
   {% endfor %}
 
-  {% if user.is_staff %}
+  {% if user.is_staff and clubs %}
     <div class="clubs-hub__admin">
       <p class="clubs-hub__admin-title">Staff</p>
       <div class="clubs-hub__admin-row">

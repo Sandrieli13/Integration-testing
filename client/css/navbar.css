@@ -1,6 +1,12 @@
 :root {
     /* Must cover real header (logo + large home link); was 64px and clipped first line of page */
     --navbar-height: 72px;
+    /* Extra air below the bar inside the in-flow shim (body > .site-nav-offset) */
+    --site-nav-below-gap: 24px;
+    /* Single source of truth for “start content below fixed nav” (safe area + bar + gap) */
+    --site-nav-offset-total: calc(
+        var(--navbar-height) + env(safe-area-inset-top, 0px) + var(--site-nav-below-gap)
+    );
     /* Space so Watson Assistant / browser UI does not cover last lines */
     --page-bottom-inset: 6.5rem;
     --navbar-bg-color: rgba(0, 65, 150, 1);
@@ -22,14 +28,29 @@ body {
     margin-top: 0;
 }
 
-/* base.html #page-content: clear fixed #navbar (override any later sheet resetting padding). */
+/*
+ * Global layout: fixed #navbar does not take flow space. Padding on #page-content was fragile
+ * (other sheets, collectstatic cache, specificity). An in-flow .site-nav-offset cannot be collapsed
+ * by .content rules and guarantees every page clears the bar.
+ */
 html {
-    scroll-padding-top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px) + 20px);
+    scroll-padding-top: var(--site-nav-offset-total);
+}
+
+body > .site-nav-offset {
+    display: block;
+    width: 100%;
+    height: var(--site-nav-offset-total);
+    min-height: var(--site-nav-offset-total);
+    flex-shrink: 0;
+    pointer-events: none;
+    box-sizing: border-box;
 }
 
 #page-content.content,
 body > .content#page-content {
-    padding-top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px) + 28px) !important;
+    /* Nav clearance is .site-nav-offset — do not double up with padding-top */
+    padding-top: 0 !important;
     padding-bottom: calc(var(--page-bottom-inset) + env(safe-area-inset-bottom, 0px)) !important;
     padding-left: env(safe-area-inset-left, 0px);
     padding-right: env(safe-area-inset-right, 0px);
