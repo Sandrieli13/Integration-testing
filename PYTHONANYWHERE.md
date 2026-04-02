@@ -101,8 +101,11 @@ From the project root with venv active:
 
 ```bash
 python manage.py load_json_data              # Majors, Courses, Semester (base app)
+python manage.py load_elective_courses       # Individual & Society, US Exp, World Cultures, Program electives (static JSON, no scraping)
 python manage.py sync_department_metrics     # charts on DataAnalysisPage (from CSV under client/css/csv/)
 ```
+
+BMCC **scrape** commands (`import_individual_society_bmcc`, etc.) need outbound HTTP; free PythonAnywhere accounts often cannot reach arbitrary URLs — use **`load_elective_courses`** instead on the server.
 
 Careers app rows (majors/skills/jobs) are **not** in that JSON; for those you still need **Option A**, Django **admin**, or a custom import.
 
