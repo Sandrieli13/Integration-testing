@@ -57,6 +57,14 @@ CSRF_TRUSTED_ORIGINS = [
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Set DJANGO_USE_WHITENOISE=false in WSGI if static files are served only via the Web tab mapping
+# (helps isolate ImportError / misconfigured venv). Default: on.
+_USE_WHITENOISE = os.environ.get('DJANGO_USE_WHITENOISE', 'true').lower() in (
+    '1',
+    'true',
+    'yes',
+)
+
 
 # Application definition
 
@@ -77,7 +85,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    *(
+        ('whitenoise.middleware.WhiteNoiseMiddleware',)
+        if _USE_WHITENOISE
+        else ()
+    ),
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -156,7 +168,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 CSV_FILE_DIR = os.path.join(BASE_DIR, 'static', 'csv')
 
 # Serve /static/ in production (DEBUG=False) without relying only on PythonAnywhere nginx mapping.
-if not DEBUG:
+if not DEBUG and _USE_WHITENOISE:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 STATICFILES_FINDERS = [

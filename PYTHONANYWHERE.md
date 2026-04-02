@@ -98,3 +98,29 @@ Use the green **Reload** button on the Web tab.
 - Read **Error log** and **Server log** on the Web tab.
 - `DisallowedHost`: fix `DJANGO_ALLOWED_HOSTS`.
 - CSRF errors on login/forms: ensure `DJANGO_CSRF_TRUSTED_ORIGINS` uses `https://` and matches your site URL exactly.
+
+### “Something went wrong” / blank error (site won’t load)
+
+The app process is crashing. **Open the Web tab → Error log** and scroll to the **bottom**; the last traceback is what matters.
+
+**In a Bash console**, run (use your username; copy env lines from your WSGI file if you like):
+
+```bash
+cd ~/Integration-testing
+source venv/bin/activate
+export DJANGO_SETTINGS_MODULE=mysite.settings
+export DJANGO_DEBUG=false
+export DJANGO_ALLOWED_HOSTS=YOURUSERNAME.pythonanywhere.com
+export DJANGO_CSRF_TRUSTED_ORIGINS=https://YOURUSERNAME.pythonanywhere.com
+export DJANGO_SECRET_KEY=test-key-not-for-production
+python -c "import django; django.setup(); from django.core.wsgi import get_wsgi_application; get_wsgi_application(); print('WSGI OK')"
+```
+
+- **`ModuleNotFoundError`** (e.g. `whitenoise`, `django`): Web tab **Virtualenv** must point at this project’s `venv`, then `pip install --no-cache-dir -r requirements.txt`.
+- Wrong **project path** in WSGI: `project_home` must be the folder containing **`manage.py`** (e.g. `Integration-testing`), not `mysite` inside it.
+
+**Temporary debug:** in the WSGI file only, set `os.environ["DJANGO_DEBUG"] = "true"` and reload. Django will show a **yellow error page** with the real exception (turn it back to `false` after fixing).
+
+**Disable WhiteNoise** (if you use the Web tab `/static/` → `.../Integration-testing/static` mapping): in WSGI, before `get_wsgi_application()`:
+
+`os.environ["DJANGO_USE_WHITENOISE"] = "false"`
