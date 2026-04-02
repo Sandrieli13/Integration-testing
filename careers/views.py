@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, get_object_or_404
 from .models import Major, Job, Course, Skill, Intern
 from django.db.models import Q
@@ -19,49 +21,65 @@ def page1(request):
         majors = Major.objects.all()
         return render(request, 'page1.html', {'majors': majors})
 
+def _major_job_ids_map():
+    data = {}
+    for m in Major.objects.prefetch_related("jobs_From_Bmcc"):
+        data[str(m.id)] = [j.id for j in m.jobs_From_Bmcc.all()]
+    return data
+
+
 def page2(request):
-    if request.method == 'POST':
-        major_id = request.POST['major']
-        job_id = request.POST['job']
+    majors_jobs_json = json.dumps(_major_job_ids_map())
+    default_gap_tip = (
+        "Build this through BMCC coursework, labs, personal projects, clubs, or micro-credentials. "
+        "Ask your professor or the Internships & Career Development office for project ideas."
+    )
+
+    if request.method == "POST":
+        major_id = request.POST["major"]
+        job_id = request.POST["job"]
         major = get_object_or_404(Major, pk=major_id)
         job = get_object_or_404(Job, pk=job_id)
 
-        # Get skills of the major and the job
         major_skills = major.skills.all()
         job_skills = job.skills.all()
 
-        # Calculate mismatched skills and gap fillers
-        mismatched_skills = job_skills.difference(major_skills)
-        print("\n \n mismatched SKILLS: \n",mismatched_skills, "\n type: ", type(mismatched_skills))
+        matched_skills = job_skills.filter(id__in=major_skills)
+        mismatched_skills = job_skills.exclude(id__in=major_skills)
 
-        skill_names = mismatched_skills
+        gap_rows = []
+        for skill in mismatched_skills:
+            tip = (skill.gapfiller or "").strip() or default_gap_tip
+            gap_rows.append({"name": skill.name, "how_to_build": tip})
 
-        skill_gap_mappin = {}
+        return render(
+            request,
+            "page2.html",
+            {
+                "major": major,
+                "job": job,
+                "major_skills": major_skills,
+                "job_skills": job_skills,
+                "matched_skills": matched_skills,
+                "mismatched_skills": mismatched_skills,
+                "gap_rows": gap_rows,
+                "majors": Major.objects.all(),
+                "jobs": Job.objects.all().order_by("job_title"),
+                "majors_jobs_json": majors_jobs_json,
+            },
+        )
 
-        for skill_name in skill_names:
-            try:
-                skill = Skill.objects.get(name=skill_name)
-                skill_gap_mappin[skill_name] = skill.gapfiller
-            except Skill.DoesNotExist:
-                skill_gap_mappin[skill_name] = "Skill not found"
-
-        # for skill_name, gap_name in skill_gap_mappin.items():
-        #     print(f"Skill: {skill_name}", f"gap: {gap_name}")
-
-
-        
-        return render(request, 'page2.html', {
-            'major': major,
-            'job': job,
-            'major_skills': major_skills,
-            'job_skills': job_skills,
-            'mismatched_skills': mismatched_skills,
-            'gapfilling': skill_gap_mappin.items(),
-        })
-    else:
-        majors = Major.objects.all()
-        jobs = Job.objects.all()
-        return render(request, 'page2.html', {'majors': majors, 'jobs': jobs})
+    majors = Major.objects.all()
+    jobs = Job.objects.all().order_by("job_title")
+    return render(
+        request,
+        "page2.html",
+        {
+            "majors": majors,
+            "jobs": jobs,
+            "majors_jobs_json": majors_jobs_json,
+        },
+    )
 
 
 

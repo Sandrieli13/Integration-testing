@@ -1,46 +1,104 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Learn about majors &amp; careers · Career readiness{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'careers/careers-pages.css' %}">
+{% endblock %}
 
 {% block content %}
-<head>
-    <title>Page 1</title>
-    <style>
-        .pg1 {
-            margin-bottom: 1000px;
-        }
-    </style>
-</head>
-<body class="pg1">
-    
+<div class="careers-hub">
+  {% include '_career_hub_nav.html' %}
 
-    {% if major %}
-    <h1>Result</h1>
-        <div class="result">
-            <h2>Major Description</h2>
-            <p>{{ major.description }}</p>
+  {% if major %}
+    <header class="careers-hub__hero">
+      <p class="careers-hub__eyebrow">Major profile</p>
+      <h1>{{ major.major }}</h1>
+      <p class="careers-hub__lede">
+        Explore typical roles linked to this program, then compare the skills your major emphasizes with what employers ask for on the
+        <a href="{% url 'careers:page2' %}">career skills &amp; gaps</a> page.
+      </p>
+    </header>
 
-            <h2>Jobs Related to {{ major.major }}</h2>
-            <h3>click on job title to see average base salary on indeed</h3>
-            <ul>
-                {% for job in major.jobs_From_Bmcc.all %}
-                <li><a href="https://www.indeed.com/career/{{ job.job_title }}/salaries" target="_blank">{{ job.job_title }}</a></li>
-                {% endfor %}
-            </ul>
+    <section class="careers-card" aria-labelledby="desc-heading">
+      <h2 id="desc-heading">Program snapshot</h2>
+      {% if major.description %}
+        <p>{{ major.description }}</p>
+      {% else %}
+        <p class="careers-muted">No narrative description is stored for this major yet. Check the BMCC catalog and your department chair for the official overview.</p>
+      {% endif %}
+    </section>
 
-            
-            <p><a href="{% url 'page1' %}">Select Another Major</a></p>
-        </div>
-    {% else %}
-    <h1>Select a Major</h1>
-        <form method="POST">
-            {% csrf_token %}
-            <label for="major">Choose a major:</label>
-            <select id="major" name="major">
-                {% for major in majors %}
-                    <option value="{{ major.id }}">{{ major.major }}</option>
-                {% endfor %}
-            </select>
-            <button type="submit">Submit</button>
-        </form>
+    <section class="careers-card" aria-labelledby="jobs-heading">
+      <h2 id="jobs-heading">Sample career titles</h2>
+      <p class="careers-muted" style="margin-top: 0;">Titles below are curated for exploration (not a complete labor-market list). Salary links open third-party sites for rough benchmarks—always verify with recent postings.</p>
+      {% if major.jobs_From_Bmcc.all %}
+        <ul>
+          {% for job in major.jobs_From_Bmcc.all %}
+            <li>
+              <a href="https://www.indeed.com/career/{{ job.job_title|slugify }}/salaries" target="_blank" rel="noopener noreferrer">{{ job.job_title }}</a>
+              <span class="careers-muted"> — Indeed career / salary hub</span>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="careers-muted">No linked job titles in the database yet. Use <a href="https://www.bmcc.cuny.edu/students/career-planning/" target="_blank" rel="noopener noreferrer">BMCC career planning</a> or <a href="{% url 'experientiallearning:career_info' %}">Career Info</a> in this site.</p>
+      {% endif %}
+    </section>
+
+    {% if major.courses.all %}
+    <section class="careers-card" aria-labelledby="courses-heading">
+      <h2 id="courses-heading">Related courses in this dataset</h2>
+      <p class="careers-muted" style="margin-top: 0;">These entries come from the careers database (not DegreeWorks). Use them as discussion points with an advisor.</p>
+      <ul>
+        {% for course in major.courses.all %}
+          <li>{{ course.name }}</li>
+        {% endfor %}
+      </ul>
+    </section>
     {% endif %}
-</body>
+
+    <section class="careers-panel">
+      <h2>Next steps</h2>
+      <ul>
+        <li><strong>Map skills to a target role:</strong> <a href="{% url 'careers:page2' %}">Open career skills &amp; gaps</a> and pick this major plus a job title you care about.</li>
+        <li><strong>Look for experience:</strong> <a href="{% url 'careers:page3' %}">Try the internship matcher</a> or the <a href="{% url 'experientiallearning:job_board' %}">job board</a>.</li>
+        <li><strong>See labor-market context:</strong> <a href="{% url 'experientiallearning:career_statistics' %}">Technology career statistics</a>.</li>
+      </ul>
+    </section>
+
+    <a class="careers-back" href="{% url 'careers:page1' %}">← Choose another major</a>
+
+  {% else %}
+    <header class="careers-hub__hero">
+      <p class="careers-hub__eyebrow">Career exploration</p>
+      <h1>Learn about majors &amp; careers</h1>
+      <p class="careers-hub__lede">
+        Pick a BMCC-related major to read a short profile, see sample job titles, and jump to tools that connect coursework, skills, and internships.
+      </p>
+    </header>
+
+    <section class="careers-panel">
+      <h2>How to use this page</h2>
+      <ol>
+        <li>Select your (intended) major—especially programs in computing and information systems.</li>
+        <li>Review linked roles; open salary links only as a rough guide, not an offer or guarantee.</li>
+        <li>Continue to <a href="{% url 'careers:page2' %}">Catch on important skills of careers</a> to compare your major’s skill set with a specific job.</li>
+      </ol>
+    </section>
+
+    <form method="post" class="careers-form">
+      {% csrf_token %}
+      <label for="major">Choose a major</label>
+      <select id="major" name="major" required>
+        <option value="" disabled selected>Select a major</option>
+        {% for m in majors %}
+          <option value="{{ m.id }}">{{ m.major }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="careers-btn">View major profile</button>
+    </form>
+  {% endif %}
+</div>
 {% endblock %}

@@ -1,0 +1,37 @@
+{% load static %}
+<header id="navbar">
+  <nav class="navbar-container container">
+    <a href="{% url 'index' %}" class="home-link">
+      <div class="navbar-logo"><img src="{% static 'Logo.png' %}" alt="BMCC Connect"></div>
+      onnect
+    </a>
+    <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div id="navbar-menu" class="detached">
+      <ul class="navbar-links">
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'CampusInfo' %}">Campus Information</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'coursePlanner' %}">Course Planner</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'DataAnalysisPage' %}">Data Analysis</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'studentprograms' %}">Student Programs</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'checklist' %}">Check List</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'events' %}">Events</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'experientiallearning:index' %}">Career readiness site</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'careers:page1' %}">Learn About Majors and Careers</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'careers:page2' %}">Catch on Important Skills of Careers</a></li>
+        <li class="navbar-item"><a class="navbar-link" href="{% url 'careers:page3' %}">Beta feature: Search for Internships</a></li>
+        <li class="navbar-item">
+          <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
+            {% if user.is_authenticated %}Profile{% else %}Sign In{% endif %}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

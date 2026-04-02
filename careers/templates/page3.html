@@ -80,9 +80,9 @@
             </ul>
         </div>
     </div>
-    <p><a href="{% url 'page3' %}">Try again</a></p>
+    <p><a href="{% url 'careers:page3' %}">Try again</a></p>
     {% else %}
-    <form method="POST" id="form" action="{% url 'page3' %}">
+    <form method="POST" id="form" action="{% url 'careers:page3' %}">
         {% csrf_token %}    
         
         <!-- Select for available majors -->
@@ -141,6 +141,9 @@
     <!-- ... Rest of your page ... -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        const internshipSuggestionsUrl = "{% url 'careers:get_internship_suggestions' %}";
+    </script>
     <script>
         document.getElementById('form').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -297,7 +300,7 @@
             const inputValue = internshipInput.value;
 
             // Use AJAX to fetch internship suggestions from the server
-            $.get(`/get_internship_suggestions/?query=${inputValue}`, function(data) {
+            $.get(`${internshipSuggestionsUrl}?query=${encodeURIComponent(inputValue)}`, function(data) {
                 const suggestionsList = data.map(suggestion => `<li class="internship-suggestion">${suggestion}</li>`).join('');
                 internshipSuggestions.innerHTML = suggestionsList ? `<ul>${suggestionsList}</ul>` : '';
             });

@@ -2,8 +2,9 @@ from django.shortcuts import render,reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from .models import Majors, Courses, Semester
-from .models import Majors, Courses, Semester
 from .models import IndividualAndSociety, USExperienceInItsDiversity, WorldCulturesAndGlobalIssues, ProgramElectives
+from .models import DepartmentMetric
+from .department_metrics import ENROLLMENT_CHART_DEFINITIONS, read_year_value_csv, static_csv_abspath
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 import json
@@ -20,7 +21,6 @@ from django.template import loader
 from django.contrib.staticfiles.storage import staticfiles_storage
 import pandas as pd
 import seaborn as sns
-import logging
 from django.core import serializers
 # Create your views here.
 def home(request):
@@ -82,41 +82,43 @@ def CampusInfo(request):
  
 
 def DataAnalysisPage(request, file_name=None):
-    chart_files = {
-        'csv/Enrollment data for CIS department.csv': 'Enrollment data for CIS department',
-        'csv/Graduation data for CIS department.csv': 'Graduation data for CIS department',
-        'csv/Enrollment data for CS Major.csv': 'Enrollment data for CS Major',
-        'csv/Graduation data for CS major.csv': 'Graduation data for CS major',
-        'csv/Enrollment data for CNT Major.csv': 'Enrollment data for CNT Major',
-        'csv/Graduation data for CNT major.csv': 'Graduation data for CNT major',
-        'csv/Enrollment data for CIS Major.csv': 'Enrollment data for CIS Major',
-        'csv/Graduation data for CIS major.csv': 'Graduation data for CIS major',       
-        
-    }
+    """
+    Enrollment headcount time series only. DepartmentMetric ORM preferred, else CSV.
+    """
+    enrollment_data = []
+    for spec in ENROLLMENT_CHART_DEFINITIONS:
+        series_key = spec["series_key"]
+        title = spec["title"]
+        qs = DepartmentMetric.objects.filter(series_key=series_key).order_by("year")
+        if qs.exists():
+            data = [[row.year, row.value] for row in qs]
+        else:
+            csv_file_path = static_csv_abspath(spec["csv"])
+            data = read_year_value_csv(csv_file_path)
+        enrollment_data.append((data, title))
 
-    all_data = []
-    for file_path, chart_name in chart_files.items():
-        csv_file_path = os.path.join(settings.STATICFILES_DIRS[0], file_path)
-        data = read_csv_file(csv_file_path)
-        all_data.append((data, chart_name))
+    enrollment_charts_json = [
+        {"title": title, "points": data} for data, title in enrollment_data
+    ]
 
-    return render(request, 'DataAnalysisPage.html', {'all_data': all_data})
+    tableau_app_url = (
+        "https://public.tableau.com/app/profile/bmcc.oiea/viz/BMCCDataDashboards/Welcome"
+    )
+    facts_url = (
+        "https://www.bmcc.cuny.edu/iea/institutional-research-and-data-analytics/facts-and-statistics/"
+    )
 
-def read_csv_file(csv_path):
-    data = []
-    with open(csv_path, 'r') as csv_file:
-        csv_reader = csv.reader(csv_file)
-        next(csv_reader)  # Skip header row
-        for row in csv_reader:
-            try:
-                year = int(row[0])
-                value = int(row[1])
-                data.append([year, value])
-            except Exception as e:
-                logger = logging.getLogger(__name__)
-                logger.error(f"Error in CSV file: {csv_path}. Row: {row}")
-                logger.error(e)
-    return data
+    return render(
+        request,
+        "DataAnalysisPage.html",
+        {
+            "enrollment_charts_json": enrollment_charts_json,
+            "tableau_app_url": tableau_app_url,
+            "facts_url": facts_url,
+        },
+    )
+
+
 def fetch_courses(request):
     major_id = request.GET.get('majorId')
     courses = Courses.objects.filter(major_id=major_id)  # corrected line

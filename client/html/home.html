@@ -1,248 +1,125 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="Webflow" name="generator">
-    <link rel="stylesheet"  href="https://use.fontawesome.com/releases/v6.4.0/css/all.css"/>
-    <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
-    <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"><link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
-</head>
-<body>
-  <!-- Add your navigation menu code here -->     
-          <header id="navbar">
-            <nav class="navbar-container container">
-              <a href="{% url 'index' %}" class="home-link">
-                <div class="navbar-logo"><img src="{% static 'Logo.png' %}"></div>
-                onnect
-              </a>
-              <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <div id="navbar-menu" class="detached">
-                <ul class="navbar-links">
-                    <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'CampusInfo' %}">Campus Information</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursePlanner' %}">Course Planner</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'DataAnalysisPage' %}">Data Analysis</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'studentprograms' %}">Student Programs</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'checklist' %}">Check List</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'events' %}">Events</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page1' %}">Learn About Majors and Careers</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page2' %}">Catch on Important Skills of Careers</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page3' %}">Beta feature: Search for Internships</a></li>
-                  <li class="navbar-item">
-                    <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
-                      {% if user.is_authenticated %}
-                        Profile
-                      {% else %}
-                        Sign In
-                      {% endif %}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-        </header>
-        <div class="team-rectangles">
-        <div class="hero">
-            <div class="imagecontainer">
-                <div class="text text"><span class="bmcconnect2-0">BMC</span><span class="bmcconnect2-1">C</span><span class="bmcconnect2-0">onnect</span></div>
-            </div>
-        </div>
-        <div class="body_rectangle home-rec">
-            <div class="sub_body_rectangle">
-                <div class="body_text1">
-                    <a>About Our Website</a>
-                </div>
-                <div class="body_text2">
-                    <a>Welcome to our website! We understand that navigating the original BMCC website to join clubs and connect with mentors may be a troublesome task as information is not easily available. That's why we have embarked on a mission to make this process more accessible and user-friendly. Our goal is to enhance the functionality of the clubs website by providing a platform that allows students to effortlessly join existing clubs or create new ones. Our simplified login system allows students to easily explore and discover a wide range of clubs and mentors that align with their interests. We are confident that our website will not only streamline the process but also foster meaningful connections between students and mentors.</a>
-                </div>
-                <div class="body_text2">
-                    <div class="body_text1">
-                        <a>New student Community</a>
-                    </div>
-                    <a> <br> Description :
-                       <br>  &nbsp;  &nbsp; Our solution for the new student community is a comprehensive website that provides all the necessary information and resources related to their degree work in their majors.
-                        
-                       <br> Here are the key features and functionalities of our solution:
-                       <br><br> Curriculum search functionality:
-                       <br>  &nbsp;  &nbsp; One of the key features of our website is a robust curriculum search function. This allows students to quickly search for specific courses or requirements within their major. They can easily find information about course availability, prerequisites, course descriptions, and schedules. 
-                       <br><br>Quick assistance:
-                    <br>  &nbsp;  &nbsp; We prioritize providing quick and efficient assistance to students through our website. This includes features such as a live chat support system, where students can connect with advisors or knowledgeable staff members to get immediate help with their queries or concerns. 
-                    <br> &nbsp;  &nbsp; To aid students in selecting their majors within the CIS department at BMCC, our solution includes a dedicated page featuring a set of data analysis visualizations. 
 
-                    </a>
-                </div>
-            </div>
-            <div class="sub_body_rectangle">
-                <div class="body_text1">
-                    <a>Career Readiness</a>
-                </div>
-                <div class="body_text2">
-                    <a>Description :
-                       <br> &nbsp;  &nbsp; The problem of career readiness stems from a lack of practical skills, limited professional networks, inadequate career guidance, and limited exposure to the job market. </a>
-                       <br><br> *Chatbot assistance: We have integrated a chatbot into the webpage, which is available 24/7 to answer students' questions and provide assistance.
-                       <br><br>*Data Analysis Visualization: To aid students in selecting their majors within the CIS department at BMCC, our solution includes a dedicated page featuring a set of data analysis visualizations.
-                       <br><br> *Assistance in skill development: The website will provide students with resources and materials to enhance their skills relevant to their desired career paths.
-                       <br> <br>*Job search support: The website will provide students with job search support by offering a job board with curated job listings, resume and cover letter templates, and resources on job market research.
-                    
-                    </div>
-                <div class="buttonsrectangle">
-                    <a href="{% url 'CampusInfo' %}" id="button1">CAMPUS INFO</a>
-                    <a href="{% url 'page1' %}" id="button1">LEARN ABOUT MAJORS AND CAREERS</a>
-                    <a href="{% url 'DataAnalysisPage' %}" id="button1">DATA ANALYSIS </a>
-                  <a href="{% url 'mentor_registration' %}" id="button1">BECOME A MENTOR</a>
-                  <a href="{% url 'mentee_registration' %}" id="button1">BECOME A MENTEE</a>
-                  <a href="{% url 'clubs-list' %}" id="button1">JOIN A CLUB</a>
-                  <a href="{% url 'demo' %}" id="button1">DEMO</a>
-                </div>
-            </div>
-        </div>
-        <div id="footer2">
-            <div class="columns-2">
-                <div class="small-columns">
-                    <div class="column">
-                        <div>
-                            <h2>Developers:</h2>
-                            <div class="footer-links">
-                                <img src="{% static 'sandropfp.jpeg' %}" alt="Profile Picture" class="profile-picture">
-                                <div class="footertext">Sandro Tskitishvili
-                                    &nbsp;
-                                    <a target="_blank" href="https://github.com/Sandrieli13">
-                                        <i class="fab fa-github"></i>
-                                    </a>&nbsp;
-                                    <a target="_blank" href="https://www.linkedin.com/in/sandro-tskitishvili">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div> 
-                                <img src="{% static 'lisandropfp.jpeg' %}" alt="Profile Picture" class="profile-picture"> 
-                                <div class="footertext">Lisandro Saavedra  
-                                    &nbsp;        
-                                    <a target="_blank" href="https://github.com/lisandrosaavedra">
-                                        <i class="fab fa-github"></i>
-                                    </a>&nbsp;         
-                                    <a target="_blank" href="https://www.linkedin.com/in/lisandro-saavedra">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div> 
-                                <img src="https://raw.githubusercontent.com/lucasstranger1/BMCCintership/main/luyao.png" alt="Profile Picture" class="profile-picture">
-                                <div class="footertext">
-                                    Lu Yao &nbsp;        
-                                    <a target="_blank" href="https://github.com/lucasstranger1">
-                                        <i class="fab fa-github"></i>
-                                    </a>&nbsp;         
-                                    <a target="_blank" href="https://www.linkedin.com/in/lu-yao-6abb90236/">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div>
-                                <img src="https://avatars.githubusercontent.com/u/116388196?v=4" alt="Profile Picture" class="profile-picture">
-                                <div class="footertext">
-                                    Mustafa Donmez &nbsp;        
-                                    <a target="_blank" href="https://github.com/MustafaDon777">
-                                        <i class="fab fa-github"></i>
-                                    </a>&nbsp;         
-                                    <a target="_blank" href="https://www.linkedin.com/in/mu-don/">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div>
-                            <h2>Mentors:</h2>
-                            <div class="footer-links">
-                                <img src="{% static 'azhar.png' %}" alt="Profile Picture" class="profile-picture">
-                                <div class="footertext">Dr. Mohammad Azhar
-                                    &nbsp;<a target="_blank" href="https://www.bmcc.cuny.edu/faculty/mohammad-azhar/">
-                                        <i class="fa-solid fa-graduation-cap"></i>
-                                    </a>
-                                </div>                     
-                                <img src="{% static 'Younes.png' %}" alt="Profile Picture" class="profile-picture">
-                                <div class="footertext">Dr. Younes Benkarroum  
-                                    &nbsp;<a target="_blank" href="https://www.bmcc.cuny.edu/faculty/younes-benkarroum/">
-                                        <i class="fa-solid fa-graduation-cap"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div>
-                            <h2>Special Thanks To:</h2>
-                            <div class="footer-links"> 
-                                <div class="footertext">Sam Karasik &nbsp;<a target="_blank" href="https://www.linkedin.com/in/sam-karasik-80209222/">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a></div>              
-                                <div class="footertext">Benjamin Jenney &nbsp;<a target="_blank" href="https://www.linkedin.com/in/benjamin-ezra-jenney-8b836320a/">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div>
-                            <h2>Resources:</h2>
-                            <div class="footer-links">
-                                <div>
-                                    <a target="_blank" href="https://www.bmcc.cuny.edu/student-affairs/student-activities/clubs/">
-                                        <div class="footertext">BMCC Clubs Website</div>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1Ychw4al6Fk53UdIzSQK6Zc3h6a6f_MTy/edit#gid=1250813089">
-                                        <div class="footertext">Active BMCC Clubs</div>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSeTlIGmRJHW2HhkYfFZyz5htj9llD9YaxG8Bqo6poiSd-afjQ/closedform?pli=1">
-                                        <div class="footertext">BMCC Clubs Forms</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column-2">
-                <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
-            </div>
-            <div class="copyright">
-                <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:white;"><div class="text-6">Copyright &copy <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship
-                </div>
-                </a>
-            </div>
-        </div>
+{% block title %}Home{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{# Home page uses the extended footer below instead of the default slim footer. #}
+{% block site_footer %}{% endblock %}
+
+{% block content %}
+<div class="team-rectangles">
+  <div class="hero">
+    <div class="imagecontainer">
+      <div class="text text"><span class="bmcconnect2-0">BMC</span><span class="bmcconnect2-1">C</span><span class="bmcconnect2-0">onnect</span></div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'scripts.js' %}"></script>
-    <script>
-        window.watsonAssistantChatOptions = {
-          integrationID: "ca3979cb-7ded-4fde-8cb2-6e34f933a2f1", // The ID of this integration.
-          region: "us-south", // The region your integration is hosted in.
-          serviceInstanceID: "0df18117-9251-4626-adea-21f86e3b22a6", // The ID of your service instance.
-          onLoad: function(instance) { instance.render(); }
-        };
-        setTimeout(function(){
-          const t=document.createElement('script');
-          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
-          document.head.appendChild(t);
-        });
-      </script>
-</body>
-</html>
+  </div>
+  <div class="body_rectangle home-rec">
+    <div class="sub_body_rectangle">
+      <div class="body_text1"><span>About Our Website</span></div>
+      <div class="body_text2">
+        <p>Welcome to our website! We understand that navigating the original BMCC website to join clubs and connect with mentors may be a troublesome task as information is not easily available. That's why we have embarked on a mission to make this process more accessible and user-friendly. Our goal is to enhance the functionality of the clubs website by providing a platform that allows students to effortlessly join existing clubs or create new ones. Our simplified login system allows students to easily explore and discover a wide range of clubs and mentors that align with their interests. We are confident that our website will not only streamline the process but also foster meaningful connections between students and mentors.</p>
+      </div>
+      <div class="body_text2">
+        <div class="body_text1"><span>New student Community</span></div>
+        <p><strong>Description:</strong></p>
+        <p>Our solution for the new student community is a comprehensive website that provides all the necessary information and resources related to their degree work in their majors.</p>
+        <p><strong>Key features:</strong></p>
+        <p><strong>Curriculum search:</strong> Students can search for courses, prerequisites, descriptions, and schedules.</p>
+        <p><strong>Quick assistance:</strong> Live chat and support, plus data analysis visualizations for CIS majors.</p>
+      </div>
+    </div>
+    <div class="sub_body_rectangle">
+      <div class="body_text1"><span>Career Readiness</span></div>
+      <div class="body_text2">
+        <p><strong>Description:</strong> Career readiness gaps include practical skills, networks, guidance, and job-market exposure.</p>
+        <p><strong>Chatbot assistance:</strong> Available 24/7 for common questions.</p>
+        <p><strong>Data analysis:</strong> Visualizations to help choose majors in CIS.</p>
+        <p><strong>Skill development:</strong> Resources aligned with career paths.</p>
+        <p><strong>Job search support:</strong> Job board ideas, templates, and research resources.</p>
+      </div>
+      <div class="buttonsrectangle">
+        <a href="{% url 'CampusInfo' %}" id="button1">CAMPUS INFO</a>
+        <a href="{% url 'careers:page1' %}" id="button1">LEARN ABOUT MAJORS AND CAREERS</a>
+        <a href="{% url 'DataAnalysisPage' %}" id="button1">DATA ANALYSIS</a>
+        <a href="{% url 'mentor_registration' %}" id="button1">BECOME A MENTOR</a>
+        <a href="{% url 'mentee_registration' %}" id="button1">BECOME A MENTEE</a>
+        <a href="{% url 'clubs-list' %}" id="button1">JOIN A CLUB</a>
+        <a href="{% url 'demo' %}" id="button1">DEMO</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer2">
+    <div class="columns-2">
+      <div class="small-columns">
+        <div class="column">
+          <h2>Developers:</h2>
+          <div class="footer-links">
+            <img src="{% static 'sandropfp.jpeg' %}" alt="" class="profile-picture">
+            <div class="footertext">Sandro Tskitishvili
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/Sandrieli13" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sandro-tskitishvili" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <img src="{% static 'lisandropfp.jpeg' %}" alt="" class="profile-picture">
+            <div class="footertext">Lisandro Saavedra
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/lisandrosaavedra" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/lisandro-saavedra" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <img src="https://raw.githubusercontent.com/lucasstranger1/BMCCintership/main/luyao.png" alt="" class="profile-picture">
+            <div class="footertext">Lu Yao
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/lucasstranger1" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/lu-yao-6abb90236/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <img src="https://avatars.githubusercontent.com/u/116388196?v=4" alt="" class="profile-picture">
+            <div class="footertext">Mustafa Donmez
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/MustafaDon777" aria-label="GitHub"><i class="fab fa-github"></i></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/mu-don/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <h2>Mentors:</h2>
+          <div class="footer-links">
+            <img src="{% static 'azhar.png' %}" alt="" class="profile-picture">
+            <div class="footertext">Dr. Mohammad Azhar
+              <a target="_blank" rel="noopener noreferrer" href="https://www.bmcc.cuny.edu/faculty/mohammad-azhar/" aria-label="Faculty page"><i class="fas fa-graduation-cap"></i></a>
+            </div>
+            <img src="{% static 'Younes.png' %}" alt="" class="profile-picture">
+            <div class="footertext">Dr. Younes Benkarroum
+              <a target="_blank" rel="noopener noreferrer" href="https://www.bmcc.cuny.edu/faculty/younes-benkarroum/" aria-label="Faculty page"><i class="fas fa-graduation-cap"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <h2>Special Thanks To:</h2>
+          <div class="footer-links">
+            <div class="footertext">Sam Karasik <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sam-karasik-80209222/"><i class="fab fa-linkedin-in"></i></a></div>
+            <div class="footertext">Benjamin Jenney <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/benjamin-ezra-jenney-8b836320a/"><i class="fab fa-linkedin-in"></i></a></div>
+          </div>
+        </div>
+        <div class="column">
+          <h2>Resources:</h2>
+          <div class="footer-links">
+            <div><a target="_blank" rel="noopener noreferrer" href="https://www.bmcc.cuny.edu/student-affairs/student-activities/clubs/"><div class="footertext">BMCC Clubs Website</div></a></div>
+            <div><a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/spreadsheets/d/1Ychw4al6Fk53UdIzSQK6Zc3h6a6f_MTy/edit#gid=1250813089"><div class="footertext">Active BMCC Clubs</div></a></div>
+            <div><a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/e/1FAIpQLSeTlIGmRJHW2HhkYfFZyz5htj9llD9YaxG8Bqo6poiSd-afjQ/closedform?pli=1"><div class="footertext">BMCC Clubs Forms</div></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column-2">
+      <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
+    </div>
+    <div class="copyright">
+      <a target="_blank" rel="noopener noreferrer" href="https://sites.google.com/view/bmcctechinterns" style="color:white;">
+        <div class="text-6">Copyright &copy; <script>document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

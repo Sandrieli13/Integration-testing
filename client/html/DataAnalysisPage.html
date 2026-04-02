@@ -1,1032 +1,348 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>U.S. Nation Graduation Data</title>
-  <!-- Add your CSS and JavaScript links here -->
-  <link rel="stylesheet"  href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
-  <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
-  <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
-  <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
-  <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
-  <link href="{% static 'navbar.css' %}" rel="stylesheet" type="text/css">
-  <script src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-    body{
-      width: 100%;
+
+{% block title %}BMCC CIS · Enrollment analysis{% endblock %}
+
+{% block extra_head %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    .da {
+      --da-bg: #f8fafc;
+      --da-surface: #ffffff;
+      --da-ink: #0f172a;
+      --da-muted: #64748b;
+      --da-border: #e2e8f0;
+      --da-accent: #0c4a6e;
+      --da-accent-soft: #e0f2fe;
+      font-family: "DM Sans", system-ui, sans-serif;
+      color: var(--da-ink);
+      background: var(--da-bg);
+      min-height: 100vh;
     }
-    .bodycontent1{
-      
-      margin: 20px 20%;
-      
+    .da__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 5.5rem 1.5rem 4rem;
     }
-    h1, h2, h3 {
-        text-align: center;
-        margin-top: 30px;
+    .da__eyebrow {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--da-muted);
+      margin: 0 0 0.75rem;
+    }
+    .da__title {
+      font-size: clamp(1.75rem, 4vw, 2.35rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.75rem;
+      color: var(--da-accent);
+    }
+    .da__lede {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--da-muted);
+      max-width: 42rem;
+      margin: 0 0 2rem;
+    }
+    .da-grid2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .da-panel {
+      background: var(--da-surface);
+      border: 1px solid var(--da-border);
+      border-radius: 12px;
+      padding: 1.35rem 1.5rem;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .da-panel h2 {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--da-accent);
+      margin: 0 0 0.75rem;
+    }
+    .da-panel p, .da-panel li {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      color: var(--da-muted);
+      margin: 0 0 0.5rem;
+    }
+    .da-panel ul { margin: 0; padding-left: 1.1rem; }
+    .da-panel li:last-child { margin-bottom: 0; }
+    .da-panel a {
+      color: var(--da-accent);
+      font-weight: 500;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+    .da-panel a:hover { border-bottom-color: var(--da-accent); }
+
+    .da-insights {
+      background: linear-gradient(135deg, var(--da-accent-soft) 0%, var(--da-surface) 45%);
+      border: 1px solid var(--da-border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2.5rem;
+    }
+    .da-insights h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 1rem;
+      color: var(--da-accent);
+    }
+    .da-insights ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .da-insights li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.65rem;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      color: var(--da-ink);
+    }
+    .da-insights li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--da-accent);
+      opacity: 0.85;
     }
 
-    .chart-container {
-       
-        display: inline-block;
-        width: 48%;
-        margin: 0 1%;
-        vertical-align: top; 
+    .da-section-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem;
+      color: var(--da-ink);
+    }
+    .da-section-desc {
+      font-size: 0.875rem;
+      color: var(--da-muted);
+      margin: 0 0 1.5rem;
+      max-width: 40rem;
     }
 
-    .grid-container {
-        display: flex; 
-        flex-wrap: wrap;  
-        flex: 2;  
+    .da-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .da-chart-card {
+      background: var(--da-surface);
+      border: 1px solid var(--da-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+    .da-chart-card__cap {
+      padding: 1rem 1.25rem 0.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--da-ink);
+    }
+    .da-chart-card__sub {
+      padding: 0 1.25rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--da-muted);
+      font-family: "IBM Plex Mono", monospace;
+    }
+    .da-chart-card__canvas {
+      flex: 1;
+      min-height: 260px;
+      padding: 0 0.75rem 1rem;
+      position: relative;
     }
 
-    hr {
-        border: 2px solid gray;
-        border-radius: 5px;
+    .da-footer {
+      border-top: 1px solid var(--da-border);
+      padding-top: 1.5rem;
+      font-size: 0.8125rem;
+      color: var(--da-muted);
+      line-height: 1.6;
     }
+    .da-footer code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.75rem;
+      background: var(--da-border);
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+  </style>
+{% endblock %}
 
-        .chart {
-             width: 400px; 
-            margin: 10px;
-                }
-    </style>
-    
-</head>
-<body>
-  <!-- Add your navigation menu code here -->     
-          <header id="navbar">
-            <nav class="navbar-container container">
-              <a href="{% url 'index' %}" class="home-link">
-                <div class="navbar-logo"><img src="{% static 'Logo.png' %}"></div>
-                onnect
-              </a>
-              <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <div id="navbar-menu" class="detached">
-                <ul class="navbar-links">
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursesearch' %}">Course Search</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'courselistpage' %}">Major and Classes List</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'CampusInfo' %}">Campus Information</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'coursePlanner' %}">Course Planner</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'DataAnalysisPage' %}">Data Analysis</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'studentprograms' %}">Student Programs</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'checklist' %}">Check List</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'events' %}">Events</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page1' %}">Learn About Majors and Careers</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page2' %}">Catch on Important Skills of Careers</a></li>
-                  <li class="navbar-item"><a class="navbar-link" href="{% url 'page3' %}">Beta feature: Search for Internships</a></li>
-                  <li class="navbar-item">
-                    <a class="navbar-link" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
-                      {% if user.is_authenticated %}
-                        Profile
-                      {% else %}
-                        Sign In
-                      {% endif %}
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-        </header>
+{% block content %}
+<div class="da">
+  <div class="da__inner">
+    <header>
+      <p class="da__eyebrow">Borough of Manhattan Community College · CIS</p>
+      <h1 class="da__title">Enrollment headcount analysis</h1>
+      <p class="da__lede">
+        A concise view of degree-seeking enrollment over time for Computer Science and related programs housed under the Department of Computer Information Systems.
+        Each series is plotted as reported in institutional files synced into this application’s database.
+      </p>
+    </header>
 
-  <div class="bodycontent1">
-    <h1 style="text-align:center; margin-top: 80px;"> U.S. nation Graduation Data of S&E (Science & Engineering) Marjors in Associate's Degrees from 2000 to 2019.</h1>
-    <div class="text" style="max-width: 800px; margin: 0 auto; text-align: center;">
-    
-        <p><em>S&E Associate&apos;s Degrees</em><a href="#target">(Click here for majors' detail)</a><br>
-        Associate&apos;s degrees are the final degree earned by some students, whereas others continue their education at 4-year colleges or universities and earn higher degrees. 
-        Many who transfer from community colleges to baccalaureate-granting institutions do not earn associate&apos;s degrees before transferring; they may be able to transfer credit 
-        for specific courses.<br><br></p>
-        
-    </div>
+      <div class="da-grid2">
+        <div class="da-panel">
+          <h2>Scope</h2> 
+          <p><strong>Metric:</strong> headcount enrollment (majors / degree students as defined in source extracts).</p>
+          <p><strong>Coverage:</strong> four enrollment series—program-level CS, CIS A.A.S., CNT, and CIS department aggregate—aligned to the years available in the underlying CSV / <code>DepartmentMetric</code> table.</p>
+        </div>
+        <div class="da-panel">
+          <h2>Method &amp; refresh</h2>
+          <p>Figures load from the ORM when present; otherwise from static CSV under <code>client/css/csv/</code>. Rebuild the table after edits:</p>
+          <p><code>python manage.py sync_department_metrics</code></p>
+          <p>For filters, drill-downs, and the latest official term:&nbsp;
+            <a href="{{ facts_url }}" target="_blank" rel="noopener noreferrer">BMCC fact sheets</a>
+            ·
+            <a href="{{ tableau_app_url }}" target="_blank" rel="noopener noreferrer">OIEA Tableau</a>
+          </p>
+        </div>
+      </div>
 
-        <div class="grid-container">
-    <div class="chart-container">
-        <div id="chartContainer1" style="height: 370px;"></div>
-        <br>
-    </div>
-    <div class="chart-container">
-        <div id="chartContainer2" style="height: 370px;"></div>
-        <br>
-    </div>
-    <div class="chart-container">
- 
-        <div id="chartContainer3" style="height: 370px;"></div>
-        <br>
-    </div>
-    <div class="chart-container">
- 
-        <div id="chartContainer4" style="height: 370px;"></div>
-        <br>
-    </div>
-    </div>
-    <div class="text" style="max-width: 1200px; margin: 0 auto; text-align: center;">
-        <p> <br><br>Relatively few associate&apos;s degrees are awarded in S&E fields. In 2019, 104,000 out of more than 1 million associate&apos;s degrees (10%) were in S&E fields 
-            (see &apos;Table column 3&apos;). The total number of S&E associate&apos;s degrees awarded declined from 2003 to 2007 but has risen in almost all years since then.
-            Until 2012, the overall trend mirrored the pattern in computer sciences, which account for a large portion (nearly 50% in 2012 and 31% in 2019) of S&E associate&apos;s degrees (Figure HED-4). 
-            Since 2012, the total number of S&E associate&apos;s degrees has continued to increase despite a decline in the number of computer sciences degrees.
-            </p> 
-            <p><br>S&E coursework <a href="#target">(Click here for majors' detail)</a> at the undergraduate level prepares knowledgeable citizens in a society 
-            increasingly reliant on science and technology. Over the past 20 years, the number of undergraduate degrees awarded by U.S. academic 
-            institutions has increased in both S&E and non-S&E fields. According to the U.S. Department of Education, the number of associate&apos;s 
-            degrees awarded is projected to increase by 1%, 
-            and the number of bachelor&apos;s degrees awarded should increase by 3% over the period spanning 2017&ndash;29.
-            
-            </p>
-          </div>
-            <hr style="  border: 2px solid gray;
-        border-radius: 5px;">
+      <div class="da-insights">
+        <h2>Quick read — what the series suggest</h2>
+        <ul>
+          <li><strong>Computer Science (A.S.)</strong> shows strong long-run growth from 2015 with more recent Fall terms (2024–2025) available in the sync; use the chart axis for exact breakpoints.</li>
+          <li><strong>CIS department</strong> aggregate enrollment reflects the full CIS portfolio; compare its slope to individual majors to see concentration vs. breadth.</li>
+          <li><strong>CIS (A.A.S.)</strong> and <strong>CNT</strong> are smaller programs—short-term volatility is normal at modest N; interpret changes alongside department totals.</li>
+          <li>Gaps on the year axis (e.g. missing Fall 2023 in some public extracts) appear as uneven spacing; that is a data availability feature, not a plotting error.</li>
+        </ul>
+      </div>
 
-    <h2>Enrollment / Graduation Data at BMCC 2016-2022</h2>
+      <section aria-labelledby="charts-heading">
+        <h2 id="charts-heading" class="da-section-title">Enrollment time series</h2>
+        <p class="da-section-desc">Each panel is an independent scale—compare shape and direction, not absolute levels across programs.</p>
 
-<div class="grid-container" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-  {% for data, chart_name in all_data %}
-  <div class="chart-container" style="width: 200%;">
-    <div class="chart" >
-      <canvas id="chart{{ forloop.counter }}"></canvas>
-    </div>
+        {{ enrollment_charts_json|json_script:"enrollment-charts-data" }}
+
+        <div class="da-chart-grid">
+          {% for chart in enrollment_charts_json %}
+          <figure class="da-chart-card">
+            <figcaption class="da-chart-card__cap">{{ chart.title }}</figcaption>
+            <span class="da-chart-card__sub">Academic year on horizontal axis · headcount on vertical axis</span>
+            <div class="da-chart-card__canvas">
+              <canvas id="enrollment-chart-{{ forloop.counter0 }}" aria-label="{{ chart.title }}"></canvas>
+            </div>
+          </figure>
+          {% endfor %}
+        </div>
+      </section>
+
+      <footer class="da-footer">
+        <p>
+          <strong>Disclaimer:</strong> This page is an internal analytic presentation built from the project’s stored extracts.
+          Official reporting, accreditation, and public disclosures remain the responsibility of BMCC OIEA and institutional publications.
+        </p>
+      </footer>
   </div>
-  {% endfor %}
 </div>
+{% endblock %}
 
-
-<h3>Enrollment Data for CIS (Computer Information System) Major at BMCC (2016-2022)</h3>
-<p>
-    The number of students enrolled in the CIS major at BMCC has been fluctuating over the years,
-    with a peak in 2020 (1026 students) and a decline in 2021 (990 students).
-    The overall trend shows a slight decrease in enrollment from 2016 to 2022.
-</p>
-
-
-<p>
-    The number of students graduating from the CIS major at BMCC has shown a steady increase over the years,
-    with a significant rise from 2019 to 2021 (164 graduates to 267 graduates).
-    The graduation data for 2022 shows a slight decline from the previous year, with 142 graduates.
-</p>
-
-
-<p>
-    The CS major at BMCC has seen consistent growth in enrollment over the years,
-    with the highest number of students enrolled in 2022 (1026 students).
-    The data indicates a positive trend, suggesting an increasing interest in the CS major at BMCC.
-</p>
-
-
-<p>
-    The graduation data for the CS major at BMCC has also shown a positive trend,
-    with a gradual increase in the number of graduates from 2017 to 2022 (40 graduates to 58 graduates).
-    The data indicates that the CS major is producing more graduates each year,
-    reflecting its popularity and success.
-</p>
-
-
-<p>
-    The enrollment data for the CNT major at BMCC has been fluctuating,
-    with the highest number of students enrolled in 2017 (390 students) and a decrease in 2022 (157 students).
-    The overall trend suggests a decline in enrollment for the CNT major at BMCC.
-</p>
-
-
-<p>
-    The graduation data for the CNT major at BMCC indicates a decline in the number of graduates over the years,
-    with 157 graduates in 2022 compared to 407 graduates in 2015.
-    The data suggests that the CNT major has experienced challenges in retaining students and producing graduates.
-</p>
-    <hr>
-
-    <h2>BMCC Enrollment Data and its Enthnicity (2022)</h2>
-
-    <div class="grid-container">
-        <div class="chart-container">
-            <div id="PiechartContainer" style="height: 370px;"></div>
-            <br>
-            <br>
-            <br>
-            <br>
-        </div>
-        <div class="chart-container">
-            <div id="PiechartContainer1" style="height: 370px;"></div>
-            <br>
-            <br>
-        </div>
-        <div class="chart-container">
-            <div id="PiechartContainer2" style="height: 370px;"></div>
-            <br>
-            <br>
-        </div>
-        <div class="chart-container">
-            <div id="PiechartContainer3" style="height: 370px;"></div>
-            <br>
-            <br>
-        </div>
-        <div class="chart-container">
-            <div id="PiechartContainer4" style="height: 370px;"></div>
-            <br>
-            <br>
-        </div>
-    </div>
-
-    
-    <hr style="  border: 2px solid black;
-    border-radius: 10px;">
-    <p style="font-size:15px;">
-        <br><br><em>Reference: National Center for Education Statistics, Integrated Postsecondary Education Data System (IPEDS), 
-        Completions Survey; National Center for Science and Engineering Statistics, Table Builder.</em>
-        <br> link:<a href="https://ncses.nsf.gov/pubs/nsb20223/trends-in-undergraduate-and-graduate-s-e-degree-awards" target="_blank">Click here</a> <br><br> </p>
-        <hr>
-        <h2 id="target">S&E Majors breakdown</h2>
-    <div class="majorsBreakdown" style="display: flex; justify-content: center; align-items: center;">
-       
-    <table>
-        <tr>    
-        <th>S&E technologies [All Fields]</th>
-        </tr>
-        <tr>
-        <td>Engineering technologies</td>
-        </tr>
-        <tr>
-        <td>Engineering technology, general</td>
-        </tr>
-        <tr>
-        <td>Architectural engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Audiovisual communications technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Civil engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Communications technologies/ technicians and support services, other</td>
-        </tr>
-        <tr>
-        <td>Communications technology/ technician</td>
-        </tr>
-        <tr>
-        <td>Computer engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Construction engineering technologies</td>
-        </tr>
-        <tr>
-        <td>Drafting/ design engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Electrical engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Electromechanical instrumentation and maintenance technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Engineering-related fields</td>
-        </tr>
-        <tr>
-        <td>Engineering-related technologies</td>
-        </tr>
-        <tr>
-        <td>Environmental control technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Industrial production technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Mechanical engineering related technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Mining and petroleum technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Nanotechnology</td>
-        </tr>
-        <tr>
-        <td>Nuclear engineering technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Precision metal working</td>
-        </tr>
-        <tr>
-        <td>Quality control and safety technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Engineering technologies/ technicians, other</td>
-        </tr>
-        <tr>
-        <td>Health technologies</td>
-        </tr>
-        <tr>
-        <td>Allied health and medical assisting services</td>
-        </tr>
-        <tr>
-        <td>Allied health diagnostic, intervention, and treatment professions</td>
-        </tr>
-        <tr>
-        <td>American Sign Language</td>
-        </tr>
-        <tr>
-        <td>Clinical/ medical laboratory science/ research and allied professions</td>
-        </tr>
-        <tr>
-        <td>Dental support services and allied professions</td>
-        </tr>
-        <tr>
-        <td>Dietetics and clinical nutrition services</td>
-        </tr>
-        <tr>
-        <td>Health aides/ attendants/ orderlies</td>
-        </tr>
-        <tr>
-        <td>Health and medical administrative services</td>
-        </tr>
-        <tr>
-        <td>Health/ medical preparatory programs</td>
-        </tr>
-        <tr>
-        <td>Medical illustration and informatics</td>
-        </tr>
-        <tr>
-        <td>Mental and social health services and allied professions</td>
-        </tr>
-        <tr>
-        <td>Ophthalmic and optometric support services and allied professions</td>
-        </tr>
-        <tr>
-        <td>Practical nursing, vocational nursing and nursing assistants</td>
-        </tr>
-        <tr>
-        <td>Rehabilitation and therapeutic professions</td>
-        </tr>
-        <tr>
-        <th>Science technologies</th>
-        </tr>
-        <tr>
-        <td>Science technologies/ technicians, general</td>
-        </tr>
-        <tr>
-        <td>Biology technician/ biotechnology laboratory technician</td>
-        </tr>
-        <tr>
-        <td>Nuclear and industrial radiologic technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Physical science technologies/ technicians</td>
-        </tr>
-        <tr>
-        <td>Science technologies/ technicians, other</td>
-        </tr>
-        <tr>
-        <th>Other S&E technologies</th>
-        </tr>
-        <tr>
-        <td>Intelligence, command control and information operations</td>
-        </tr>
-        <tr>
-        <td>Military applied sciences</td>
-        </tr>
-        <tr>
-        <td>Military systems and maintenance technology</td>
-        </tr>
-        <tr>
-        <td>Military technologies and applied sciences, other</td>
-        </tr>
-    </table>
-</div>
-</div>
-
-    <script>
-        // Data for the charts
-        window.onload = function () {
-
-
-
-  var dataPoints1 = [
-    { x: 2000, y: 40470 },
-    { x: 2001, y: 39732 },
-    { x: 2002, y: 37901 },
-    { x: 2003, y: 39600 },
-    { x: 2004, y: 37020 },
-    { x: 2005, y: 32488 },
-    { x: 2006, y: 29710 },
-    { x: 2007, y: 30097 },
-    { x: 2008, y: 31643 },
-    { x: 2009, y: 33243 },
-    { x: 2010, y: 34553 },
-    { x: 2011, y: 38222 },
-    { x: 2012, y: 40630 },
-    { x: 2013, y: 37475 },
-    { x: 2014, y: 34638 },
-    { x: 2015, y: 34764 },
-    { x: 2016, y: 31704 },
-    { x: 2017, y: 31561 },
-    { x: 2018, y: 31438 },
-    { x: 2019, y: 30731 },
-  ];
-
-  var chart = new CanvasJS.Chart("chartContainer1", {
-    animationEnabled: true,
-    title: {
-      text: "Data for Associate's Degrees in Engineering Technologies Majors (National)",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "bar",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: dataPoints1,
-      },
-    ],
-  });
-
-  chart.render();
-  //---------------------------------------------------------------------------------------------------------------
-  var chart = new CanvasJS.Chart("chartContainer2", {
-                animationEnabled: true,
-                title: {
-                    text: "S&E associate's degrees awarded, by field: 2000–19"
-                },
-                axisX: {
-                    title: "Year"
-                },
-                axisY: {
-                    title: "Number of Degrees"
-                },
-                toolTip: {
-                    shared: true
-                },
-                legend: {
-                    cursor: "pointer",
-                    itemclick: toggleDataSeries
-                },
-                data: [
-                    {
-                        type: "line",
-                        name: "Biological and Agricultural Sciences",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 3460 },
-                            { x: 2001, y: 3642 },
-                            { x: 2002, y: 3578 },
-                            { x: 2003, y: 3804 },
-                            { x: 2004, y: 3719 },
-                            { x: 2005, y: 3887 },
-                            { x: 2006, y: 3962 },
-                            { x: 2007, y: 4014 },
-                            { x: 2008, y: 4141 },
-                            { x: 2009, y: 4357 },
-                            { x: 2010, y: 4833 },
-                            { x: 2011, y: 5578 },
-                            { x: 2012, y: 6554 },
-                            { x: 2013, y: 6732 },
-                            { x: 2014, y: 7173 },
-                            { x: 2015, y: 7749 },
-                            { x: 2016, y: 8134 },
-                            { x: 2017, y: 8518 },
-                            { x: 2018, y: 9500 },
-                            { x: 2019, y: 10393 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Computer Sciences",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 23576 },
-                            { x: 2001, y: 30113 },
-                            { x: 2002, y: 35578 },
-                            { x: 2003, y: 46400 },
-                            { x: 2004, y: 42153 },
-                            { x: 2005, y: 36140 },
-                            { x: 2006, y: 31170 },
-                            { x: 2007, y: 27680 },
-                            { x: 2008, y: 28327 },
-                            { x: 2009, y: 30050 },
-                            { x: 2010, y: 32514 },
-                            { x: 2011, y: 37675 },
-                            { x: 2012, y: 41190 },
-                            { x: 2013, y: 38897 },
-                            { x: 2014, y: 37643 },
-                            { x: 2015, y: 36421 },
-                            { x: 2016, y: 30512 },
-                            { x: 2017, y: 31179 },
-                            { x: 2018, y: 31434 },
-                            { x: 2019, y: 31939 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Engineering",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 1794 },
-                            { x: 2001, y: 1898 },
-                            { x: 2002, y: 1781 },
-                            { x: 2003, y: 2278 },
-                            { x: 2004, y: 2843 },
-                            { x: 2005, y: 2557 },
-                            { x: 2006, y: 2291 },
-                            { x: 2007, y: 2272 },
-                            { x: 2008, y: 2403 },
-                            { x: 2009, y: 2329 },
-                            { x: 2010, y: 2665 },
-                            { x: 2011, y: 2994 },
-                            { x: 2012, y: 3537 },
-                            { x: 2013, y: 3871 },
-                            { x: 2014, y: 4409 },
-                            { x: 2015, y: 5004 },
-                            { x: 2016, y: 5414 },
-                            { x: 2017, y: 6048 },
-                            { x: 2018, y: 6526 },
-                            { x: 2019, y: 6492 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Mathematics and Statistics",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 675 },
-                            { x: 2001, y: 696 },
-                            { x: 2002, y: 686 },
-                            { x: 2003, y: 735 },
-                            { x: 2004, y: 802 },
-                            { x: 2005, y: 807 },
-                            { x: 2006, y: 753 },
-                            { x: 2007, y: 827 },
-                            { x: 2008, y: 855 },
-                            { x: 2009, y: 930 },
-                            { x: 2010, y: 1051 },
-                            { x: 2011, y: 1645 },
-                            { x: 2012, y: 1529 },
-                            { x: 2013, y: 1802 },
-                            { x: 2014, y: 2140 },
-                            { x: 2015, y: 2697 },
-                            { x: 2016, y: 3029 },
-                            { x: 2017, y: 3454 },
-                            { x: 2018, y: 4135 },
-                            { x: 2019, y: 4631 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Physical Sciences",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 1419 },
-                            { x: 2001, y: 1267 },
-                            { x: 2002, y: 1401 },
-                            { x: 2003, y: 1191 },
-                            { x: 2004, y: 1615 },
-                            { x: 2005, y: 1660 },
-                            { x: 2006, y: 1737 },
-                            { x: 2007, y: 2015 },
-                            { x: 2008, y: 1976 },
-                            { x: 2009, y: 2199 },
-                            { x: 2010, y: 2403 },
-                            { x: 2011, y: 3163 },
-                            { x: 2012, y: 3670 },
-                            { x: 2013, y: 4104 },
-                            { x: 2014, y: 4535 },
-                            { x: 2015, y: 5062 },
-                            { x: 2016, y: 5542 },
-                            { x: 2017, y: 5850 },
-                            { x: 2018, y: 6707 },
-                            { x: 2019, y: 7099 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Psychology",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 1454 },
-                            { x: 2001, y: 1553 },
-                            { x: 2002, y: 1704 },
-                            { x: 2003, y: 1785 },
-                            { x: 2004, y: 1887 },
-                            { x: 2005, y: 1942 },
-                            { x: 2006, y: 1944 },
-                            { x: 2007, y: 2213 },
-                            { x: 2008, y: 2412 },
-                            { x: 2009, y: 3949 },
-                            { x: 2010, y: 6582 },
-                            { x: 2011, y: 3866 },
-                            { x: 2012, y: 4713 },
-                            { x: 2013, y: 6118 },
-                            { x: 2014, y: 7529 },
-                            { x: 2015, y: 8736 },
-                            { x: 2016, y: 10602 },
-                            { x: 2017, y: 11282 },
-                            { x: 2018, y: 12488 },
-                            { x: 2019, y: 14481 }
-                        ]
-                    },
-                    {
-                        type: "line",
-                        name: "Social Sciences",
-                        showInLegend: true,
-                        dataPoints: [
-                            { x: 2000, y: 6056 },
-                            { x: 2001, y: 6057 },
-                            { x: 2002, y: 6466 },
-                            { x: 2003, y: 6612 },
-                            { x: 2004, y: 7227 },
-                            { x: 2005, y: 7757 },
-                            { x: 2006, y: 7993 },
-                            { x: 2007, y: 8464 },
-                            { x: 2008, y: 9052 },
-                            { x: 2009, y: 10470 },
-                            { x: 2010, y: 12163 },
-                            { x: 2011, y: 21100 },
-                            { x: 2012, y: 23592 },
-                            { x: 2013, y: 24274 },
-                            { x: 2014, y: 24547 },
-                            { x: 2015, y: 24920 },
-                            { x: 2016, y: 25599 },
-                            { x: 2017, y: 26319 },
-                            { x: 2018, y: 27723 },
-                            { x: 2019, y: 29400 }
-                        ]
-                    }
-                ]
-            });
-            chart.render();
-
-            function toggleDataSeries(e) {
-                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
-                chart.render();
-            }
-
-    //---------------------------------------------------------------------------------------------------------------
-  const associatedataPoints3 = [
-    { label: "Associate's degrees", y: 38434 },
-    { label: "Bachelor's degrees", y: 398602 },
-    { label: "Master's degrees", y: 96230 },
-    { label: "Doctoral degrees", y: 27862 },
-  ];
-
-  const associatedataPoints4 = [
-    { label: "Associate's degrees", y: 104435 },
-    { label: "Bachelor's degrees", y: 724947 },
-    { label: "Master's degrees", y: 209566 },
-    { label: "Doctoral degrees", y: 47753 },
-  ];
-
-  var chart = new CanvasJS.Chart("chartContainer3", {
-    animationEnabled: true,
-    title: {
-      text: "Number of graduates by Degree Level 2000 & 2019 (National)",
-    },
-    axisY: {
-      title: "number of students",
-      titleFontColor: "#4F81BC",
-      lineColor: "#4F81BC",
-      labelFontColor: "#4F81BC",
-      tickColor: "#4F81BC",
-    },
-    axisY2: {
-      title: "number of students",
-      titleFontColor: "#C0504E",
-      lineColor: "#C0504E",
-      labelFontColor: "#C0504E",
-      tickColor: "#C0504E",
-    },
-    toolTip: {
-      shared: true,
-    },
-    legend: {
-      cursor: "pointer",
-      itemclick: toggleDataSeries,
-    },
-    data: [
-      {
-        type: "column",
-        name: "year of 2000 graduates",
-        legendText: " Year : 2000",
-        showInLegend: true,
-        dataPoints: associatedataPoints3,
-      },
-      {
-        type: "column",
-        name: "year of 2019 graduates",
-        legendText: "Year : 2019",
-        axisYType: "secondary",
-        showInLegend: true,
-        dataPoints: associatedataPoints4,
-      },
-    ],
-  });
-
-  chart.render();
-
-
-function toggleDataSeries(e) {
-  if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
-    e.dataSeries.visible = false;
-  } else {
-    e.dataSeries.visible = true;
-  }
-  chart.render();
-}
-var csAssociatedataPoints4 = [
-{ x: 2000, y: 23576 },
-        { x: 2001, y: 30113 },
-        { x: 2002, y: 35578 },
-        { x: 2003, y: 46400 },
-        { x: 2005, y: 36140 },
-        { x: 2006, y: 31170 },
-        { x: 2007, y: 27680 },
-        { x: 2008, y: 28327 },
-        { x: 2009, y: 30050 },
-        { x: 2010, y: 32514 },
-        { x: 2012, y: 41190 },
-        { x: 2013, y: 38897 },
-        { x: 2014, y: 37643 },
-        { x: 2015, y: 36421 },
-        { x: 2016, y: 30512 },
-        { x: 2017, y: 31179 },
-        { x: 2018, y: 31434 },
-        { x: 2019, y: 31939 },
-  ];
-
-  var chart = new CanvasJS.Chart("chartContainer4", {
-    animationEnabled: true,
-    title: {
-      text: "Computer Science in Associate's Degrees awarded data by field: 2000-2019 (National)",
-    },
-    axisY: {
-      title: "Number of Students",
-      includeZero: true,
-      crosshair: {
-        enabled: true,
-        snapToDataPoint: true,
-      },
-    },
-    data: [
-      {
-        type: "spline",
-        toolTipContent: "{label}: {y} students",
-        dataPoints: csAssociatedataPoints4,
-      },
-    ],
-  });
-
-  chart.render();
-//---------------------------------------------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------------------------------------------
-        //  Data for the pie charts
-        var dataPointsPie = [
-            { label: "Computer Science", y: 1026 },
-            { label: "Computer Information Systems", y: 256 },
-            { label: "Geographic Information Science", y: 10 },
-            { label: "Computer Network Technology", y: 157 },
-        ];
-
-        // Function to render pie charts
-        function renderPieCharts() {
-            // Chart 0 - Pie chart for BMCC CIS Department Major Distribution Analysis
-            var chart0 = new CanvasJS.Chart("PiechartContainer", {
-                animationEnabled: true,
-                exportEnabled: true,
-                title: {
-                    text: "BMCC CIS Department in CS, CIS, GIS, and CNT Enrollment Data (Fall 2022)"
-                },
-                subtitles: [{
-                    text: "Major Distribution Analysis"
-                }],
-                data: [{
-                    type: "pie",
-                    showInLegend: true,
-                    legendText: "{label}",
-                    indexLabelFontSize: 16,
-                    indexLabel: "{label} - #percent%",
-                    dataPoints: dataPointsPie
-                }]
-            });
-            chart0.render();
-        }
-        // Data for Pie Chart 1
-        var dataPoints1 = [
-            { label: "Asian", y: 85 },
-            { label: "Black", y: 80 },
-            { label: "Hispanic", y: 74 },
-            { label: "White", y: 17 },
-            { label: "Native American", y: 0 },
-        ];
-    
-        // Chart 1 - Pie chart for Computer Information Systems Ethnicity Data (Fall 2022)
-        var chart1 = new CanvasJS.Chart("PiechartContainer1", {
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-                text: "Computer Information Systems - Ethnicity Data (Fall 2022)"
-            },
-            subtitles: [{
-                text: "Ethnicity Analysis"
-            }],
-            data: [{
-                type: "pie",
-                showInLegend: true,
-                legendText: "{label}",
-                indexLabelFontSize: 16,
-                indexLabel: "{label} - #percent%",
-                dataPoints: dataPoints1
-            }]
-        });
-        chart1.render();
-    
-        // Data for Pie Chart 2
-        var dataPoints2 = [
-            { label: "Asian", y: 297 },
-            { label: "Black", y: 310 },
-            { label: "Hispanic", y: 283 },
-            { label: "White", y: 133 },
-            { label: "Native American", y: 3 },
-        ];
-    
-        // Chart 2 - Pie chart for Computer Science Ethnicity Data (Fall 2022)
-        var chart2 = new CanvasJS.Chart("PiechartContainer2", {
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-                text: "Computer Science - Ethnicity Data (Fall 2022)"
-            },
-            subtitles: [{
-                text: "Ethnicity Analysis"
-            }],
-            data: [{
-                type: "pie",
-                showInLegend: true,
-                legendText: "{label}",
-                indexLabelFontSize: 16,
-                indexLabel: "{label} - #percent%",
-                dataPoints: dataPoints2
-            }]
-        });
-        chart2.render();
-    
-        // Data for Pie Chart 3
-        var dataPoints3 = [
-            { label: "Asian", y: 34 },
-            { label: "Black", y: 52 },
-            { label: "Hispanic", y: 55 },
-            { label: "White", y: 15 },
-            { label: "Native American", y: 1 },
-        ];
-    
-        // Chart 3 - Pie chart for Computer Network Technology Ethnicity Data (Fall 2022)
-        var chart3 = new CanvasJS.Chart("PiechartContainer3", {
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-                text: "Computer Network Technology - Ethnicity Data (Fall 2022)"
-            },
-            subtitles: [{
-                text: "Ethnicity Analysis"
-            }],
-            data: [{
-                type: "pie",
-                showInLegend: true,
-                legendText: "{label}",
-                indexLabelFontSize: 16,
-                indexLabel: "{label} - #percent%",
-                dataPoints: dataPoints3
-            }]
-        });
-        chart3.render();
-    
-        // Data for Pie Chart 4
-        var dataPoints4 = [
-            { label: "Asian", y: 2 },
-            { label: "Black", y: 1 },
-            { label: "Hispanic", y: 4 },
-            { label: "White", y: 3 },
-            { label: "Native American", y: 0 },
-        ];
-    
-        // Chart 4 - Pie chart for Geographic Information Systems Ethnicity Data (Fall 2022)
-        var chart4 = new CanvasJS.Chart("PiechartContainer4", {
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-                text: "Geographic Information Systems - Ethnicity Data (Fall 2022)"
-            },
-            subtitles: [{
-                text: "Ethnicity Analysis"
-            }],
-            data: [{
-                type: "pie",
-                showInLegend: true,
-                legendText: "{label}",
-                indexLabelFontSize: 16,
-                indexLabel: "{label} - #percent%",
-                dataPoints: dataPoints4
-            }]
-        });
-        chart4.render();
-        renderPieCharts();
-    };
-    </script>
-
-{% for data, chart_name in all_data %}
+{% block extra_js %}
 <script>
-  var data{{ forloop.counter }} = {{ data|safe }};
-  var years{{ forloop.counter }} = data{{ forloop.counter }}.map(item => item[0]);
-  var values{{ forloop.counter }} = data{{ forloop.counter }}.map(item => parseInt(item[1]));
+(function () {
+  const specs = JSON.parse(document.getElementById("enrollment-charts-data").textContent);
+  const palette = [
+    { border: "rgb(8, 145, 178)", fill: "rgba(8, 145, 178, 0.08)" },
+    { border: "rgb(79, 70, 229)", fill: "rgba(79, 70, 229, 0.08)" },
+    { border: "rgb(180, 83, 9)", fill: "rgba(180, 83, 9, 0.08)" },
+    { border: "rgb(5, 150, 105)", fill: "rgba(5, 150, 105, 0.08)" },
+  ];
 
-  var ctx{{ forloop.counter }} = document.getElementById('chart{{ forloop.counter }}').getContext('2d');
-  var myChart{{ forloop.counter }} = new Chart(ctx{{ forloop.counter }}, {
-    type: 'line', // Use a line chart to visualize the data
-    data: {
-      labels: years{{ forloop.counter }},
-      datasets: [{
-        label: '{{ chart_name }}',
-        data: values{{ forloop.counter }},
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.7)',
-        borderWidth: 1,
-        fill: false, // Fill the area under the line
-        fontSize: 25
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Graduation Data for ' + '{{ chart_name }}',
-        fontSize: 18 // Set the font size for the chart title
-      },
-      scales: {
-        x: {
-          ticks: {
-            fontSize: 14 // Set the font size for the x-axis labels
-          }
+  Chart.defaults.font.family = '"DM Sans", system-ui, sans-serif';
+  Chart.defaults.color = "#64748b";
+
+  function init() {
+    specs.forEach(function (spec, i) {
+      const el = document.getElementById("enrollment-chart-" + i);
+      if (!el || !spec.points.length) return;
+      const years = spec.points.map(function (p) { return p[0]; });
+      const values = spec.points.map(function (p) { return p[1]; });
+      const c = palette[i % palette.length];
+      new Chart(el, {
+        type: "line",
+        data: {
+          labels: years,
+          datasets: [{
+            label: "Headcount",
+            data: values,
+            borderColor: c.border,
+            backgroundColor: c.fill,
+            borderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: c.border,
+            tension: 0.2,
+            fill: true,
+          }],
         },
-        y: {
-          ticks: {
-            fontSize: 14 // Set the font size for the y-axis labels
-          }
-        }
-      },
-      plugins: {
-        tooltip: {
-          titleFontSize: 16, // Set the font size for the tooltip title
-          bodyFontSize: 14 // Set the font size for the tooltip body
-        }
-      },
-      responsive: true,
-      maintainAspectRatio: false
-    }
-  });
-  
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { intersect: false, mode: "index" },
+          plugins: {
+            legend: { display: false },
+            title: { display: false },
+            tooltip: {
+              backgroundColor: "rgba(15, 23, 42, 0.92)",
+              padding: 10,
+              titleFont: { size: 12, weight: "600" },
+              bodyFont: { size: 13 },
+              callbacks: {
+                title: function (items) {
+                  return items.length ? "Year " + items[0].label : "";
+                },
+                label: function (ctx) {
+                  var v = ctx.parsed.y;
+                  return " Headcount: " + v.toLocaleString();
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              grid: { color: "rgba(148, 163, 184, 0.25)" },
+              ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 10 },
+            },
+            y: {
+              beginAtZero: false,
+              grid: { color: "rgba(148, 163, 184, 0.25)" },
+              ticks: {
+                callback: function (val) { return Number(val).toLocaleString(); },
+              },
+            },
+          },
+        },
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'scripts.js' %}"></script>
-{% endfor %}
-
-</body>
-
-
-
-<div class="footer">
-  <div class="column-2">
-    <div class="logo-wrapper"><img src="{% static 'Logo_1.png' %}" loading="lazy" width="287" height="68" srcset="{% static 'Logo_1-p-500.png' %}" sizes="(max-width: 479px) 60vw, 287px" alt="" class="logo-2"></div>
-  </div>
-  <div class="copyright">
-    <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" style="color:white;"><div class="text-6">Copyright &copy <script type="text/javascript">document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship
-    </div>
-    </a>
-  </div>
-</div>
-</div>
-<script>
-  window.watsonAssistantChatOptions = {
-    integrationID: "ca3979cb-7ded-4fde-8cb2-6e34f933a2f1", // The ID of this integration.
-    region: "us-south", // The region your integration is hosted in.
-    serviceInstanceID: "0df18117-9251-4626-adea-21f86e3b22a6", // The ID of your service instance.
-    onLoad: function(instance) { instance.render(); }
-  };
-  setTimeout(function(){
-    const t=document.createElement('script');
-    t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
-    document.head.appendChild(t);
-  });
-</script>
-</html>
+{% endblock %}

@@ -17,13 +17,11 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'client', 'css'),
     os.path.join(BASE_DIR, 'client', 'js'),
     os.path.join(BASE_DIR, 'client', 'images'),
-    # Add more directories as needed
 ]
 
 
@@ -31,12 +29,33 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*5pl%2a!bj401=r0jp)w0(hep)@0$ra3r@kr5hhm9(k8301!)$'
+# On PythonAnywhere, set DJANGO_SECRET_KEY in the WSGI config file (do not commit real secrets).
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-*5pl%2a!bj401=r0jp)w0(hep)@0$ra3r@kr5hhm9(k8301!)$',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Set DJANGO_DEBUG=false on the host (e.g. in WSGI file before loading the app).
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = []
+# Comma-separated list, e.g. DJANGO_ALLOWED_HOSTS=yourname.pythonanywhere.com
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
+    if h.strip()
+]
+
+# HTTPS on PythonAnywhere (and similar): set in WSGI, e.g.
+# DJANGO_CSRF_TRUSTED_ORIGINS=https://yourname.pythonanywhere.com
+_csrf_origins = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '')
+CSRF_TRUSTED_ORIGINS = [
+    o.strip() for o in _csrf_origins.split(',') if o.strip()
+]
+
+# Trust X-Forwarded-Proto when DEBUG is off (reverse proxy / PA).
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Application definition
@@ -51,9 +70,9 @@ INSTALLED_APPS = [
     'apps.clubs',
     'myapp',
     'base',
-    'internshipProject',
     'events',
-    'careers'
+    'careers',
+    'experientiallearning',
 ]
 
 MIDDLEWARE = [
@@ -131,8 +150,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'static'
 CSV_FILE_DIR = os.path.join(BASE_DIR, 'static', 'csv')

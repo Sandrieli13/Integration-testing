@@ -64,3 +64,23 @@ class ProgramElectives(models.Model):
     description = models.TextField()
     class Meta:
         db_table = 'Program Electives'
+
+
+class DepartmentMetric(models.Model):
+    """Yearly headcount or completion counts for BMCC CIS-related majors (synced from static CSVs)."""
+
+    series_key = models.SlugField(max_length=64, db_index=True)
+    year = models.PositiveIntegerField()
+    value = models.PositiveIntegerField()
+
+    class Meta:
+        ordering = ["series_key", "year"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["series_key", "year"],
+                name="department_metric_series_year_uniq",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.series_key} {self.year}: {self.value}"

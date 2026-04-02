@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home page</title>
-        <!-- Add any CSS or JavaScript files here -->
-    
-        <!-- Include the navbar.html template -->
-        {% include 'navbar.html' %}
-        
-    </head>
-    <body>
-        {% block content%}
-        {% endblock %}
-    </body>
-</html>
+{% extends "base.html" %}
+{# Legacy shell: use base.html directly in views instead of this file. #}
+{% block title %}Home{% endblock %}
+{% block content %}
+<p>This layout is unused. Point your view at <code>home.html</code> or another page template.</p>
+{% endblock %}

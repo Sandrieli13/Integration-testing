@@ -1,0 +1,7 @@
+{% if messages %}
+<ul class="el-messages" style="list-style:none;padding:12px 24px;margin:0;background:#fff8e6;border-bottom:1px solid #e6d9a8;">
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}

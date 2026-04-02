@@ -1,57 +1,176 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Career skills &amp; gaps · Career readiness{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'careers/careers-pages.css' %}">
+{% endblock %}
 
 {% block content %}
-<body>
-    <h1>Select a Major and Job</h1>
+<div class="careers-hub">
+  {% include '_career_hub_nav.html' %}
 
-    {% if major and job %}
-        <div class="result">
-            <h2>Major: {{ major.major }}</h2>
-            <h2>Job: {{ job.job_title }}</h2>
-            <h3>Skills Needed for {{ job.job_title }}:</h3>
-            <ul>
-                {% for skill in job.skills.all %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ul>
-            <h3>Skills of {{ major.major }}:</h3>
-            <ul>
-                {% for skill in major.skills.all %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ul>
-            <h3>Mismatched Skills:</h3>
-            <ul>
-                {% for skill in mismatched_skills %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ul>
-            <h3>Gap Fillers:</h3>
-            <ul>
-                {% for skill_name, gap_name in gapfilling %}
-                    <li>{{ skill_name }} : <br>- {{ gap_name }}</li>
-                {% endfor %}
-            </ul>
-            <p><a href="{% url 'page2' %}">Select Another Major and Job</a></p>
-        </div>
-    {% else %}
-        <form method="POST">
-            {% csrf_token %}
-            <label for="major">Choose a major:</label>
-            <select id="major" name="major">
-                {% for major in majors %}
-                    <option value="{{ major.id }}">{{ major.major }}</option>
-                {% endfor %}
-            </select>
+  {% if major and job %}
+    <header class="careers-hub__hero">
+      <p class="careers-hub__eyebrow">Skills alignment report</p>
+      <h1>{{ job.job_title }}</h1>
+      <p class="careers-hub__lede">
+        Compared against <strong>{{ major.major }}</strong>. <em>Overlap</em> shows skills both your major and the role emphasize; <em>gaps</em> are skills the role expects that are not currently tied to your major in this dataset—plus ideas to close them.
+      </p>
+    </header>
 
-            <label for="job">Choose a job:</label>
-            <select id="job" name="job">
-                {% for job in jobs %}
-                    <option value="{{ job.id }}">{{ job.job_title }}</option>
-                {% endfor %}
-            </select>
-            <button class="navbar-button w-nav-link text-3 footer-ting" type="submit">Submit</button>
-        </form>
-    {% endif %}
-</body>
+    <section class="careers-card">
+      <h2>Role: required skills (full list)</h2>
+      <p class="careers-muted" style="margin-top: 0;">Every skill listed for this job in the database.</p>
+      {% if job_skills %}
+        <ul>
+          {% for skill in job_skills %}
+            <li>{{ skill.name }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="careers-muted">No skills are attached to this job yet—ask an advisor or edit data in admin.</p>
+      {% endif %}
+    </section>
+
+    <section class="careers-card">
+      <h2>Major: emphasized skills</h2>
+      {% if major_skills %}
+        <ul>
+          {% for skill in major_skills %}
+            <li>{{ skill.name }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="careers-muted">No skills are linked to this major in the database yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="careers-card">
+      <h2>Overlap: skills you already “cover” in this model</h2>
+      <p class="careers-muted" style="margin-top: 0;">Intersection of job skills and major skills (exact name match in the database).</p>
+      {% if matched_skills %}
+        <p>
+          {% for skill in matched_skills %}
+            <span class="careers-pill careers-pill--match">{{ skill.name }}</span>
+          {% endfor %}
+        </p>
+      {% else %}
+        <p class="careers-muted">No overlapping skill names between this major and job. Treat every job skill as a development area or broaden the major’s skill tags in admin.</p>
+      {% endif %}
+    </section>
+
+    <section class="careers-card">
+      <h2>Skill gaps &amp; how to build them</h2>
+      <p class="careers-muted" style="margin-top: 0;">Job skills not matched to the major in this dataset. “How to build” comes from the <code>gapfiller</code> field when present.</p>
+      {% if gap_rows %}
+        {% for row in gap_rows %}
+          <div class="careers-gap-item">
+            <strong><span class="careers-pill careers-pill--gap">Gap</span> {{ row.name }}</strong>
+            <p style="margin: 0.35rem 0 0; font-size: 0.95rem;">{{ row.how_to_build }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="careers-muted">No gaps detected—either the job has no extra skills vs. this major, or data needs updating.</p>
+      {% endif %}
+    </section>
+
+    <section class="careers-panel">
+      <h2>Reflect like an analyst</h2>
+      <ul>
+        <li>Which gaps are <strong>foundational</strong> (e.g., networking, databases) vs. <strong>nice-to-have</strong>?</li>
+        <li>Can one BMCC course or a capstone project cover multiple gaps at once?</li>
+        <li>Update your résumé bullets to mention tools and outcomes, not only course names.</li>
+      </ul>
+    </section>
+
+    <p>
+      <a class="careers-back" href="{% url 'careers:page1' %}">← Back to majors &amp; careers</a>
+      &nbsp;·&nbsp;
+      <a class="careers-back" href="{% url 'careers:page2' %}">Compare another job</a>
+    </p>
+
+  {% else %}
+    <header class="careers-hub__hero">
+      <p class="careers-hub__eyebrow">Skill gap analysis</p>
+      <h1>Catch on important skills of careers</h1>
+      <p class="careers-hub__lede">
+        Choose a major and a target job. We list skills the job expects, skills your major emphasizes in this app’s data, where they overlap, and what is still missing—with suggested ways to build missing skills.
+      </p>
+    </header>
+
+    <section class="careers-panel">
+      <h2>Why this matters</h2>
+      <p>Employers hire for <strong>capabilities and evidence</strong>, not only the degree name. This tool gives a structured comparison so you can plan electives, projects, and internships deliberately.</p>
+    </section>
+
+    {{ majors_jobs_json|json_script:"majors-jobs-map" }}
+
+    <form method="post" class="careers-form" id="skills-compare-form">
+      {% csrf_token %}
+      <label for="major">1. Choose your major</label>
+      <select id="major" name="major" required>
+        {% for m in majors %}
+          <option value="{{ m.id }}">{{ m.major }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="job">2. Choose a target job</label>
+      <p class="job-filter-hint" id="job-filter-hint">Job list filters to titles linked to your major when possible. If none are linked, all titles show.</p>
+      <select id="job" name="job" required>
+        <option value="" disabled selected>Select a job</option>
+        {% for j in jobs %}
+          <option value="{{ j.id }}">{{ j.job_title }}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" class="careers-btn">Build skills report</button>
+    </form>
+
+    <script>
+    (function () {
+      var el = document.getElementById("majors-jobs-map");
+      if (!el) return;
+      var majorToJobs = JSON.parse(el.textContent);
+      var majorSel = document.getElementById("major");
+      var jobSel = document.getElementById("job");
+      var hint = document.getElementById("job-filter-hint");
+
+      function filterJobs() {
+        var mid = majorSel.value;
+        var allowed = majorToJobs[mid];
+        var opts = jobSel.querySelectorAll("option");
+        var visible = 0;
+        if (!allowed || allowed.length === 0) {
+          opts.forEach(function (opt) {
+            opt.hidden = false;
+            visible++;
+          });
+          hint.textContent = "No job links configured for this major—showing all job titles. Ask your admin to link jobs to majors for a tighter list.";
+          return;
+        }
+        var set = new Set(allowed);
+        opts.forEach(function (opt) {
+          if (opt.value === "") return;
+          var ok = set.has(parseInt(opt.value, 10));
+          opt.hidden = !ok;
+          if (ok) visible++;
+        });
+        hint.textContent = visible
+          ? "Showing " + visible + " job title(s) associated with this major in the database."
+          : "No jobs linked to this major—showing all titles.";
+        if (visible === 0) {
+          opts.forEach(function (opt) { opt.hidden = false; });
+        }
+        var first = jobSel.querySelector("option:not([hidden]):not([value=''])");
+        if (first) jobSel.value = first.value;
+      }
+
+      majorSel.addEventListener("change", filterJobs);
+      filterJobs();
+    })();
+    </script>
+  {% endif %}
+</div>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.utils.http import url_has_allowed_host_and_scheme
 from .forms import LoginForm, SignupForm, UserEditForm, UserMentor, UserMentee
 from .models import Mentee, Mentor, CustomUser
 from operator import attrgetter
@@ -11,18 +12,36 @@ def signout_view(request):
     logout(request)
     return redirect('index')
 
+
+def _safe_next_redirect(request, default_url_name='index'):
+    next_url = request.POST.get('next') or request.GET.get('next')
+    if (
+        next_url
+        and url_has_allowed_host_and_scheme(
+            url=next_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        )
+    ):
+        return redirect(next_url)
+    return redirect(default_url_name)
+
+
 def signin_view(request):
-        if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('index')  # Replace 'home' with the name of your home page URL pattern
-            else:
-                return render(request, 'signin.html', {'error': 'Invalid credentials'})
-        else:
-            return render(request, 'signin.html')
+    next_url = request.POST.get('next') or request.GET.get('next')
+    if request.method == 'POST':
+        username = request.POST.get('username', '').strip()
+        password = request.POST.get('password', '')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return _safe_next_redirect(request)
+        return render(
+            request,
+            'signin.html',
+            {'error': 'Invalid credentials', 'next': next_url},
+        )
+    return render(request, 'signin.html', {'next': next_url})
 
 
 def signup_view(request):

@@ -1,0 +1,23 @@
+{% load static %}
+<nav>
+  <a href="{% url 'experientiallearning:index' %}" class="el-nav__brand">
+    <img src="{% static 'experientiallearning/images/logo-mark.svg' %}" width="200" height="48" alt="Career readiness — home">
+  </a>
+  <div class="nav-links" id="navLinks">
+    <i class="fa fa-times" onclick="hideMenu()" role="button" aria-label="Close menu"></i>
+    <ul>
+      <li><a href="{% url 'index' %}">Main site</a></li>
+      <li><a href="{% url 'experientiallearning:index' %}">EL Home</a></li>
+      <li><a href="{% url 'experientiallearning:about' %}">About</a></li>
+      <li><a href="{% url 'experientiallearning:job_board' %}">Job Board</a></li>
+      <li><a href="{% url 'experientiallearning:events' %}">Events</a></li>
+      <li><a href="{% url 'experientiallearning:career_info' %}">Career Info</a></li>
+      <li><a href="{% url 'experientiallearning:research' %}">Research</a></li>
+      <li><a href="{% url 'experientiallearning:register_events' %}">Register events</a></li>
+      <li><a href="{% url 'experientiallearning:career_statistics' %}">Career stats</a></li>
+      <li><a href="{% url 'careers:page1' %}">Majors &amp; careers</a></li>
+      <li><a href="{% url 'experientiallearning:login' %}">Login</a></li>
+    </ul>
+  </div>
+  <i class="fa fa-bars" onclick="showMenu()" role="button" aria-label="Open menu"></i>
+</nav>

@@ -1,11 +1,7 @@
-    {% extends 'base.html' %}
-    {% load static %}
-    {% block content %}
-        <head>
-
-    <title>Student Programs - FRESHMAN'S ROADMAP</title><meta property="og:site_name" content="FRESHMAN&#039;S ROADMAP" />
-    <meta property="og:title" content="Student Programs" />            
-
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Student Programs — Freshman&apos;s roadmap{% endblock %}
+{% block extra_head %}
     <link id="wsite-base-style" rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/sites.css?buildTime=1668539559" />
     <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/old/fancybox.css?1668093892" />
     <link rel="stylesheet" type="text/css" href="//cdn2.editmysite.com/css/social-icons.css?buildtime=1668093892" media="screen,projection" />
@@ -26,7 +22,9 @@
             
     <script type="text/javascript" src="//cdn2.editmysite.com/js/lang/en/stl.js?buildTime=1668539559&"></script><script> _W.themePlugins = [];</script><script type="text/javascript"> _W.recaptchaUrl = "https://www.google.com/recaptcha/api.js"; </script>
   
-        </head> 
+
+{% endblock %}
+{% block content %}
         <div class="banner-wrap">
             <div class="wsite-elements wsite-not-footer wsite-header-elements">
         <div class="wsite-section-wrap">
@@ -351,6 +349,4 @@
             catch(ex) {}
         })(window._W && _W.jQuery);
     </script>
-
 {% endblock %}
- 
