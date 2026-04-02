@@ -107,6 +107,12 @@ python manage.py sync_department_metrics     # charts on DataAnalysisPage (from 
 
 BMCC **scrape** commands (`import_individual_society_bmcc`, etc.) need outbound HTTP; free PythonAnywhere accounts often cannot reach arbitrary URLs — use **`load_elective_courses`** instead on the server.
 
+**Refresh the fixture on your laptop** (after running scrape commands locally), then commit and push:
+
+```bash
+python manage.py dump_elective_courses
+```
+
 Careers app rows (majors/skills/jobs) are **not** in that JSON; for those you still need **Option A**, Django **admin**, or a custom import.
 
 If you see **`attempt to write a readonly database`**, the `db.sqlite3` file or its folder is not writable — fix ownership/permissions under `/home/YOURUSERNAME/Integration-testing`.
