@@ -87,7 +87,26 @@ python manage.py migrate
 python manage.py createsuperuser   # optional
 ```
 
-`db.sqlite3` is not in git; the server creates a fresh DB on first migrate.
+`db.sqlite3` is not in git, so **`migrate` alone leaves empty tables**. Pages that list majors, courses, careers data, etc. will look “broken” until you add data.
+
+**Option A — copy your real database from your laptop**
+
+1. Upload `db.sqlite3` via **Files** into `/home/YOURUSERNAME/Integration-testing/` (replace the empty one), **or** use `scp`.
+2. In Bash: `chmod 664 ~/Integration-testing/db.sqlite3` if you get permission errors.
+3. `python manage.py migrate` (applies any new migrations safely).
+
+**Option B — seed from the repo (partial)**
+
+From the project root with venv active:
+
+```bash
+python manage.py load_json_data              # Majors, Courses, Semester (base app)
+python manage.py sync_department_metrics     # charts on DataAnalysisPage (from CSV under client/css/csv/)
+```
+
+Careers app rows (majors/skills/jobs) are **not** in that JSON; for those you still need **Option A**, Django **admin**, or a custom import.
+
+If you see **`attempt to write a readonly database`**, the `db.sqlite3` file or its folder is not writable — fix ownership/permissions under `/home/YOURUSERNAME/Integration-testing`.
 
 ## 6. Reload
 

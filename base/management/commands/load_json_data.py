@@ -1,13 +1,17 @@
-import json 
+import json
 import os
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
+
 from base.models import Majors, Courses, Semester
+
 
 class Command(BaseCommand):
     help = 'Load data from JSON file'
 
     def handle(self, *args, **kwargs):
-        file_path = os.path.join('base', 'fixtures', 'sql_code.json')
+        file_path = os.path.join(settings.BASE_DIR, 'base', 'fixtures', 'sql_code.json')
 
         with open(file_path, 'r') as file:
             data = json.load(file)
