@@ -4,50 +4,63 @@ import os
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from base.models import Majors, Courses, Semester
+from base.models import Courses, Majors, Semester
 
 
 class Command(BaseCommand):
-    help = 'Load data from JSON file'
+    help = 'Load data from JSON file (Majors, Courses, Semester)'
+
+    @staticmethod
+    def _course_ref(course_pk):
+        if course_pk is None:
+            return None
+        return Courses.objects.get(course_id=course_pk)
 
     def handle(self, *args, **kwargs):
         file_path = os.path.join(settings.BASE_DIR, 'base', 'fixtures', 'sql_code.json')
 
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
-            majors_data = data['Majors']
-            courses_data = data['Courses']
-            semester_data = data['Semester']
+        majors_data = data['Majors']
+        courses_data = data['Courses']
+        semester_data = data['Semester']
 
-            # Load Majors data
-            for major in majors_data:
-                Majors.objects.create(
-                    major_id=major['major_id'],
-                    major_name=major['major_name']
-                )
+        for major in majors_data:
+            Majors.objects.update_or_create(
+                major_id=major['major_id'],
+                defaults={'major_name': major['major_name']},
+            )
 
-            # Load Courses data
-            for course in courses_data:
-                Courses.objects.create(
-                    course_id=course['course_id'],
-                    course_name=course['course_name'],
-                    major_id=course['major_id'],
-                    credits=course['credits']
-                )
+        for course in courses_data:
+            Courses.objects.update_or_create(
+                course_id=course['course_id'],
+                defaults={
+                    'course_name': course['course_name'],
+                    'major_id': course['major_id'],
+                    'credits': course['credits'],
+                },
+            )
 
-            # Load Semester data
-            for semester in semester_data:
-                Semester.objects.create(
-                    semester_id=semester['semester_id'],
-                    major_id=semester['major_id'],
-                    course1_id=semester['course1'],
-                    course2_id=semester['course2'],
-                    course3_id=semester['course3'],
-                    course4_id=semester['course4'],
-                    course5_id=semester['course5'],
-                    course6_id=semester['course6'],
-                    total_credits=semester['total_credits']
+        for semester in semester_data:
+            if semester.get('course6') is not None:
+                self.stdout.write(
+                    self.style.WARNING(
+                        'Ignoring course6 in fixture (model has at most 5 courses per semester).'
+                    )
                 )
+            major = Majors.objects.get(pk=semester['major_id'])
+            Semester.objects.update_or_create(
+                semester_id=semester['semester_id'],
+                major=major,
+                defaults={
+                    'course1': self._course_ref(semester.get('course1')),
+                    'course2': self._course_ref(semester.get('course2')),
+                    'course3': self._course_ref(semester.get('course3')),
+                    'course4': self._course_ref(semester.get('course4')),
+                    'course5': self._course_ref(semester.get('course5')),
+                    'total_credits': semester['total_credits'],
+                },
+            )
 
         self.stdout.write(self.style.SUCCESS('Data loaded successfully.'))
