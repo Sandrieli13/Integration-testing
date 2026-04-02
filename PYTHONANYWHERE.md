@@ -22,6 +22,12 @@ The default `requirements.txt` is **minimal** (no NumPy/Pandas/Matplotlib) so in
 
 Optional local analytics stack: `requirements-dev.txt` (do not install on PA unless you upgrade disk).
 
+If `pip` errors with `\x00` in `requirements.txt`, the file was saved as UTF-16. Fix on the server with:
+
+`python3 -c "p='requirements.txt'; open(p,'wb').write(open(p,'r',encoding='utf-16').read().encode('utf-8'))"`
+
+(or `git pull` after the repo is fixed to UTF-8).
+
 Use the same Python version you selected for the web app (3.9–3.11 is fine).
 
 ## 2. Web tab → Virtualenv
