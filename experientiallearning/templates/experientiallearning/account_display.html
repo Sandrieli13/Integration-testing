@@ -1,16 +1,9 @@
+{% extends "base_el.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account</title>
-  {% include 'experientiallearning/_el_head_common.html' %}
-</head>
-<body>
+{% block title %}Account · Career readiness{% endblock %}
+{% block el_content %}
 {% include 'experientiallearning/_messages.html' %}
 <section class="sub-header">
-  {% include 'experientiallearning/_el_nav.html' %}
   <h1>Account</h1>
 </section>
 
@@ -20,15 +13,4 @@
   <p>The original PHP site looked up this ID in MySQL (<code>stuUsers</code>). That database is not connected here. Use the main application <a href="{% url 'signup' %}">sign up</a> or <a href="{% url 'signin' %}">sign in</a> for authenticated access, or import legacy data into Django models if you need parity.</p>
   <p><a href="{% url 'experientiallearning:update_profile' %}">Update profile</a> (legacy form) · <a href="{% url 'experientiallearning:my_account' %}">New account form</a></p>
 </div>
-
-<section class="footer">
-  <h4>About Us</h4>
-  <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.</p>
-</section>
-<script>
-  var navLinks = document.getElementById('navLinks');
-  function showMenu(){ navLinks.style.right = '0'; }
-  function hideMenu(){ navLinks.style.right = '-200px'; }
-</script>
-</body>
-</html>
+{% endblock %}

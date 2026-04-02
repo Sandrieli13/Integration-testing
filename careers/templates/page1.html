@@ -4,7 +4,7 @@
 {% block title %}Learn about majors &amp; careers · Career readiness{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'careers/careers-pages.css' %}">
+  <link rel="stylesheet" href="{% static 'careers/careers-pages.css' %}?v=elnav1">
 {% endblock %}
 
 {% block content %}
@@ -45,7 +45,7 @@
           {% endfor %}
         </ul>
       {% else %}
-        <p class="careers-muted">No linked job titles in the database yet. Use <a href="https://www.bmcc.cuny.edu/students/career-planning/" target="_blank" rel="noopener noreferrer">BMCC career planning</a> or <a href="{% url 'experientiallearning:career_info' %}">Career Info</a> in this site.</p>
+        <p class="careers-muted">No linked job titles in the database yet. Use <a href="https://www.bmcc.cuny.edu/student-affairs/career/" target="_blank" rel="noopener noreferrer">BMCC Career Center</a> or <a href="{% url 'experientiallearning:career_info' %}">Career Info</a> in this site.</p>
       {% endif %}
     </section>
 

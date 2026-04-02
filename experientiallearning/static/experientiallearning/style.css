@@ -10,14 +10,16 @@
     --el-radius: 14px;
 }
 
+/* Scope to .el-legacy-scope so resets and bare selectors (nav, h1, section…) do not hit the site chrome */
+@scope (.el-legacy-scope) {
+:scope {
+    color: var(--el-ink);
+    font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Outfit', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-}
-
-body {
-    color: var(--el-ink);
+    font-family: inherit;
 }
 .header{
     min-height: 100vh;
@@ -986,3 +988,18 @@ section h2 {
   color: #fff !important;
 }
 
+/* Full-bleed mini-site heroes inside the centered .bmc-page shell */
+.header,
+.sub-header,
+.sub1-header,
+.sub2-header,
+.sub3-header,
+.sub6-header {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  box-sizing: border-box;
+}
+
+}

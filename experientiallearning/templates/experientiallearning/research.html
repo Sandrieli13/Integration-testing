@@ -1,51 +1,22 @@
+{% extends "base_el.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research · Career readiness</title>
-    {% include 'experientiallearning/_el_head_common.html' %}
-</head>
-<body>
+{% block title %}Research · Career readiness{% endblock %}
+{% block el_content %}
 {% include 'experientiallearning/_messages.html' %}
-    <section class="sub6-header">
-        {% include 'experientiallearning/_el_nav.html' %}
-        <h1>Research Opportunities</h1>
-    </section>
+<section class="sub6-header">
+    <h1>Research Opportunities</h1>
+</section>
 
-    <section>
-        <p style="margin: 0 5% 1rem;"><a href="{% url 'experientiallearning:job_board' %}">Internship opportunities (job board)</a></p>
-        <h2>Research Opportunities</h2>
-        <ul id="job-list"></ul>
-    </section>
+<section>
+    <p style="margin: 0 5% 1rem;"><a href="{% url 'experientiallearning:job_board' %}">Internship opportunities (job board)</a></p>
+    <h2>Research Opportunities</h2>
+    <ul id="job-list"></ul>
+</section>
+{% endblock %}
 
-    <section class="footer">
-        <h4>About Us</h4>
-        <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
-        Together, we are dedicated to guiding students towards their goals by providing a platform to discover 
-        relevant courses, workshops, and resources that will facilitate their career path. We believe in empowering
-        students to make informed decisions and embark on a successful educational journey.<br>
-        <a target="_blank" href="https://sites.google.com/view/bmcctechinterns" rel="noopener noreferrer" style="color:red;">Copyright &copy; 2023&ndash;<script>document.write(new Date().getFullYear());</script> BMCC Technology Learning Community Internship</a></p>
-        <div class="icons">
-            <i class="fa fa-facebook"></i>
-            <i class="fa fa-twitter"></i>
-            <i class="fa fa-instagram"></i>
-            <i class="fa fa-linkedin"></i>       
-        </div>
-    </section>
-
-    <script>
-        var navLinks = document.getElementById("navLinks");
-
-        function showMenu() {
-            navLinks.style.right = "0";
-        }
-
-        function hideMenu() {
-            navLinks.style.right = "-200px";
-        }
-
+{% block extra_js %}
+{{ block.super }}
+<script>
         const jobs = [
             {
                 title: "CUNY Research Scholars Program (CRSP)",
@@ -89,11 +60,11 @@
                     contact: "vandrews@bmcc.cuny.edu"
                 }
             },
-            // Add more internship data here...
         ];
 
         function displayJobs() {
             const jobList = document.getElementById("job-list");
+            if (!jobList) return;
             jobList.innerHTML = "";
 
             jobs.forEach((job) => {
@@ -106,23 +77,14 @@
                 const jobCollegeName = document.createElement("p");
                 jobCollegeName.classList.add("job-collegeName");
                 jobCollegeName.innerHTML = "<strong>CollegeName:</strong> " + job.collegeName;
-                
 
                 const jobLocation = document.createElement("p");
                 jobLocation.classList.add("job-location");
                 jobLocation.innerHTML = "<strong>Location:</strong> " + job.location;
 
-                const jobDescriptionLabel = document.createElement("p");
-                jobDescriptionLabel.classList.add("job-description-label");
-                jobDescriptionLabel.textContent = "Description:";
-
                 const jobDescription = document.createElement("p");
                 jobDescription.classList.add("job-description");
                 jobDescription.innerHTML = "<strong>Description:</strong>" + job.description;
-
-                const jobRequirementsLabel = document.createElement("p");
-                jobRequirementsLabel.classList.add("job-requirements-label");
-                jobRequirementsLabel.textContent = "Requirements:";
 
                 const jobRequirements = document.createElement("p");
                 jobRequirements.classList.add("job-requirements");
@@ -153,6 +115,5 @@
         }
 
         displayJobs();
-    </script>
-</body>
-</html>
+</script>
+{% endblock %}

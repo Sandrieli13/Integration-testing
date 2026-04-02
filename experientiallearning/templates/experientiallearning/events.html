@@ -1,16 +1,9 @@
+{% extends "base_el.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events · Career readiness</title>
-  {% include 'experientiallearning/_el_head_common.html' %}
-</head>
-<body>
+{% block title %}Events · Career readiness{% endblock %}
+{% block el_content %}
 {% include 'experientiallearning/_messages.html' %}
   <section class="sub2-header">
-    {% include 'experientiallearning/_el_nav.html' %}
     <h1>EVENTS</h1>
   </section>
 
@@ -209,7 +202,13 @@
       if (registeredEvents.length > 0) {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
-        form.setAttribute("action", "register_events.php");
+        form.setAttribute("action", "{% url 'experientiallearning:register_events' %}");
+
+        var csrfInput = document.createElement("input");
+        csrfInput.setAttribute("type", "hidden");
+        csrfInput.setAttribute("name", "csrfmiddlewaretoken");
+        csrfInput.setAttribute("value", "{{ csrf_token }}");
+        form.appendChild(csrfInput);
 
         registeredEvents.forEach(function(event) {
           var inputTitle = document.createElement("input");
@@ -251,5 +250,4 @@
       }
     });
   </script>
-</body>
-</html>
+{% endblock %}

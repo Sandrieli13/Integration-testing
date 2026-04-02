@@ -1,8 +1,8 @@
 :root {
     /* Must cover real header (logo + large home link); was 64px and clipped first line of page */
     --navbar-height: 72px;
-    /* Extra air below the bar inside the in-flow shim (body > .site-nav-offset) */
-    --site-nav-below-gap: 24px;
+    /* Keep 0 so first content (e.g. hero banner) sits flush under the fixed bar */
+    --site-nav-below-gap: 0px;
     /* Single source of truth for “start content below fixed nav” (safe area + bar + gap) */
     --site-nav-offset-total: calc(
         var(--navbar-height) + env(safe-area-inset-top, 0px) + var(--site-nav-below-gap)

@@ -26,6 +26,11 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* Legacy webflow set body { margin-top: 50px } for an old layout — creates a white band under the fixed nav */
+body {
+  margin-top: 0;
+}
+
 .shell h1 {
   font-size: clamp(1.65rem, 4vw, 2.1rem);
   font-weight: 700;
@@ -66,20 +71,52 @@
   color: var(--bmc-blue-hover);
 }
 
-/* Careers hub strip sits on a dark gradient — shell link styles must not force blue-on-navy */
+/* Career readiness sub-nav — same tokens as #navbar (navbar.css); overrides .shell default link underline */
 .shell .careers-hub__nav a {
-  color: rgba(255, 255, 255, 0.92) !important;
+  color: var(--navbar-text-color) !important;
   border-bottom: none !important;
-  font-weight: 500;
+  font-weight: 400 !important;
 }
 
-.shell .careers-hub__nav a:hover {
-  color: #fff !important;
-  text-decoration: underline;
+.shell .careers-hub__nav a:hover,
+.shell .careers-hub__nav a:focus-visible {
+  color: var(--navbar-text-color-focus) !important;
+  background-color: var(--navbar-bg-contrast) !important;
+  text-decoration: none !important;
 }
 
 .shell .careers-hub__nav-sep {
-  color: rgba(255, 255, 255, 0.42) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Full-bleed sub-bar like the fixed header (edge-to-edge under site nav) */
+.shell .careers-hub > .careers-hub__nav:first-child,
+.shell .bmc-page.el-career-readiness > .careers-hub__nav:first-child {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+  margin-bottom: 1.25rem;
+  box-sizing: border-box;
+}
+
+/* No white band: default .bmc-page padding-top sits above the hub strip; hero is inside .el-legacy-scope */
+.shell .bmc-page.el-career-readiness {
+  padding-top: 0;
+}
+
+/* Flush blue hub strip against Manhattan hero (margin was showing the page background) */
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope .bmc-page-hero) > .careers-hub__nav:first-child,
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope header.bmc-page-hero) > .careers-hub__nav:first-child,
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope section:is(.sub-header, .sub1-header, .sub2-header, .sub3-header, .sub6-header)) > .careers-hub__nav:first-child {
+  margin-bottom: 0;
+}
+
+.shell .careers-hub:has(> .bmc-page-hero) > .careers-hub__nav:first-child,
+.shell .careers-hub:has(> header.bmc-page-hero) > .careers-hub__nav:first-child {
+  margin-bottom: 0;
 }
 
 /* Standard page column */
@@ -89,6 +126,11 @@
   margin: 0 auto;
   padding: 0.35rem 1.25rem 3rem;
   box-sizing: border-box;
+}
+
+/* No extra top padding when the first block is a full-width hero */
+.shell .bmc-page:has(> .bmc-page-hero:first-child) {
+  padding-top: 0;
 }
 
 .bmc-hero {
@@ -343,6 +385,7 @@
 .shell .team-rectangles {
   background: linear-gradient(180deg, var(--bmc-surface) 0%, #fff 50%);
   padding-bottom: 1rem;
+  margin-top: 0; /* override lisandros webflow 50px */
 }
 
 .shell #footer2 {
@@ -378,17 +421,38 @@
   box-sizing: border-box;
 }
 
-.shell .home-rec .body_text1 span {
+/*
+ * Home (home.html): .sub_body_rectangle uses BMCC blue in style.css — titles/body must stay light.
+ * Do not apply shell “ink/navy” here or text disappears on the blue cards.
+ */
+.shell .team-rectangles .home-rec .body_text1 span {
   font-family: var(--bmc-font);
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-weight: 700;
-  color: var(--bmc-navy);
+  color: #ebf7ff;
+  text-shadow: 7px 6px 4px rgba(58, 87, 125, 0.47);
 }
 
-.shell .home-rec .body_text2 {
-  color: var(--bmc-ink);
+.shell .team-rectangles .home-rec .body_text2,
+.shell .team-rectangles .home-rec .body_text2 p,
+.shell .team-rectangles .home-rec .body_text2 strong {
+  color: #ffffff;
   font-size: 0.98rem;
   line-height: 1.6;
+}
+
+.shell .team-rectangles .home-rec .body_text2 p {
+  max-width: none;
+}
+
+.shell .team-rectangles .home-rec .body_text2 a {
+  color: #ffffff;
+  border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+.shell .team-rectangles .home-rec .body_text2 a:hover {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
 }
 
 /* Long-form / Weebly migration pages */
@@ -549,6 +613,73 @@
   border-radius: 0;
 }
 
+/* Career readiness templates: hero lives inside .el-legacy-scope, not as direct .bmc-page child */
+.shell .bmc-page.el-career-readiness > .el-legacy-scope > .bmc-page-hero,
+.shell .bmc-page.el-career-readiness > .el-legacy-scope > header.bmc-page-hero {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-radius: 0;
+}
+
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > .bmc-page-hero:first-child),
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > header.bmc-page-hero:first-child) {
+  padding-top: 0;
+}
+
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > ul.el-messages:first-child + .bmc-page-hero),
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > ul.el-messages:first-child + header.bmc-page-hero) {
+  padding-top: 0;
+}
+
+/*
+ * Legacy EL heroes (section.sub-header, etc.) relied on experientiallearning/style.css inside @scope.
+ * If @scope is unsupported or ordering breaks, the banner disappears — mirror .bmc-page-hero here.
+ */
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub-header,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub1-header,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub2-header,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub3-header,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub6-header {
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  border-radius: 0;
+  box-sizing: border-box;
+  min-height: min(50vh, 360px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3d4a5c;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("https://upload.wikimedia.org/wikipedia/commons/9/96/Murray_Hill%2C_Manhattan.jpg");
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: rgb(247, 248, 249);
+}
+
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub-header h1,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub1-header h1,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub2-header h1,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub3-header h1,
+.shell .bmc-page.el-career-readiness .el-legacy-scope > section.sub6-header h1 {
+  color: rgb(247, 248, 249);
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-shadow: none;
+}
+
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > section:is(.sub-header, .sub1-header, .sub2-header, .sub3-header, .sub6-header):first-child),
+.shell .bmc-page.el-career-readiness:has(> .el-legacy-scope > ul.el-messages:first-child + section:is(.sub-header, .sub1-header, .sub2-header, .sub3-header, .sub6-header)) {
+  padding-top: 0;
+}
+
 .bmc-page-hero__panel {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 1.25rem 1.5rem;
@@ -584,6 +715,23 @@
   color: rgb(247, 248, 249);
   margin: 0.75rem auto 0;
   max-width: 42rem;
+}
+
+/* .shell a { color: blue } uses high specificity (:not(#button1) etc.) — hero links must read as light-on-photo */
+.shell .bmc-page-hero__lede a,
+.shell .bmc-events-hero__lede a {
+  color: rgb(247, 248, 249) !important;
+  border-bottom: 1px solid rgba(247, 248, 249, 0.55) !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.shell .bmc-page-hero__lede a:hover,
+.shell .bmc-page-hero__lede a:focus-visible,
+.shell .bmc-events-hero__lede a:hover,
+.shell .bmc-events-hero__lede a:focus-visible {
+  color: #fff !important;
+  border-bottom-color: #fff !important;
 }
 
 .bmc-page-hero__lede a {

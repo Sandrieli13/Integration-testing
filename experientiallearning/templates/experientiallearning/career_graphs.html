@@ -1,44 +1,121 @@
+{% extends "base_el.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Career statistics</title>
-  {% include 'experientiallearning/_el_head_common.html' %}
-</head>
-<body>
-{% include 'experientiallearning/_messages.html' %}
+{% block title %}Career statistics · Career readiness{% endblock %}
+{% block extra_head %}
+{{ block.super }}
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-<section class="sub-header">
-  {% include 'experientiallearning/_el_nav.html' %}
-  <h1>Technology career statistics</h1>
-</section>
-<br><br>
+{% endblock %}
 
+{% block el_content %}
+  {% include 'experientiallearning/_messages.html' %}
+
+  <header class="bmc-page-hero bmc-page-hero--urban" role="banner">
+    <div class="bmc-page-hero__panel">
+      <p class="bmc-page-hero__eyebrow">Career readiness</p>
+      <h1>Technology career statistics</h1>
+      <p class="bmc-page-hero__lede">
+        Illustrative NYC-scale tech openings and wages plus survey-style language shares for planning (not hiring guarantees).
+        {{ chart_meta.as_of }}
+      </p>
+    </div>
+  </header>
+
+  <section style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.25rem;">
+    <div class="careers-card">
+      <h2 style="font-size: 1.05rem; margin: 0 0 0.75rem; color: #0f172a;">Estimated hiring hotspots</h2>
+      <ul style="margin: 0; padding-left: 1.25rem;">
+        {% for role in chart_meta.insights.top_roles_openings %}
+          <li><strong>{{ role.label }}</strong>: {{ role.y|floatformat:0 }}</li>
+        {% endfor %}
+      </ul>
+      <p class="careers-muted" style="margin-top: 0.75rem;">{{ chart_meta.openings_note }}</p>
+    </div>
+
+    <div class="careers-card">
+      <h2 style="font-size: 1.05rem; margin: 0 0 0.75rem; color: #0f172a;">Typical pay range (hourly)</h2>
+      <p style="margin: 0 0 0.6rem; font-weight: 700; color: #0f172a;">
+        ${{ chart_meta.insights.salary_range.min|floatformat:0 }} - ${{ chart_meta.insights.salary_range.max|floatformat:0 }}
+      </p>
+      {% if chart_meta.insights.top_paid %}
+        <p class="careers-muted" style="margin: 0;">
+          Top paid (in this list): <strong>{{ chart_meta.insights.top_paid.label }}</strong>
+        </p>
+      {% endif %}
+      <p class="careers-muted" style="margin-top: 0.75rem;">{{ chart_meta.salary_note }}</p>
+    </div>
+
+    <div class="careers-card">
+      <h2 style="font-size: 1.05rem; margin: 0 0 0.75rem; color: #0f172a;">Languages to learn next</h2>
+      <ul style="margin: 0; padding-left: 1.25rem;">
+        {% for lang in chart_meta.insights.top_languages %}
+          <li>{{ lang.label }}: {{ lang.y|floatformat:1 }}%</li>
+        {% endfor %}
+      </ul>
+      <p class="careers-muted" style="margin-top: 0.75rem;">{{ chart_meta.languages_note }}</p>
+    </div>
+  </section>
+
+  <section style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items:start;">
+    <div class="careers-card" style="padding: 1rem 1rem 1.25rem;">
+      <h2 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin: 0 0 0.75rem;">Openings distribution</h2>
+      <div id="chartOpenings" style="height: 420px; width: 100%;"></div>
+    </div>
+
+    <div class="careers-card" style="padding: 1rem 1rem 1.25rem;">
+      <h2 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin: 0 0 0.75rem;">Median hourly pay</h2>
+      <div id="chartWages" style="height: 420px; width: 100%;"></div>
+    </div>
+  </section>
+
+  <section style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items:start; margin-top: 1.25rem;">
+    <div class="careers-card" style="padding: 1rem 1rem 1.25rem;">
+      <h2 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin: 0 0 0.75rem;">Language usage shares</h2>
+      <div id="chartLanguages" style="height: 380px; width: 100%;"></div>
+    </div>
+
+    <div class="careers-card" style="padding: 1rem 1rem 1.25rem;">
+      <h2 style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; color: #64748b; margin: 0 0 0.75rem;">Pay vs estimated hiring demand</h2>
+      <div id="chartPayVsOpenings" style="height: 380px; width: 100%;"></div>
+    </div>
+  </section>
+
+  <section class="careers-panel" style="margin-top: 1.5rem;">
+    <h2 style="margin-bottom: 0.5rem;">Suggested next steps</h2>
+    <p class="careers-muted" style="margin-top: 0;">Pick one track, then build a project that proves the skills employers want to see.</p>
+    <ul style="margin: 0; padding-left: 1.25rem;">
+      {% for track in chart_meta.insights.learning_tracks %}
+        <li><strong>{{ track.title }}:</strong> {{ track.description }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
 <script>
-window.onload = function () {
-  var chart1 = new CanvasJS.Chart("chartContainer1", {
+window.addEventListener('load', function () {
+  var chartOpenings = new CanvasJS.Chart("chartOpenings", {
     animationEnabled: true,
     exportEnabled: true,
-    title:{ text: "Current Job Openings in New York", fontFamily:"Geneva", fontWeight:"bold" },
-    subtitles: [{ text: "This chart shows the current job openings in NYC with the leading tech jobs (Source: BMCC Career Coach)", fontFamily:"Geneva" }],
+    title: { text: "Estimated openings (selected occupations)", fontFamily: "Geneva", fontWeight: "bold" },
+    subtitles: [{ text: "{{ chart_meta.openings_note|escapejs }}", fontFamily: "Geneva" }],
     data: [{
       type: "pie",
       showInLegend: true,
       legendText: "{label}",
-      indexLabelFontSize: 16,
+      indexLabelFontSize: 14,
       indexLabel: "{label} - #percent%",
       yValueFormatString: "##0",
       dataPoints: {{ openings_json|safe }}
     }]
   });
-  var chart2 = new CanvasJS.Chart("chartContainer2", {
+
+  var chartWages = new CanvasJS.Chart("chartWages", {
     animationEnabled: true,
     theme: "light2",
-    title:{ text: "Median Salary for Different Tech Careers", fontFamily:"Geneva", fontWeight:"bold" },
-    subtitles: [{ text: "This chart shows the median salary of common technology jobs in NYC. (Source: BMCC Career Coach)", fontFamily:"Geneva" }],
-    axisY: { title: "$/perHour (in USD)", includeZero: true, prefix: "$" },
+    title: { text: "Median hourly pay (selected occupations)", fontFamily: "Geneva", fontWeight: "bold" },
+    subtitles: [{ text: "{{ chart_meta.salary_note|escapejs }}", fontFamily: "Geneva" }],
+    axisY: { title: "$/hour (USD)", includeZero: true, prefix: "$" },
     data: [{
       type: "spline",
       lineThickness: 3,
@@ -50,46 +127,38 @@ window.onload = function () {
       dataPoints: {{ salary_json|safe }}
     }]
   });
-  var chart3 = new CanvasJS.Chart("chartContainer3", {
+
+  var chartLanguages = new CanvasJS.Chart("chartLanguages", {
     animationEnabled: true,
     theme: "light2",
-    title:{ text: "Most Used Programming Languages Across Industries Worldwide", fontFamily:"Geneva", fontWeight:"bold" },
-    subtitles: [{
-      text: "As of 2022, JavaScript and HTML/CSS were the most commonly used programming languages among software developers around the world (Source: statista.com)",
-      fontFamily:"Geneva"
-    }],
-    axisY: { title: "% of People Using Language" },
+    title: { text: "Language usage shares (survey-style)", fontFamily: "Geneva", fontWeight: "bold" },
+    subtitles: [{ text: "{{ chart_meta.languages_note|escapejs }}", fontFamily: "Geneva" }],
+    axisY: { title: "% share" },
     data: [{
       type: "column",
       yValueFormatString: "##.#0 '%'",
       dataPoints: {{ languages_json|safe }}
     }]
   });
-  chart1.render();
-  chart2.render();
-  chart3.render();
-};
-</script>
 
-<div class="chartContainer" id="chartContainer2" style="height: 400px; width: 70%; margin:auto;"><br></div><br><hr><br>
-<div class="chartContainer" id="chartContainer1" style="height: 500px; width: 100%;"></div><br><hr><br>
-<div class="chartContainer" id="chartContainer3" style="height: 350px; width: 85%; margin:auto;"></div><br>
+  var chartPayVsOpenings = new CanvasJS.Chart("chartPayVsOpenings", {
+    animationEnabled: true,
+    theme: "light2",
+    title: { text: "Median pay vs estimated hiring demand", fontFamily: "Geneva", fontWeight: "bold" },
+    axisX: { title: "Median hourly pay ($/hr)" },
+    axisY: { title: "Estimated openings (count)" },
+    data: [{
+      type: "scatter",
+      markerType: "circle",
+      dataPoints: {{ scatter_json|safe }},
+      toolTipContent: "<b>{label}</b><br/>Pay: ${x}/hr<br/>Openings: {y}"
+    }]
+  });
 
-<hr>
-<section class="footer">
-  <h4>About Us</h4>
-  <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.</p>
-  <div class="icons">
-    <i class="fa fa-facebook"></i>
-    <i class="fa fa-twitter"></i>
-    <i class="fa fa-instagram"></i>
-    <i class="fa fa-linkedin"></i>
-  </div>
-</section>
-<script>
-  var navLinks = document.getElementById('navLinks');
-  function showMenu(){ navLinks.style.right = '0'; }
-  function hideMenu(){ navLinks.style.right = '-200px'; }
+  chartOpenings.render();
+  chartWages.render();
+  chartLanguages.render();
+  chartPayVsOpenings.render();
+});
 </script>
-</body>
-</html>
+{% endblock %}

@@ -1,369 +1,373 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Internship matcher · Career readiness{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'careers/careers-pages.css' %}?v=elnav1">
+  <link rel="stylesheet" href="{% static 'careers/internship-matcher.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
-<head>
-    <title>Page 3</title>
-    <style>
-        /* Add max height to the lists */
-        #skills-list, #courses-list, #selected-skills,#selected-courses, #internship-suggestions, #contan {
-            max-height: 200px;
-            width: 300px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            padding: 5px;
-            line-height: 2;
-            cursor: pointer;
-        }
-        .container{
-            display:flex;
-        }
-    </style>
-</head>
-<body stule="background">
-    <h1>Internship Search Page</h1>
-    {% if done %}
-    <div class="container" >
-        <div id="contan" style="width: 30%; max-height: 100%; cursor: default;">
-            <h2>{{ majors.major }} Skills:</h2>
-            <ul>
-                {% for skill in majors.skills.all %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ul>
-            <h2>Selected Skills:</h2>
-            <ul>
-                {% for skill in skills %}
-                    <li>{{ skill }}</li>
-                {% endfor %}
-            </ul>
-            <h2>Selected Courses:</h2>
-            <ul>
-                {% for course in courses %}
-                    <li>{{ course }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div id="contan" style="width: 30%; max-height: 100%; cursor: default;">
-            <h2>{{ intr_des }} Internship:</h2>
-            <h4>Title: {{ intern.title }}</h4>
-            <h4>Description: </h4><p>{{ intern.description }}</p>
-            <h4>Link:</h4><a href="http://{{ intern.link }}" target="_blank">{{ intern.link }}</a>
-            <h4>Skills:</h4>
-            <ul>
-                {% for skill in intern.skills.all %}
-                    <li>{{ skill.name }}</li>
-                {% endfor %}
-            </ul>
-            <h4>Courses:</h4>
-            <ul>
-                {% for course in intern.courses.all %}
-                    <li>{{ course.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div id="contan" style="width: 30%; max-height: 100%; cursor: default;">
-            <h2>Mismatched Skills:</h2>
-            <ul>
-                {% for skill in intern.skills.all %}
-                    {% if skill not in majors.skills.all and skill.name not in skills %}
-                        <li>{{ skill.name }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <h2>Mismatched Courses:</h2>
-            <ul>
-                {% for course in intern.courses.all %}
-                    {% if course.name not in courses %}
-                        <li>{{ course.name }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+<div class="careers-hub">
+  {% include '_career_hub_nav.html' %}
+
+  <header class="bmc-page-hero bmc-page-hero--urban">
+    <div class="bmc-page-hero__panel">
+      <p class="bmc-page-hero__eyebrow">Career readiness</p>
+      {% if done %}
+        {% if intern %}
+          <h1>Your match</h1>
+          <p class="bmc-page-hero__lede">
+            Comparison for <strong>{{ majors.major }}</strong> and your selected skills and courses vs.
+            <strong>{{ intern.title }}</strong>.
+          </p>
+        {% else %}
+          <h1>No internship match yet</h1>
+          <p class="bmc-page-hero__lede">
+            Nothing in the dataset scored above zero for <strong>{{ majors.major }}</strong> with your selections.
+            Add more skills or courses, or search for a posting by name before submitting.
+          </p>
+        {% endif %}
+      {% else %}
+        <h1>Internship matcher</h1>
+        <p class="bmc-page-hero__lede">
+          Pick a major, tap skills and courses to highlight, then search internships. Submit to see overlap with a posting and what is still missing.
+        </p>
+      {% endif %}
     </div>
-    <p><a href="{% url 'careers:page3' %}">Try again</a></p>
+  </header>
+
+  {% if done %}
+    {% if intern %}
+    <div class="internship-matcher__results">
+      <div class="internship-matcher__result-card">
+        <h2>{{ majors.major }} · your profile</h2>
+        <h3>Major skills (dataset)</h3>
+        <ul>
+          {% for skill in majors.skills.all %}
+            <li>{{ skill.name }}</li>
+          {% empty %}
+            <li class="careers-muted" style="list-style: none; margin-left: -1rem;">No skills linked to this major yet.</li>
+          {% endfor %}
+        </ul>
+        <h3>You selected · skills</h3>
+        <ul>
+          {% for skill in skills %}
+            <li>{{ skill }}</li>
+          {% empty %}
+            <li class="careers-muted" style="list-style: none; margin-left: -1rem;">None</li>
+          {% endfor %}
+        </ul>
+        <h3>You selected · courses</h3>
+        <ul>
+          {% for course in courses %}
+            <li>{{ course }}</li>
+          {% empty %}
+            <li class="careers-muted" style="list-style: none; margin-left: -1rem;">None</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="internship-matcher__result-card">
+        <h2>{{ intr_des }} internship</h2>
+        <h3>Title</h3>
+        <p>{{ intern.title }}</p>
+        <h3>Description</h3>
+        <p>{{ intern.description }}</p>
+        <h3>Link</h3>
+        <p><a href="http://{{ intern.link }}" target="_blank" rel="noopener noreferrer">{{ intern.link }}</a></p>
+        <h3>Required skills (posting)</h3>
+        <ul>
+          {% for skill in intern.skills.all %}
+            <li>{{ skill.name }}</li>
+          {% endfor %}
+        </ul>
+        <h3>Related courses (posting)</h3>
+        <ul>
+          {% for course in intern.courses.all %}
+            <li>{{ course.name }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="internship-matcher__result-card">
+        <h2>Gaps to close</h2>
+        <p class="careers-muted" style="margin-bottom: 0.75rem;">Skills or courses in the internship listing that did not appear in your major list or your selections.</p>
+        <h3>Skills not matched</h3>
+        <ul>
+          {% for skill in intern.skills.all %}
+            {% if skill not in majors.skills.all and skill.name not in skills %}
+              <li>{{ skill.name }}</li>
+            {% endif %}
+          {% empty %}
+            <li class="careers-muted" style="list-style: none; margin-left: -1rem;">No skills listed for this internship.</li>
+          {% endfor %}
+        </ul>
+        <h3>Courses not matched</h3>
+        <ul>
+          {% for course in intern.courses.all %}
+            {% if course.name not in courses %}
+              <li>{{ course.name }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <p><a class="careers-back" href="{% url 'careers:page3' %}">← Run another match</a></p>
     {% else %}
-    <form method="POST" id="form" action="{% url 'careers:page3' %}">
-        {% csrf_token %}    
-        
-        <!-- Select for available majors -->
-        <label for="major">Select Major:</label>
-        <select id="major" name="major" required>
-            <option value="" selected disabled>Select a major</option>
-            {% for major in majors %}
-                <option value="{{ major.id }}">{{ major.major }}</option>
-            {% endfor %}
-        </select>
-        <br>
-        
-        <!-- Skills: Clickable list and selected skills -->
-        <label for="skills">Skills:</label>
-        <div id="skills-container" class="container">
-            <div id="skills-list">
-                <ul>
-                    {% for skill in skills|dictsort:"name" %}
-                        <li class="skill" data-skill-id="{{ skill.id }}">{{ skill.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="selected-skills">
-                <ul id="selected-skills-list"></ul>
-            </div>
-        </div>
-        <br><button type="button" id="clear-selected-skills">Clear Selected Skills</button><br>
-        
-        <!-- Courses: Clickable list and selected courses -->
-        <label for="courses">Courses:</label>
-        <div id="courses-container" class="container">
-            <div id="courses-list">
-                <ul>
-                    {% for course in courses|dictsort:"name" %}
-                        <li class="course" data-course-id="{{ course.id }}">{{ course.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="selected-courses">
-                <ul id="selected-courses-list"></ul>
-            </div>
-        </div>
-        <br><button type="button" id="clear-selected-courses">Clear Selected Courses</button><br>
-        
-        <!-- Search bar for internship -->
-        <label for="internship">Search Internship:</label>
-        <input type="text" id="internship" name="internship" oninput="fetchInternshipSuggestions()">
-        <div id="internship-suggestions" class="suggestions"></div> <!-- Use a class for styling -->
-        <br>
-        
-        <button type="submit">Submit</button>
-    </form>
-    
-    
-
-    <!-- ... Rest of your page ... -->
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        const internshipSuggestionsUrl = "{% url 'careers:get_internship_suggestions' %}";
-    </script>
-    <script>
-        document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const selectedDogItems = document.querySelectorAll('#selected-skills-list li[data-skill-id]');
-            const selectedDogIds = Array.from(selectedDogItems).map(item => item.getAttribute('data-skill-id'));
-            
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'skill_ids';
-            hiddenInput.value = selectedDogIds.join(',');
-            
-            this.appendChild(hiddenInput);
-            
-            this.submit();
-        });
-    </script>
-     <script>
-        document.getElementById('form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const selectedDogItems = document.querySelectorAll('#selected-courses-list li[data-course-id]');
-            const selectedDogIds = Array.from(selectedDogItems).map(item => item.getAttribute('data-course-id'));
-            
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'course_ids';
-            hiddenInput.value = selectedDogIds.join(',');
-            
-            this.appendChild(hiddenInput);
-            
-            this.submit();
-        });
-    </script>
-
-    <script>
-        // ... Rest of your JavaScript code ...
-    
-        // Function to add selected skill to the selected skills list
-        function addSelectedSkill(skillId, skillName) {
-            const selectedSkillsList = document.getElementById('selected-skills-list');
-            const selectedSkillLi = document.createElement('li');
-            selectedSkillLi.textContent = skillName;
-            selectedSkillLi.setAttribute('data-skill-id', skillId); // Set the data-skill-id attribute
-            selectedSkillsList.appendChild(selectedSkillLi);
-            sortList(selectedSkillsList); // Sort the list
-            $(`.skill[data-skill-id="${skillId}"]`).remove(); // Remove from original list
-        }
-
-        // Function to add selected course to the selected courses list
-        function addSelectedCourse(courseId, courseName) {
-            const selectedCoursesList = document.getElementById('selected-courses-list');
-            const selectedCourseLi = document.createElement('li');
-            selectedCourseLi.textContent = courseName;
-            selectedCourseLi.setAttribute('data-course-id', courseId); // Set the data-course-id attribute
-            selectedCoursesList.appendChild(selectedCourseLi);
-            sortList(selectedCoursesList); // Sort the list
-            $(`.course[data-course-id="${courseId}"]`).remove(); // Remove from original list
-        }
-
-        // Function to sort a list element
-        function sortList(listElement) {
-            const items = Array.from(listElement.children);
-            items.sort((a, b) => a.textContent.localeCompare(b.textContent));
-            items.forEach(item => listElement.appendChild(item));
-        }
-        // Function to remove and return skill from the selected skills list
-        function removeSelectedSkill(skillId, skillName) {
-            const selectedSkillsList = document.getElementById('selected-skills-list');
-            const selectedSkillLi = document.querySelector(`#selected-skills-list li[data-skill-id="${skillId}"]`);
-            if (selectedSkillLi) {
-                selectedSkillsList.removeChild(selectedSkillLi);
-                addToSkillsList(skillId, skillName);
-            }
-        }
-
-        // Function to remove and return course from the selected courses list
-        function removeSelectedCourse(courseId, courseName) {
-            const selectedCoursesList = document.getElementById('selected-courses-list');
-            const selectedCourseLi = document.querySelector(`#selected-courses-list li[data-course-id="${courseId}"]`);
-            if (selectedCourseLi) {
-                selectedCoursesList.removeChild(selectedCourseLi);
-                addToCoursesList(courseId, courseName);
-            }
-        }
-
-
-        // Function to add skill back to the skills list
-        function addToSkillsList(skillId, skillName) {
-            const skillsList = document.getElementById('skills-list').querySelector('ul');
-            const skillLi = document.createElement('li');
-            skillLi.className = 'skill';
-            skillLi.setAttribute('data-skill-id', skillId);
-            skillLi.textContent = skillName;
-
-            // Find the correct position to insert the skill in alphabetical order
-            const skills = Array.from(skillsList.children);
-            let insertIndex = skills.findIndex(skill => skill.textContent.localeCompare(skillName) > 0);
-            if (insertIndex === -1) {
-                skillsList.appendChild(skillLi); // If skillName comes last, append at the end
-            } else {
-                skillsList.insertBefore(skillLi, skills[insertIndex]); // Insert before the skill that comes after skillName
-            }
-        }
-
-        // Function to add course back to the courses list
-        function addToCoursesList(courseId, courseName) {
-            const coursesList = document.getElementById('courses-list').querySelector('ul');
-            const courseLi = document.createElement('li');
-            courseLi.className = 'course';
-            courseLi.setAttribute('data-course-id', courseId);
-            courseLi.textContent = courseName;
-
-            // Find the correct position to insert the course in alphabetical order
-            const courses = Array.from(coursesList.children);
-            let insertIndex = courses.findIndex(course => course.textContent.localeCompare(courseName) > 0);
-            if (insertIndex === -1) {
-                coursesList.appendChild(courseLi); // If courseName comes last, append at the end
-            } else {
-                coursesList.insertBefore(courseLi, courses[insertIndex]); // Insert before the course that comes after courseName
-            }
-        }
-        // Function to add click event listener to selected skills list items
-        function addClickListenersToSelectedSkills() {
-            const selectedSkillsList = document.getElementById('selected-skills-list');
-            selectedSkillsList.addEventListener('click', (event) => {
-                const selectedSkillLi = event.target;
-                const skillId = selectedSkillLi.getAttribute('data-skill-id');
-                const skillName = selectedSkillLi.textContent;
-                console.log(`Selected Skill Clicked: ${skillName} (ID: ${skillId})`);
-                removeSelectedSkill(skillId, skillName);
-            });
-        }
-
-        // Function to add click event listener to selected courses list items
-        function addClickListenersToSelectedCourses() {
-            const selectedCoursesList = document.getElementById('selected-courses-list');
-            selectedCoursesList.addEventListener('click', (event) => {
-                const selectedCourseLi = event.target;
-                const courseId = selectedCourseLi.getAttribute('data-course-id');
-                const courseName = selectedCourseLi.textContent;
-                console.log(`Selected Course Clicked: ${courseName} (ID: ${courseId})`);
-                removeSelectedCourse(courseId, courseName);
-            });
-        }
-        // Attach click listeners to selected skills list items
-        addClickListenersToSelectedSkills();
-
-        // Attach click listeners to selected courses list items
-        addClickListenersToSelectedCourses();
-
-        // Function to fetch and display internship suggestions
-        function fetchInternshipSuggestions() {
-            const internshipInput = document.getElementById('internship');
-            const internshipSuggestions = document.getElementById('internship-suggestions');
-            const inputValue = internshipInput.value;
-
-            // Use AJAX to fetch internship suggestions from the server
-            $.get(`${internshipSuggestionsUrl}?query=${encodeURIComponent(inputValue)}`, function(data) {
-                const suggestionsList = data.map(suggestion => `<li class="internship-suggestion">${suggestion}</li>`).join('');
-                internshipSuggestions.innerHTML = suggestionsList ? `<ul>${suggestionsList}</ul>` : '';
-            });
-        }
-        // Attach click event listener to internship suggestions
-        $(document).on('click', '.internship-suggestion', function() {
-            const suggestion = $(this).text();
-            $('#internship').val(suggestion);
-            $('#internship-suggestions').html('');
-        });
-    
-        // Attach click event listener to skills
-        $(document).on('click', '.skill', function() {
-            const skillId = $(this).data('skill-id');
-            const skillName = $(this).text();
-            addSelectedSkill(skillId, skillName);
-        });
-
-        // Attach click event listener to courses
-        $(document).on('click', '.course', function() {
-            const courseId = $(this).data('course-id');
-            const courseName = $(this).text();
-            addSelectedCourse(courseId, courseName);
-        });
-
-
-        // Function to clear the selected skills and return them to the skills list
-        function clearSelectedSkills() {
-            const selectedSkillsList = document.getElementById('selected-skills-list');
-            const skillsList = document.getElementById('skills-list').querySelector('ul');
-
-            const selectedSkills = Array.from(selectedSkillsList.children);
-
-            selectedSkills.forEach(selectedSkill => {
-                const skillId = selectedSkill.getAttribute('data-skill-id');
-                const skillName = selectedSkill.textContent;
-                addToSkillsList(skillId, skillName);
-            });
-
-            selectedSkillsList.innerHTML = ''; // Clear the selected skills list
-        }
-
-        // Function to clear the selected courses and return them to the courses list
-        function clearSelectedCourses() {
-            const selectedCoursesList = document.getElementById('selected-courses-list');
-            const coursesList = document.getElementById('courses-list').querySelector('ul');
-
-            const selectedCourses = Array.from(selectedCoursesList.children);
-
-            selectedCourses.forEach(selectedCourse => {
-                const courseId = selectedCourse.getAttribute('data-course-id');
-                const courseName = selectedCourse.textContent;
-                addToCoursesList(courseId, courseName);
-            });
-
-            selectedCoursesList.innerHTML = ''; // Clear the selected courses list
-        }
-
-        // Attach click event listeners to the "Clear Selection" buttons
-        document.getElementById('clear-selected-skills').addEventListener('click', clearSelectedSkills);
-        document.getElementById('clear-selected-courses').addEventListener('click', clearSelectedCourses);
-    </script>
+    <section class="careers-card">
+      <h2>What you can try</h2>
+      <ul style="margin:0; padding-left:1.25rem; color:#334155; line-height:1.6;">
+        <li>Select additional skills or courses that appear on postings you like.</li>
+        <li>Use the internship search field and choose a title so the matcher uses that posting directly.</li>
+        <li>Browse the <a href="{% url 'experientiallearning:job_board' %}">career readiness job board</a> for more ideas.</li>
+      </ul>
+      <p style="margin:1rem 0 0;"><a class="bmc-btn bmc-btn--primary" href="{% url 'careers:page3' %}">Back to internship matcher</a></p>
+    </section>
     {% endif %}
-</body>
 
+  {% else %}
+
+    <section class="careers-card internship-matcher">
+      <form method="post" id="internship-matcher-form" action="{% url 'careers:page3' %}">
+        {% csrf_token %}
+
+        <label class="internship-matcher__form-label" for="major">Major</label>
+        <select class="internship-matcher__select" id="major" name="major" required>
+          <option value="" selected disabled>Select a major</option>
+          {% for major in majors %}
+            <option value="{{ major.id }}">{{ major.major }}</option>
+          {% endfor %}
+        </select>
+
+        <span class="internship-matcher__form-label">Skills · click to move into your list (click selected item to return)</span>
+        <div id="skills-container" class="internship-matcher__pair">
+          <div>
+            <p class="internship-matcher__list-head">Available</p>
+            <div id="skills-list" class="internship-matcher__scroll">
+              <ul>
+                {% for skill in skills|dictsort:"name" %}
+                  <li class="skill" data-skill-id="{{ skill.id }}">{{ skill.name }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p class="internship-matcher__list-head">Your selection</p>
+            <div id="selected-skills" class="internship-matcher__scroll internship-matcher__scroll--selected">
+              <ul id="selected-skills-list"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="internship-matcher__actions">
+          <button type="button" class="bmc-btn bmc-btn--ghost" id="clear-selected-skills">Clear selected skills</button>
+        </div>
+
+        <span class="internship-matcher__form-label">Courses</span>
+        <div id="courses-container" class="internship-matcher__pair">
+          <div>
+            <p class="internship-matcher__list-head">Available</p>
+            <div id="courses-list" class="internship-matcher__scroll">
+              <ul>
+                {% for course in courses|dictsort:"name" %}
+                  <li class="course" data-course-id="{{ course.id }}">{{ course.name }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div>
+            <p class="internship-matcher__list-head">Your selection</p>
+            <div id="selected-courses" class="internship-matcher__scroll internship-matcher__scroll--selected">
+              <ul id="selected-courses-list"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="internship-matcher__actions">
+          <button type="button" class="bmc-btn bmc-btn--ghost" id="clear-selected-courses">Clear selected courses</button>
+        </div>
+
+        <label class="internship-matcher__form-label" for="internship">Search internship</label>
+        <input class="internship-matcher__text-input" type="text" id="internship" name="internship" autocomplete="off" placeholder="Type to filter titles…">
+        <div id="internship-suggestions" class="internship-matcher__suggestions" aria-live="polite"></div>
+
+        <div class="internship-matcher__actions">
+          <button type="submit" class="bmc-btn bmc-btn--primary">Submit match</button>
+        </div>
+      </form>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{% if not done %}
+<script>
+  (function () {
+    const internshipSuggestionsUrl = "{% url 'careers:get_internship_suggestions' %}";
+    const form = document.getElementById('internship-matcher-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const skillIds = Array.from(document.querySelectorAll('#selected-skills-list li[data-skill-id]'))
+        .map(function (el) { return el.getAttribute('data-skill-id'); });
+      const courseIds = Array.from(document.querySelectorAll('#selected-courses-list li[data-course-id]'))
+        .map(function (el) { return el.getAttribute('data-course-id'); });
+
+      var si = document.createElement('input');
+      si.type = 'hidden';
+      si.name = 'skill_ids';
+      si.value = skillIds.join(',');
+      form.appendChild(si);
+
+      var ci = document.createElement('input');
+      ci.type = 'hidden';
+      ci.name = 'course_ids';
+      ci.value = courseIds.join(',');
+      form.appendChild(ci);
+
+      form.submit();
+    });
+
+    function addSelectedSkill(skillId, skillName) {
+      var selectedSkillsList = document.getElementById('selected-skills-list');
+      var selectedSkillLi = document.createElement('li');
+      selectedSkillLi.textContent = skillName;
+      selectedSkillLi.setAttribute('data-skill-id', skillId);
+      selectedSkillsList.appendChild(selectedSkillLi);
+      sortList(selectedSkillsList);
+      var from = document.querySelector('.skill[data-skill-id="' + skillId + '"]');
+      if (from) from.remove();
+    }
+
+    function addSelectedCourse(courseId, courseName) {
+      var selectedCoursesList = document.getElementById('selected-courses-list');
+      var selectedCourseLi = document.createElement('li');
+      selectedCourseLi.textContent = courseName;
+      selectedCourseLi.setAttribute('data-course-id', courseId);
+      selectedCoursesList.appendChild(selectedCourseLi);
+      sortList(selectedCoursesList);
+      var from = document.querySelector('.course[data-course-id="' + courseId + '"]');
+      if (from) from.remove();
+    }
+
+    function sortList(listElement) {
+      var items = Array.from(listElement.children);
+      items.sort(function (a, b) { return a.textContent.localeCompare(b.textContent); });
+      items.forEach(function (item) { listElement.appendChild(item); });
+    }
+
+    function removeSelectedSkill(skillId, skillName) {
+      var selectedSkillLi = document.querySelector('#selected-skills-list li[data-skill-id="' + skillId + '"]');
+      if (selectedSkillLi) {
+        selectedSkillLi.remove();
+        addToSkillsList(skillId, skillName);
+      }
+    }
+
+    function removeSelectedCourse(courseId, courseName) {
+      var selectedCourseLi = document.querySelector('#selected-courses-list li[data-course-id="' + courseId + '"]');
+      if (selectedCourseLi) {
+        selectedCourseLi.remove();
+        addToCoursesList(courseId, courseName);
+      }
+    }
+
+    function addToSkillsList(skillId, skillName) {
+      var skillsList = document.getElementById('skills-list').querySelector('ul');
+      var skillLi = document.createElement('li');
+      skillLi.className = 'skill';
+      skillLi.setAttribute('data-skill-id', skillId);
+      skillLi.textContent = skillName;
+      var skills = Array.from(skillsList.children);
+      var insertIndex = skills.findIndex(function (skill) { return skill.textContent.localeCompare(skillName) > 0; });
+      if (insertIndex === -1) {
+        skillsList.appendChild(skillLi);
+      } else {
+        skillsList.insertBefore(skillLi, skills[insertIndex]);
+      }
+    }
+
+    function addToCoursesList(courseId, courseName) {
+      var coursesList = document.getElementById('courses-list').querySelector('ul');
+      var courseLi = document.createElement('li');
+      courseLi.className = 'course';
+      courseLi.setAttribute('data-course-id', courseId);
+      courseLi.textContent = courseName;
+      var courses = Array.from(coursesList.children);
+      var insertIndex = courses.findIndex(function (course) { return course.textContent.localeCompare(courseName) > 0; });
+      if (insertIndex === -1) {
+        coursesList.appendChild(courseLi);
+      } else {
+        coursesList.insertBefore(courseLi, courses[insertIndex]);
+      }
+    }
+
+    document.getElementById('selected-skills-list').addEventListener('click', function (event) {
+      var selectedSkillLi = event.target;
+      if (selectedSkillLi.tagName !== 'LI' || !selectedSkillLi.getAttribute('data-skill-id')) return;
+      removeSelectedSkill(selectedSkillLi.getAttribute('data-skill-id'), selectedSkillLi.textContent);
+    });
+
+    document.getElementById('selected-courses-list').addEventListener('click', function (event) {
+      var selectedCourseLi = event.target;
+      if (selectedCourseLi.tagName !== 'LI' || !selectedCourseLi.getAttribute('data-course-id')) return;
+      removeSelectedCourse(selectedCourseLi.getAttribute('data-course-id'), selectedCourseLi.textContent);
+    });
+
+    function fetchInternshipSuggestions() {
+      var internshipInput = document.getElementById('internship');
+      var internshipSuggestions = document.getElementById('internship-suggestions');
+      var inputValue = internshipInput.value;
+      $.get(internshipSuggestionsUrl + '?query=' + encodeURIComponent(inputValue), function (data) {
+        var suggestionsList = data.map(function (suggestion) {
+          return '<li class="internship-suggestion">' + $('<div>').text(suggestion).html() + '</li>';
+        }).join('');
+        internshipSuggestions.innerHTML = suggestionsList ? '<ul>' + suggestionsList + '</ul>' : '';
+      });
+    }
+
+    $(document).on('click', '.internship-suggestion', function () {
+      var suggestion = $(this).text();
+      $('#internship').val(suggestion);
+      $('#internship-suggestions').empty();
+    });
+
+    $(document).on('click', '.skill', function () {
+      var skillId = $(this).data('skill-id');
+      var skillName = $(this).text();
+      addSelectedSkill(skillId, skillName);
+    });
+
+    $(document).on('click', '.course', function () {
+      var courseId = $(this).data('course-id');
+      var courseName = $(this).text();
+      addSelectedCourse(courseId, courseName);
+    });
+
+    function clearSelectedSkills() {
+      var selectedSkillsList = document.getElementById('selected-skills-list');
+      Array.from(selectedSkillsList.children).forEach(function (selectedSkill) {
+        addToSkillsList(selectedSkill.getAttribute('data-skill-id'), selectedSkill.textContent);
+      });
+      selectedSkillsList.innerHTML = '';
+    }
+
+    function clearSelectedCourses() {
+      var selectedCoursesList = document.getElementById('selected-courses-list');
+      Array.from(selectedCoursesList.children).forEach(function (selectedCourse) {
+        addToCoursesList(selectedCourse.getAttribute('data-course-id'), selectedCourse.textContent);
+      });
+      selectedCoursesList.innerHTML = '';
+    }
+
+    document.getElementById('clear-selected-skills').addEventListener('click', clearSelectedSkills);
+    document.getElementById('clear-selected-courses').addEventListener('click', clearSelectedCourses);
+    document.getElementById('internship').addEventListener('input', fetchInternshipSuggestions);
+  })();
+</script>
+{% endif %}
 {% endblock %}

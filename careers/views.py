@@ -207,9 +207,10 @@ def page3(request):
         })
 
 def calculate_skill_compat(skill1, skill2):
-    if(skill1 == skill2):
-        return 1
-    else:
+    """Match by primary key so ORM instances from different querysets still compare correctly."""
+    try:
+        return 1 if skill1.pk == skill2.pk else 0
+    except Exception:
         return 0
     
 def find_best_intern(combined_skills_list_names, courses_list_names):

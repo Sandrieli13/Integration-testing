@@ -5,47 +5,11 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
-
-def _legacy_chart_data():
-    openings = [
-        {'label': 'Computer and Information Managers', 'y': 6683},
-        {'label': 'Computer Programmers', 'y': 1867},
-        {'label': 'Software Developers', 'y': 17595},
-        {'label': 'Web Developer', 'y': 1565},
-        {'label': 'Database Adminstrators', 'y': 940},
-        {'label': 'Information Technology Project Managers', 'y': 3150},
-        {'label': 'Business Intelligence Analysts', 'y': 1803},
-    ]
-    salary = [
-        {'y': 87, 'label': 'Computer and Information Managers'},
-        {'y': 45, 'label': 'Computer Programmers'},
-        {'y': 61, 'label': 'Software Developers'},
-        {'y': 35, 'label': 'Web Developers'},
-        {'y': 53, 'label': 'Database Adminstrators'},
-        {'y': 43, 'label': 'Information Technology Project Managers'},
-        {'y': 59, 'label': 'Business Intelligence Analysts'},
-    ]
-    languages = [
-        {'y': 65.36, 'label': 'JavaScript'},
-        {'y': 55.08, 'label': 'HTML/CSS'},
-        {'y': 49.43, 'label': 'SQL'},
-        {'y': 48.07, 'label': 'Python'},
-        {'y': 33.27, 'label': 'Java'},
-        {'y': 27.98, 'label': 'C#'},
-        {'y': 22.55, 'label': 'C++'},
-        {'y': 20.87, 'label': 'PHP'},
-        {'y': 19.24, 'label': 'C'},
-        {'y': 11.15, 'label': 'Go'},
-        {'y': 6.05, 'label': 'Ruby'},
-        {'y': 4.91, 'label': 'Swift'},
-        {'y': 4.66, 'label': 'R'},
-        {'y': 4.10, 'label': 'Matlab'},
-    ]
-    return openings, salary, languages
+from careers.tech_market_charts import get_tech_career_chart_series
 
 
 def career_statistics(request):
-    openings, salary, languages = _legacy_chart_data()
+    openings, salary, languages, chart_meta, scatter_points = get_tech_career_chart_series()
     return render(
         request,
         'experientiallearning/career_graphs.html',
@@ -53,6 +17,8 @@ def career_statistics(request):
             'openings_json': json.dumps(openings),
             'salary_json': json.dumps(salary),
             'languages_json': json.dumps(languages),
+            'scatter_json': json.dumps(scatter_points),
+            'chart_meta': chart_meta,
         },
     )
 
