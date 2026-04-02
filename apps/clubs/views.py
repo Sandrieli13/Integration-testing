@@ -73,17 +73,17 @@ def clubs_list_view(request):
         Club.objects.annotate(member_count=Count("members", distinct=True))
         .order_by("category", "name")
     )
-    user_clubs = list(request.user.clubs.all())
-    user_club_ids = {c.id for c in user_clubs}
-    categories = sorted(
-        Club.objects.values_list("category", flat=True).distinct(),
-    )
+    if request.user.is_authenticated:
+        user_clubs = list(request.user.clubs.all())
+        user_club_ids = {c.id for c in user_clubs}
+    else:
+        user_clubs = []
+        user_club_ids = set()
     return render(
         request,
         "clubs_2.html",
         {
             "clubs": clubs,
-            "categories": categories,
             "user_clubs": user_clubs,
             "user_club_ids": user_club_ids,
         },

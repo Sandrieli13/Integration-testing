@@ -1,125 +1,520 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Clubs{% endblock %}
+{% block title %}Clubs · BMCC Connect{% endblock %}
 
 {% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.list_club {
-  margin-top: 25px;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-.collapsible {
-  background-color: rgba(0, 65, 150, 1);
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-.collapsible2 {
-  background-color: rgba(0, 65, 150, 1);
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 50%;
-  border: none;
-  text-align: center;
-  outline: none;
-  font-size: 20px;
-}
-.active, .collapsible:hover {
-  background-color: rgb(0, 50, 115);
-}
-.content-club, .content2 {
-  padding: 0 18px;
-  max-height: 0;
-  width: inherit;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-  align-items: center;
-  margin-top: 2px;
-  margin-bottom: 3px;
-}
-.content p {
-  text-align: center;
-  align-items: center;
-  display: flex;
-  margin: 0 auto;
-}
-.content-club {
-  background-color: rgb(246, 247, 177);
-}
-.club-delete-form { display: inline; margin: 0; }
-.club-delete-form button {
-  background: transparent;
-  border: none;
-  color: #004196;
-  cursor: pointer;
-  font: inherit;
-  padding: 0;
-  text-decoration: underline;
-}
-.club-delete-form button:hover { color: rgb(0, 50, 115); }
+  .clubs-hub {
+    /* Match #page-content offset in navbar.css (uses --navbar-height + safe area + buffer) */
+    --ch-header-clear: calc(var(--navbar-height, 72px) + env(safe-area-inset-top, 0px) + 28px);
+    --ch-navy: #0a1628;
+    --ch-blue: #0d47a1;
+    --ch-blue-soft: #e3f2fd;
+    --ch-ink: #1a2332;
+    --ch-muted: #5c6b7f;
+    --ch-line: #d8e1ec;
+    --ch-surface: #f5f8fc;
+    --ch-card: #ffffff;
+    --ch-warm: #e85d04;
+    --ch-warm-soft: #fff4ed;
+    --ch-ok: #0d6b4d;
+    --ch-radius: 14px;
+    --ch-font: "Outfit", system-ui, sans-serif;
+    font-family: var(--ch-font);
+    color: var(--ch-ink);
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(13, 71, 161, 0.09), transparent 55%),
+      radial-gradient(800px 400px at 0% 100%, rgba(232, 93, 4, 0.06), transparent 50%),
+      var(--ch-surface);
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 max(1rem, env(safe-area-inset-right, 0px)) calc(3rem + env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
+    scroll-margin-top: var(--ch-header-clear);
+    box-sizing: border-box;
+  }
+
+  .clubs-hub__hero {
+    padding: 0.5rem 0 1.75rem;
+    scroll-margin-top: var(--ch-header-clear);
+  }
+
+  .clubs-hub__eyebrow {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ch-warm);
+    margin: 0 0 0.35rem;
+  }
+
+  .clubs-hub__title {
+    font-size: clamp(1.85rem, 4.5vw, 2.35rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--ch-navy);
+    margin: 0 0 0.5rem;
+    line-height: 1.15;
+  }
+
+  .clubs-hub__lede {
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--ch-muted);
+    max-width: 34rem;
+    margin: 0;
+  }
+
+  .clubs-hub__hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1rem;
+    padding: 0.45rem 0.85rem;
+    background: var(--ch-card);
+    border: 1px solid var(--ch-line);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--ch-muted);
+    box-shadow: 0 1px 0 rgba(10, 22, 40, 0.04);
+  }
+
+  .clubs-hub__hint strong {
+    color: var(--ch-blue);
+    font-weight: 600;
+  }
+
+  .clubs-hub__empty {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--ch-card);
+    border: 1px dashed var(--ch-line);
+    border-radius: var(--ch-radius);
+    color: var(--ch-muted);
+    line-height: 1.55;
+  }
+
+  .clubs-hub__category {
+    margin-bottom: 1rem;
+    border-radius: var(--ch-radius);
+    background: var(--ch-card);
+    border: 1px solid var(--ch-line);
+    box-shadow: 0 4px 24px rgba(10, 22, 40, 0.06);
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .clubs-hub__cat-title {
+    flex: 1 1 12rem;
+    min-width: 0;
+    line-height: 1.35;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  .clubs-hub__category > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap /* wrap before text is overlapped by pills/chevron */;
+    gap: 0.65rem 1rem;
+    padding: 1.05rem 1.15rem;
+    background: linear-gradient(105deg, var(--ch-blue) 0%, #0a3d91 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.05rem;
+    user-select: none;
+    transition: filter 0.15s ease;
+  }
+
+  .clubs-hub__category > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .clubs-hub__category > summary:hover {
+    filter: brightness(1.05);
+  }
+
+  .clubs-hub__cat-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+  }
+
+  .clubs-hub__cat-count {
+    font-size: 0.78rem;
+    font-weight: 500;
+    opacity: 0.92;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  .clubs-hub__cat-chevron {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .clubs-hub__category[open] > summary .clubs-hub__cat-chevron {
+    transform: rotate(180deg);
+  }
+
+  .clubs-hub__club-list {
+    padding: 0.6rem 0.65rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    background: var(--ch-blue-soft);
+  }
+
+  .clubs-hub__club {
+    border-radius: 10px;
+    background: var(--ch-card);
+    border: 1px solid rgba(13, 71, 161, 0.12);
+    overflow: hidden;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .clubs-hub__club > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.6rem;
+    padding: 0.9rem 1rem;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--ch-navy);
+    user-select: none;
+  }
+
+  .clubs-hub__club > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .clubs-hub__club > summary:hover {
+    background: rgba(13, 71, 161, 0.04);
+  }
+
+  .clubs-hub__club-name {
+    text-align: left;
+    line-height: 1.3;
+    flex: 1 1 200px;
+    min-width: 0;
+    word-break: break-word;
+  }
+
+  .clubs-hub__chip {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ch-ok);
+    background: rgba(13, 107, 77, 0.1);
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .clubs-hub__mini-chev {
+    color: var(--ch-muted);
+    font-size: 0.65rem;
+    transform: translateY(1px);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .clubs-hub__club[open] .clubs-hub__mini-chev {
+    transform: rotate(180deg);
+  }
+
+  .clubs-hub__club-body {
+    padding: 0 1rem 1rem;
+    border-top: 1px solid var(--ch-line);
+  }
+
+  .clubs-hub__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: 0.65rem 1.25rem;
+    padding-top: 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    min-width: 0;
+  }
+
+  .clubs-hub__field dt {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ch-muted);
+    margin: 0 0 0.15rem;
+  }
+
+  .clubs-hub__field dd {
+    margin: 0;
+    word-break: break-word;
+    color: var(--ch-ink);
+  }
+
+  .clubs-hub__field dd a {
+    color: var(--ch-blue);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(13, 71, 161, 0.35);
+  }
+
+  .clubs-hub__field dd a:hover {
+    border-bottom-color: var(--ch-blue);
+  }
+
+  .clubs-hub__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--ch-line);
+  }
+
+  .clubs-hub__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 0.95rem;
+    font-family: var(--ch-font);
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  .clubs-hub__btn:active {
+    transform: scale(0.98);
+  }
+
+  .clubs-hub__btn--primary {
+    background: var(--ch-navy);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(10, 22, 40, 0.2);
+  }
+
+  .clubs-hub__btn--primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .clubs-hub__btn--ghost {
+    background: #fff;
+    color: var(--ch-blue);
+    border: 1px solid rgba(13, 71, 161, 0.35);
+  }
+
+  .clubs-hub__btn--ghost:hover {
+    background: var(--ch-blue-soft);
+  }
+
+  .clubs-hub__btn--danger {
+    background: transparent;
+    color: #b00020;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 0.45rem 0.5rem;
+    font-weight: 600;
+    box-shadow: none;
+  }
+
+  .clubs-hub__btn--danger:hover {
+    color: #7a0015;
+  }
+
+  .clubs-hub__admin {
+    margin-top: 2.25rem;
+    padding: 1.25rem 1.35rem;
+    background: var(--ch-warm-soft);
+    border: 1px solid rgba(232, 93, 4, 0.25);
+    border-radius: var(--ch-radius);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .clubs-hub__admin-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ch-warm);
+    margin: 0;
+  }
+
+  .clubs-hub__admin-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .clubs-hub__admin-row .clubs-hub__btn {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.88rem;
+  }
+
+  .clubs-hub__admin-row .clubs-hub__btn--stat {
+    background: var(--ch-warm);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(232, 93, 4, 0.35);
+  }
+
+  .clubs-hub__admin-row .clubs-hub__btn--stat:hover {
+    filter: brightness(1.06);
+  }
+
+  .club-delete-form {
+    display: inline;
+    margin: 0;
+  }
+
+  @media (max-width: 520px) {
+    .clubs-hub__cat-meta {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    .clubs-hub__club > summary .clubs-hub__mini-chev {
+      margin-left: 0;
+    }
+  }
 </style>
-<link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
-<link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block content %}
-<div class="list_club">
-  <div class="clubs_header_text">Find Clubs</div>
-  {% if not categories %}
-    <p style="text-align:center;margin:1.5rem auto;max-width:520px;">No clubs are listed yet. If you are staff, use <strong>Create Club</strong> below.</p>
+<div class="clubs-hub">
+  <header class="clubs-hub__hero">
+    <p class="clubs-hub__eyebrow">Campus life</p>
+    <h1 class="clubs-hub__title">Find your club</h1>
+    <p class="clubs-hub__lede">
+      Browse by category, open a club to see contacts and meeting details, and join the ones that fit you.
+    </p>
+    {% if not user.is_authenticated %}
+      <p class="clubs-hub__hint"><strong>Tip:</strong> Sign in to join or leave clubs.</p>
+    {% endif %}
+  </header>
+
+  {% if not clubs %}
+    <p class="clubs-hub__empty">
+      No clubs are listed yet.{% if user.is_staff %}
+        Use <strong>Create club</strong> below to add the first one.{% endif %}
+    </p>
   {% endif %}
-  {% for category in categories %}
-    <h2 class="collapsible2">{{ category }}</h2>
-    <div class="content2">
-      {% for club in clubs %}
-        {% if club.category == category %}
-          <button type="button" class="collapsible">{{ club.name }}</button>
-          <div class="content-club">
-            <p><strong>Email:</strong> {{ club.email }}</p>
-            <p><strong>Meeting Type:</strong> {{ club.meeting_type }}</p>
-            <p><strong>Hybrid Link:</strong> {% if club.hybrid_link %}<a href="{{ club.hybrid_link }}" target="_blank" rel="noopener noreferrer">{{ club.hybrid_link }}</a>{% else %}—{% endif %}</p>
-            <p><strong>Advisor Name:</strong> {{ club.advisor_name }}</p>
-            <p><strong>Advisor Email:</strong> {{ club.advisor_email }}</p>
-            <p><strong>Club Room:</strong> {{ club.club_room }}</p>
-            <p><strong>Category:</strong> {{ club.category }}</p>
-            <p><strong>Members:</strong> <span id="members-count-{{ club.id }}">{{ club.member_count }}</span></p>
-            <div class="buttonsrectangle">
-              {% if user.is_staff %}
-                <a href="{% url 'edit_club' club.id %}">Edit Club</a>
-              {% endif %}
-              {% if user.is_authenticated %}
-                {% if club.id in user_club_ids %}
-                  <button type="button" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">Leave Club</button>
-                {% else %}
-                  <button type="button" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">Join Club</button>
-                {% endif %}
+
+  {% regroup clubs by category as category_list %}
+  {% for category in category_list %}
+    <details class="clubs-hub__category" {% if forloop.first %}open{% endif %}>
+      <summary>
+        <span class="clubs-hub__cat-title">{{ category.grouper }}</span>
+        <span class="clubs-hub__cat-meta">
+          <span class="clubs-hub__cat-count">{{ category.list|length }} club{{ category.list|length|pluralize }}</span>
+          <span class="clubs-hub__cat-chevron" aria-hidden="true">▼</span>
+        </span>
+      </summary>
+      <div class="clubs-hub__club-list">
+        {% for club in category.list %}
+          <details class="clubs-hub__club">
+            <summary>
+              <span class="clubs-hub__club-name">{{ club.name }}</span>
+              <span class="clubs-hub__chip"><span id="members-count-{{ club.id }}">{{ club.member_count }}</span> members</span>
+              <span class="clubs-hub__mini-chev" aria-hidden="true">▼</span>
+            </summary>
+            <div class="clubs-hub__club-body">
+              <dl class="clubs-hub__grid">
+                <div class="clubs-hub__field">
+                  <dt>Email</dt>
+                  <dd><a href="mailto:{{ club.email }}">{{ club.email }}</a></dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Meeting</dt>
+                  <dd>{{ club.meeting_type }}</dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Hybrid link</dt>
+                  <dd>
+                    {% if club.hybrid_link %}
+                      <a href="{{ club.hybrid_link }}" target="_blank" rel="noopener noreferrer">Open link</a>
+                    {% else %}
+                      —
+                    {% endif %}
+                  </dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Advisor</dt>
+                  <dd>{{ club.advisor_name }}</dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Advisor email</dt>
+                  <dd>{% if club.advisor_email %}<a href="mailto:{{ club.advisor_email }}">{{ club.advisor_email }}</a>{% else %}—{% endif %}</dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Room</dt>
+                  <dd>{{ club.club_room }}</dd>
+                </div>
+                <div class="clubs-hub__field">
+                  <dt>Category</dt>
+                  <dd>{{ club.category }}</dd>
+                </div>
+              </dl>
+              <div class="clubs-hub__actions">
                 {% if user.is_staff %}
-                  <form class="club-delete-form" method="post" action="{% url 'delete_club' club.id %}" onsubmit="return confirm('Delete {{ club.name|escapejs }}?');">
-                    {% csrf_token %}
-                    <button type="submit">Delete Club</button>
-                  </form>
+                  <a class="clubs-hub__btn clubs-hub__btn--ghost" href="{% url 'edit_club' club.id %}">Edit</a>
                 {% endif %}
-              {% endif %}
+                {% if user.is_authenticated %}
+                  <button type="button" class="clubs-hub__btn clubs-hub__btn--primary" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">
+                    {% if club.id in user_club_ids %}Leave club{% else %}Join club{% endif %}
+                  </button>
+                  {% if user.is_staff %}
+                    <form class="club-delete-form" method="post" action="{% url 'delete_club' club.id %}" onsubmit="return confirm('Delete {{ club.name|escapejs }}?');">
+                      {% csrf_token %}
+                      <button type="submit" class="clubs-hub__btn clubs-hub__btn--danger">Delete club</button>
+                    </form>
+                  {% endif %}
+                {% endif %}
+              </div>
             </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+          </details>
+        {% endfor %}
+      </div>
+    </details>
   {% endfor %}
+
   {% if user.is_staff %}
-    <a href="{% url 'create_club' %}" id="button1">Create Club</a>
-    <a href="{% url 'charts' %}" id="button1">Club Data</a>
+    <div class="clubs-hub__admin">
+      <p class="clubs-hub__admin-title">Staff</p>
+      <div class="clubs-hub__admin-row">
+        <a class="clubs-hub__btn clubs-hub__btn--stat" href="{% url 'create_club' %}">Create club</a>
+        <a class="clubs-hub__btn clubs-hub__btn--ghost" href="{% url 'charts' %}">Club data &amp; charts</a>
+      </div>
+    </div>
   {% endif %}
 </div>
 {% endblock %}
@@ -142,7 +537,7 @@
         if (typeof data.members_count !== 'undefined') {
           membersCountElement.text(data.members_count);
         }
-        joinButton.text(data.joined ? 'Leave Club' : 'Join Club');
+        joinButton.text(data.joined ? 'Leave club' : 'Join club');
       },
       error: function (xhr) {
         var msg = (xhr.responseJSON && xhr.responseJSON.detail) || xhr.statusText || 'Could not update membership.';
@@ -151,36 +546,6 @@
     });
   }
   window.joinClub = joinClub;
-
-  document.querySelectorAll('.collapsible').forEach(function (button) {
-    button.addEventListener('click', function () {
-      this.classList.toggle('active');
-      var content = this.nextElementSibling;
-      if (!content) return;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-        content.style.width = null;
-      } else {
-        content.style.maxHeight = content.scrollHeight + 'px';
-        content.style.width = this.offsetWidth + 'px';
-      }
-    });
-  });
-
-  document.querySelectorAll('.collapsible2').forEach(function (h2) {
-    h2.addEventListener('click', function () {
-      this.classList.toggle('active');
-      var content = this.nextElementSibling;
-      if (!content) return;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-        content.style.width = null;
-      } else {
-        content.style.maxHeight = '4900px';
-        content.style.width = this.offsetWidth + 'px';
-      }
-    });
-  });
 })();
 </script>
 {% endblock %}

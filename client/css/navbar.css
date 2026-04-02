@@ -1,4 +1,8 @@
 :root {
+    /* Must cover real header (logo + large home link); was 64px and clipped first line of page */
+    --navbar-height: 72px;
+    /* Space so Watson Assistant / browser UI does not cover last lines */
+    --page-bottom-inset: 6.5rem;
     --navbar-bg-color: rgba(0, 65, 150, 1);
     --navbar-text-color: hsl(0, 0%, 85%);
     --navbar-text-color-focus: white;
@@ -12,11 +16,34 @@
 }
 
 body {
-    height: 100vh;
+    min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
+    margin-top: 0;
 }
 
+/* base.html #page-content: clear fixed #navbar (override any later sheet resetting padding). */
+html {
+    scroll-padding-top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px) + 20px);
+}
+
+#page-content.content,
+body > .content#page-content {
+    padding-top: calc(var(--navbar-height) + env(safe-area-inset-top, 0px) + 28px) !important;
+    padding-bottom: calc(var(--page-bottom-inset) + env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    /* Override lisandros / legacy: centered cross-axis squeezes full-width blocks and long text */
+    align-items: stretch !important;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto;
+    overflow-y: visible;
+}
 
 .container {
     padding-left: 1.4rem;
@@ -25,13 +52,12 @@ body {
 }
 
 #navbar {
-    --navbar-height: 64px;
     position: fixed;
     height: var(--navbar-height);
     background-color: var(--navbar-bg-color);
     left: 0;
     right: 0;
-    top:0;
+    top: 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     z-index: 99999;
 }
@@ -139,6 +165,7 @@ body {
                 right 0.2s ease-in-out;
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 #navbar-menu.sidebar,
@@ -162,6 +189,7 @@ body {
     background-color: rgba(0, 0, 0, 0.4);
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
 }
 
 #navbar.opened #navbar-menu.sidebar.left {
@@ -226,9 +254,10 @@ body {
     margin: 0.4em;
     width: 95%;
 }
-.content{
-    align-items: center;
-  }
+/* Default main column: full width so children control their own max-width */
+.content {
+    align-items: stretch;
+}
 @media screen and (min-width: 3000px) {
     .navbar-toggle {
         display: none;

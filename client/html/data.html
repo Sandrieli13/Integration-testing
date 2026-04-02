@@ -5,24 +5,95 @@
 
 {% block extra_head %}
 <style>
-  .club-chart { max-width: 720px; margin: 1rem auto; }
-  .club-chart-row {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
-    font-size: 14px;
+  .page-data {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0.25rem 0 1rem;
+    color: #1a1a1a;
+    box-sizing: border-box;
+    min-width: 0;
+    scroll-margin-top: calc(var(--navbar-height, 72px) + env(safe-area-inset-top, 0px) + 28px);
   }
-  .club-chart-name { flex: 0 0 160px; text-align: right; }
+  .page-data h1 {
+    color: #0a1f45;
+    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .page-data > p {
+    margin: 0 0 1rem;
+    line-height: 1.55;
+    color: #333;
+    max-width: 65ch;
+  }
+  .club-chart {
+    max-width: 720px;
+    margin: 1rem auto 0;
+    min-width: 0;
+  }
+  .club-chart-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.35;
+    min-width: 0;
+  }
+  .club-chart-name {
+    flex: 1 1 140px;
+    min-width: 0;
+    text-align: right;
+    word-break: break-word;
+    hyphens: auto;
+  }
   .club-chart-bar-wrap {
-    flex: 1; height: 22px; background: #eee; border-radius: 4px; overflow: hidden;
+    flex: 2 1 120px;
+    min-width: 0;
+    height: 22px;
+    background: #eee;
+    border-radius: 4px;
+    overflow: hidden;
   }
   .club-chart-bar {
-    height: 100%; background: #2563eb; border-radius: 4px;
+    height: 100%;
+    background: #2563eb;
+    border-radius: 4px;
     min-width: 4px;
   }
-  .club-chart-count { flex: 0 0 48px; font-weight: 600; }
+  .club-chart-count {
+    flex: 0 0 auto;
+    min-width: 2.5rem;
+    font-weight: 600;
+    text-align: right;
+  }
+  @media (max-width: 520px) {
+    .club-chart-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .club-chart-name {
+      text-align: left;
+    }
+    .club-chart-count {
+      text-align: left;
+      font-size: 0.8125rem;
+      color: #444;
+    }
+    .club-chart-bar-wrap {
+      width: 100%;
+    }
+  }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="page-data">
 <h1>Clubs data</h1>
 <p>Members per club (from your database).</p>
 {% if clubs_chart %}
@@ -40,4 +111,5 @@
 {% else %}
 <p>No club membership data yet.</p>
 {% endif %}
+</div>
 {% endblock %}
