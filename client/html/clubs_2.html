@@ -57,6 +57,17 @@
 .content-club {
   background-color: rgb(246, 247, 177);
 }
+.club-delete-form { display: inline; margin: 0; }
+.club-delete-form button {
+  background: transparent;
+  border: none;
+  color: #004196;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  text-decoration: underline;
+}
+.club-delete-form button:hover { color: rgb(0, 50, 115); }
 </style>
 <link href="{% static 'lisandros-stunning-site-01bdb5.webflow.css' %}" rel="stylesheet" type="text/css">
 <link href="{% static 'webflow.css' %}" rel="stylesheet" type="text/css">
@@ -65,6 +76,9 @@
 {% block content %}
 <div class="list_club">
   <div class="clubs_header_text">Find Clubs</div>
+  {% if not categories %}
+    <p style="text-align:center;margin:1.5rem auto;max-width:520px;">No clubs are listed yet. If you are staff, use <strong>Create Club</strong> below.</p>
+  {% endif %}
   {% for category in categories %}
     <h2 class="collapsible2">{{ category }}</h2>
     <div class="content2">
@@ -74,24 +88,27 @@
           <div class="content-club">
             <p><strong>Email:</strong> {{ club.email }}</p>
             <p><strong>Meeting Type:</strong> {{ club.meeting_type }}</p>
-            <p><strong>Hybrid Link:</strong> {{ club.hybrid_link }}</p>
+            <p><strong>Hybrid Link:</strong> {% if club.hybrid_link %}<a href="{{ club.hybrid_link }}" target="_blank" rel="noopener noreferrer">{{ club.hybrid_link }}</a>{% else %}—{% endif %}</p>
             <p><strong>Advisor Name:</strong> {{ club.advisor_name }}</p>
             <p><strong>Advisor Email:</strong> {{ club.advisor_email }}</p>
             <p><strong>Club Room:</strong> {{ club.club_room }}</p>
             <p><strong>Category:</strong> {{ club.category }}</p>
-            <p><strong>Members:</strong> <span id="members-count-{{ club.id }}">{{ club.members.count }}</span></p>
+            <p><strong>Members:</strong> <span id="members-count-{{ club.id }}">{{ club.member_count }}</span></p>
             <div class="buttonsrectangle">
               {% if user.is_staff %}
                 <a href="{% url 'edit_club' club.id %}">Edit Club</a>
               {% endif %}
               {% if user.is_authenticated %}
-                {% if club in user.clubs.all %}
+                {% if club.id in user_club_ids %}
                   <button type="button" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">Leave Club</button>
                 {% else %}
                   <button type="button" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">Join Club</button>
                 {% endif %}
                 {% if user.is_staff %}
-                  <a href="{% url 'delete_club' club.id %}">Delete Club</a>
+                  <form class="club-delete-form" method="post" action="{% url 'delete_club' club.id %}" onsubmit="return confirm('Delete {{ club.name|escapejs }}?');">
+                    {% csrf_token %}
+                    <button type="submit">Delete Club</button>
+                  </form>
                 {% endif %}
               {% endif %}
             </div>
@@ -110,17 +127,26 @@
 {% block extra_js %}
 <script>
 (function () {
+  var joinUrlBase = "{% url 'join_club' club_id=999999 %}";
   function joinClub(clubId) {
+    var url = joinUrlBase.replace('999999', String(clubId));
     $.ajax({
-      url: 'join/' + clubId + '/',
+      url: url,
       type: 'POST',
       dataType: 'json',
+      data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
       headers: { 'X-CSRFToken': '{{ csrf_token }}' },
       success: function (data) {
         var joinButton = $('#join-button-' + clubId);
         var membersCountElement = $('#members-count-' + clubId);
-        joinButton.text(joinButton.text() === 'Join Club' ? 'Leave Club' : 'Join Club');
-        membersCountElement.text(data.members_count);
+        if (typeof data.members_count !== 'undefined') {
+          membersCountElement.text(data.members_count);
+        }
+        joinButton.text(data.joined ? 'Leave Club' : 'Join Club');
+      },
+      error: function (xhr) {
+        var msg = (xhr.responseJSON && xhr.responseJSON.detail) || xhr.statusText || 'Could not update membership.';
+        window.alert(msg);
       }
     });
   }
