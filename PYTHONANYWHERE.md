@@ -40,16 +40,29 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 ```
 
-## 4. Static files
+## 4. Static files (CSS / layout)
+
+The project uses **WhiteNoise** so Django can serve `/static/` when `DEBUG` is false. You still must run **`collectstatic`** after every deploy.
 
 ```bash
 cd ~/Integration-testing
 source venv/bin/activate
+pip install -r requirements.txt
 python manage.py collectstatic --noinput
 ```
 
-**Web** tab → **Static files**: URL `/static/` → directory  
-`/home/YOURUSERNAME/Integration-testing/static`
+Check that files exist, e.g.:
+
+```bash
+ls ~/Integration-testing/static/webflow.css
+```
+
+**Option A — rely on WhiteNoise (simplest):**  
+On the **Web** tab, under **Static files**, **remove** any `/static/` mapping (or leave it unset). Reload the site. Requests to `/static/...` then go through Django + WhiteNoise.
+
+**Option B — PythonAnywhere nginx (faster):**  
+Add mapping: URL `/static/` → directory `/home/YOURUSERNAME/Integration-testing/static`  
+If the path is wrong, the site loads but **CSS disappears** (404 on `.css` files). Fix the directory or use Option A.
 
 ## 5. Database
 
