@@ -212,17 +212,15 @@
 
       <div class="da-grid2">
         <div class="da-panel">
-          <h2>Scope</h2>
-          <p><strong>Enrollment charts:</strong> degree-seeking headcount by year (definitions match each CSV / <code>DepartmentMetric</code> series).</p>
-          <p><strong>Completions charts:</strong> degrees awarded for programs where graduation extracts exist (Data Science A.S. completions will appear when added to the dataset).</p>
-          <p><strong>Pie &amp; doughnut views:</strong> race/ethnicity and major mix from BMCC Institutional Research fact sheets, plus a degrees-mix snapshot from project CSVs.</p>
+          <h2>What you’re looking at</h2>
+          <p><strong>Enrollment:</strong> how many students were in each program over time (by year on the chart).</p>
+          <p><strong>Degrees awarded:</strong> how many students completed each program in a given year, where we have that history (Data Science will show up when that series is included).</p>
+          <p><strong>Composition charts:</strong> mixes of majors or race/ethnicity—based on published BMCC institutional research, with the year called out on each chart.</p>
         </div>
         <div class="da-panel">
-          <h2>Method &amp; refresh</h2>
-          <p>Line charts use <code>DepartmentMetric</code> when synced; otherwise they read CSV under <code>client/css/csv/</code>. Refresh everything BMCC publishes as HTML lists plus metrics:</p>
-          <p><code>python manage.py refresh_all_bmcc_scrapes</code></p>
-          <p>Metrics only: <code>python manage.py sync_department_metrics</code>. Optional live CSV mirror: set <code>BMCC_METRICS_CSV_BASE_URL</code> and run <code>sync_department_metrics --fetch-from-web</code> (host the same filenames as the repo CSVs). Doughnut charts use code defaults unless you add <code>client/css/csv/data_analysis_pie_charts.json</code> (update when new OIRA fact sheets ship).</p>
-          <p>For filters, drill-downs, and the latest official term:&nbsp;
+          <h2>Need the latest official numbers?</h2>
+          <p>These charts are for exploration and context. For the <strong>current term</strong>, filters, and dashboards BMCC publishes for the public, use:</p>
+          <p style="margin-bottom:0;">
             <a href="{{ facts_url }}" target="_blank" rel="noopener noreferrer">BMCC fact sheets</a>
             ·
             <a href="{{ tableau_app_url }}" target="_blank" rel="noopener noreferrer">OIEA Tableau</a>
@@ -233,7 +231,7 @@
       <div class="da-insights">
         <h2>Quick read</h2>
         <ul>
-          <li><strong>Data Science (A.S.)</strong> (Mathematics Department, DSM-AS) is included in enrollment trends; replace the bundled CSV with official OIEA extracts when you sync via <code>sync_department_metrics</code>.</li>
+          <li><strong>Data Science (A.S.)</strong> (Mathematics Department, DSM-AS) is included in enrollment trends; confirm your catalog year with DegreeWorks and an advisor.</li>
           <li><strong>Computer Science</strong> shows long-run enrollment growth; use the axis for exact year labels.</li>
           <li><strong>CIS department</strong> totals help you compare breadth across the whole unit vs. individual majors.</li>
           <li><strong>Composition charts</strong> show who is in these programs (race/ethnicity from published fact sheets). Data Science (A.S.) does not yet appear in the Fall 2022 major-mix vintage; the <strong>Computer Science (Spring 2023)</strong> ethnicity chart is a reasonable peer reference for a large STEM cohort until OIRA publishes program-specific DS rows.</li>
