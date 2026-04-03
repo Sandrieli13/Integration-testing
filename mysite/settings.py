@@ -17,6 +17,28 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def _load_local_env() -> None:
+    """Load KEY=value lines from .env if present. Never commit .env; real OS env wins."""
+    path = BASE_DIR / '.env'
+    if not path.is_file():
+        return
+    try:
+        for raw in path.read_text(encoding='utf-8').splitlines():
+            line = raw.strip()
+            if not line or line.startswith('#') or '=' not in line:
+                continue
+            key, _, val = line.partition('=')
+            key = key.strip()
+            val = val.strip().strip('"').strip("'")
+            if key and key not in os.environ:
+                os.environ[key] = val
+    except OSError:
+        pass
+
+
+_load_local_env()
+
 STATIC_URL = '/static/'
 # Served in production from STATIC_ROOT after: python manage.py collectstatic --noinput
 STATICFILES_DIRS = [
@@ -167,6 +189,17 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR / 'static'
 CSV_FILE_DIR = os.path.join(BASE_DIR, 'static', 'csv')
+
+# Optional mirror of department metric CSVs (same filenames as under client/css/csv/).
+# Set on the server, then: python manage.py sync_department_metrics --fetch-from-web
+BMCC_METRICS_CSV_BASE_URL = os.environ.get('BMCC_METRICS_CSV_BASE_URL', '').strip().rstrip('/')
+
+# BLS Public Data API (free key): https://data.bls.gov/registrationEngine/
+# Enables live OEWS employment + median hourly wage on Tech career stats (experientiallearning).
+BLS_API_KEY = os.environ.get('BLS_API_KEY', '').strip()
+# Optional 7-digit CBSA code for metro OEWS (e.g. New York-Newark-Jersey City ≈ 0356200). Empty = national.
+BLS_OEWS_METRO_AREA_CODE = os.environ.get('BLS_OEWS_METRO_AREA_CODE', '').strip()
+BLS_TECH_MARKET_CACHE_HOURS = int(os.environ.get('BLS_TECH_MARKET_CACHE_HOURS', '24'))
 
 # Serve /static/ in production (DEBUG=False) without relying only on PythonAnywhere nginx mapping.
 if not DEBUG and _USE_WHITENOISE:

@@ -171,6 +171,7 @@
       min-height: 260px;
       padding: 0 0.75rem 1rem;
       position: relative;
+      z-index: 0;
     }
     .da-chart-card__canvas--pie {
       min-height: 300px;
@@ -195,6 +196,8 @@
 {% endblock %}
 
 {% block content %}
+{# .bmc-page keeps the hero full-bleed like other shell pages and avoids layout edge cases with #page-content #}
+<main class="bmc-page bmc-page--data-analysis">
 <header class="bmc-page-hero">
   <div class="bmc-page-hero__panel">
     <p class="bmc-page-hero__eyebrow">BMCC · CIS &amp; data programs</p>
@@ -216,8 +219,9 @@
         </div>
         <div class="da-panel">
           <h2>Method &amp; refresh</h2>
-          <p>Figures load from the ORM when present; otherwise from static CSV under <code>client/css/csv/</code>. Rebuild the table after edits:</p>
-          <p><code>python manage.py sync_department_metrics</code></p>
+          <p>Line charts use <code>DepartmentMetric</code> when synced; otherwise they read CSV under <code>client/css/csv/</code>. Refresh everything BMCC publishes as HTML lists plus metrics:</p>
+          <p><code>python manage.py refresh_all_bmcc_scrapes</code></p>
+          <p>Metrics only: <code>python manage.py sync_department_metrics</code>. Optional live CSV mirror: set <code>BMCC_METRICS_CSV_BASE_URL</code> and run <code>sync_department_metrics --fetch-from-web</code> (host the same filenames as the repo CSVs). Doughnut charts use code defaults unless you add <code>client/css/csv/data_analysis_pie_charts.json</code> (update when new OIRA fact sheets ship).</p>
           <p>For filters, drill-downs, and the latest official term:&nbsp;
             <a href="{{ facts_url }}" target="_blank" rel="noopener noreferrer">BMCC fact sheets</a>
             ·
@@ -303,6 +307,7 @@
       </footer>
   </div>
 </div>
+</main>
 {% endblock %}
 
 {% block extra_js %}

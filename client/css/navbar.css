@@ -78,7 +78,9 @@ body > .content#page-content {
     left: 0;
     right: 0;
     top: 0;
-    z-index: 99999;
+    /* Above Chart.js tooltips/plugins (~15k) and legacy sheets; below Webflow corner badge */
+    z-index: 200000;
+    isolation: isolate;
     font-family: var(--navbar-art-font);
     background: linear-gradient(168deg, #021f4a 0%, #003978 38%, #004a9e 100%);
     box-shadow:
@@ -386,7 +388,7 @@ body > .content#page-content {
 
     .navbar-art-dd__panel {
         position: absolute;
-        z-index: 100000;
+        z-index: 200010;
         top: calc(100% + 0.55rem);
         left: 50%;
         transform: translateX(-50%) translateY(6px);

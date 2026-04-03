@@ -28,3 +28,6 @@ $RECYCLE.BIN/
 
 #db
 db.sqlite3
+
+# BLS tech career stats cache (live OEWS)
+data/bls_tech_market_cache.json

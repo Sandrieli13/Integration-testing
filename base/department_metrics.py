@@ -1,6 +1,7 @@
 """BMCC CIS / CS / CNT time-series used on DataAnalysisPage (CSV + ORM)."""
 
 import csv
+import io
 import os
 
 from django.conf import settings
@@ -68,15 +69,25 @@ def static_csv_abspath(relative_csv: str) -> str:
     return os.path.join(settings.STATICFILES_DIRS[0], relative_csv)
 
 
+def read_year_value_rows(rows) -> list[list[int]]:
+    """Parse year,count pairs. Non-numeric rows (e.g. headers) are skipped."""
+    out: list[list[int]] = []
+    for row in rows:
+        if len(row) < 2:
+            continue
+        try:
+            out.append([int(row[0]), int(row[1])])
+        except ValueError:
+            continue
+    return out
+
+
 def read_year_value_csv(csv_path: str) -> list[list[int]]:
-    """Read year,count rows. Lines that are not two integers (e.g. a header) are skipped."""
-    rows: list[list[int]] = []
+    """Read year,count rows from a UTF-8 file on disk."""
     with open(csv_path, newline="", encoding="utf-8") as f:
-        for row in csv.reader(f):
-            if len(row) < 2:
-                continue
-            try:
-                rows.append([int(row[0]), int(row[1])])
-            except ValueError:
-                continue
-    return rows
+        return read_year_value_rows(csv.reader(f))
+
+
+def read_year_value_csv_text(text: str) -> list[list[int]]:
+    """Same as read_year_value_csv but from an in-memory CSV string (e.g. HTTP body)."""
+    return read_year_value_rows(csv.reader(io.StringIO(text)))

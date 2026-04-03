@@ -1,3 +1,7 @@
+import json
+from pathlib import Path
+
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -8,6 +12,26 @@ from .department_metrics import (
     static_csv_abspath,
 )
 from .ethnicity_charts_data import DATA_ANALYSIS_PIE_SPECS
+
+
+def _pie_charts_payload():
+    """
+    Composition doughnut specs: default from code, or optional JSON override for live updates.
+
+    Drop client/css/csv/data_analysis_pie_charts.json (array of objects with slug, title,
+    subtitle, labels, values) after updating from the latest OIRA fact sheet.
+    """
+    try:
+        root = Path(settings.STATICFILES_DIRS[0])
+        path = root / "csv" / "data_analysis_pie_charts.json"
+        if path.is_file():
+            with open(path, encoding="utf-8") as f:
+                data = json.load(f)
+            if isinstance(data, list) and len(data) > 0:
+                return data
+    except (OSError, ValueError, json.JSONDecodeError, TypeError):
+        pass
+    return DATA_ANALYSIS_PIE_SPECS
 from .models import (
     Courses,
     DepartmentMetric,
@@ -121,7 +145,7 @@ def DataAnalysisPage(request, file_name=None):
         {
             "enrollment_charts_json": enrollment_charts_json,
             "graduation_charts_json": graduation_charts_json,
-            "pie_charts_json": DATA_ANALYSIS_PIE_SPECS,
+            "pie_charts_json": _pie_charts_payload(),
             "tableau_app_url": tableau_app_url,
             "facts_url": facts_url,
         },

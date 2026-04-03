@@ -128,6 +128,11 @@ body {
   box-sizing: border-box;
 }
 
+/* Data analysis: slightly wider column so chart grid matches designed inner width */
+.shell .bmc-page--data-analysis {
+  max-width: min(1120px, 100%);
+}
+
 /* No extra top padding when the first block is a full-width hero */
 .shell .bmc-page:has(> .bmc-page-hero:first-child) {
   padding-top: 0;
