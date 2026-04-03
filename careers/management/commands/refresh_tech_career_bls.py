@@ -12,7 +12,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-from careers.bls_oews_client import load_or_fetch_tech_oews
+from careers.bls_oews_client import bls_api_smoke_test, load_or_fetch_tech_oews
 
 
 class Command(BaseCommand):
@@ -47,6 +47,8 @@ class Command(BaseCommand):
                     "BLS request failed or returned incomplete series. Check API key, network, and BLS status."
                 )
             )
+            self.stderr.write(self.style.WARNING("--- BLS smoke test (one series) ---"))
+            self.stderr.write(bls_api_smoke_test(key))
             raise SystemExit(1)
 
         _openings, _salary, year, geo = result

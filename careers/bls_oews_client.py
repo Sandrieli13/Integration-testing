@@ -36,11 +36,16 @@ TECH_OCCUPATIONS: tuple[tuple[str, str], ...] = (
 
 
 def _series_prefix(metro_area_code: str | None) -> str:
-    """OEUN… national cross-industry, or OEUM + 7-digit CBSA + 000000 industry."""
+    """OEUN… national cross-industry, or OEUM + 7-digit CBSA + 000000 industry.
+
+    OEWS IDs are exactly 25 chars: OE(2)+U(1)+area_type(1)+area(7)+industry(6)+occupation(6)+datatype(2).
+    National = OEUN + seven zero area + six zero industry (17 chars before occupation).
+    """
     code = (metro_area_code or "").strip()
     if len(code) == 7 and code.isdigit():
         return f"OEUM{code}000000"
-    return "OEUN000000000000"
+    # Was missing one zero → 24-char IDs; BLS rejects / returns no series.
+    return "OEUN0000000000000"
 
 
 def _build_series_ids(prefix: str) -> tuple[list[str], list[str]]:
@@ -149,7 +154,11 @@ def fetch_tech_oews_live(
         return None
 
     results = (parsed.get("Results") or {}).get("series") or []
-    by_id = {s.get("seriesID"): s for s in results if s.get("seriesID")}
+    by_id: dict[str, Any] = {}
+    for s in results:
+        sid = s.get("seriesID") or s.get("seriesId")
+        if sid:
+            by_id[str(sid)] = s
 
     openings: list[dict] = []
     salary: list[dict] = []
@@ -176,6 +185,16 @@ def fetch_tech_oews_live(
         geo = "United States, national (BLS OEWS)"
 
     return openings, salary, oews_year, geo
+
+
+def bls_api_smoke_test(api_key: str) -> str:
+    """One known-good national series; for debugging PA / key / network."""
+    sid = "OEUN000000000000015125201"  # Software devs, employment, national
+    try:
+        parsed = _post_bls([sid], api_key, timeout=30)
+        return json.dumps(parsed, indent=2)[:4000]
+    except Exception as exc:
+        return f"{type(exc).__name__}: {exc}"
 
 
 def load_or_fetch_tech_oews(
