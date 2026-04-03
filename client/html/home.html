@@ -92,33 +92,32 @@
               <a target="_blank" rel="noopener noreferrer" href="https://github.com/Lisandro09" aria-label="GitHub"><i class="fab fa-github"></i></a>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/lisandro-saavedra" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
+            {# LinkedIn first via unavatar (real <img> load, no fetch/CORS). Fallback: GitHub unavatar → repo photo → SVG. #}
             <img
-              class="profile-picture dev-avatar"
-              src="{{ home_avatar_lucas }}"
+              class="profile-picture"
+              src="https://unavatar.io/linkedin/lucas-yao001?size=256"
               alt="Lucas Yao"
               width="120"
               height="120"
               loading="lazy"
               decoding="async"
-              data-li="https://unavatar.io/linkedin/lucas-yao001?size=256"
-              data-mid="https://raw.githubusercontent.com/lucasstranger1/BMCCintership/main/luyao.png"
-              data-gh="https://unavatar.io/github/lucasstranger1?size=256"
-              data-svg="{{ home_avatar_lucas }}">
+              referrerpolicy="no-referrer"
+              onerror="if(!this.dataset._g){this.dataset._g='1';this.src='https://unavatar.io/github/lucasstranger1?size=256';return;}if(!this.dataset._m){this.dataset._m='1';this.src='https://raw.githubusercontent.com/lucasstranger1/BMCCintership/main/luyao.png';return;}this.onerror=null;this.src='{{ home_avatar_lucas|escapejs }}';">
             <div class="footertext">Lucas Yao
               <a target="_blank" rel="noopener noreferrer" href="https://github.com/lucasstranger1" aria-label="GitHub"><i class="fab fa-github"></i></a>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/lucas-yao001" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
-            {# Mustafa: use <img src> for GitHub avatar (no dev-avatar fetch). fetch() to unavatar often fails CORS in production, so PA showed a broken image. #}
+            {# LinkedIn first; fallback GitHub unavatar → SVG. #}
             <img
               class="profile-picture"
-              src="https://unavatar.io/github/MustafaDon777?size=256"
+              src="https://unavatar.io/linkedin/mu-don?size=256"
               alt="Mustafa Donmez"
               width="120"
               height="120"
               loading="lazy"
               decoding="async"
               referrerpolicy="no-referrer"
-              onerror="this.onerror=null;this.src='{{ home_avatar_mustafa|escapejs }}';">
+              onerror="if(!this.dataset._g){this.dataset._g='1';this.src='https://unavatar.io/github/MustafaDon777?size=256';return;}this.onerror=null;this.src='{{ home_avatar_mustafa|escapejs }}';">
             <div class="footertext">Mustafa Donmez
               <a target="_blank" rel="noopener noreferrer" href="https://github.com/MustafaDon777" aria-label="GitHub"><i class="fab fa-github"></i></a>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/mu-don/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -168,78 +167,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-(function () {
-  /* Unavatar LinkedIn often returns ~1.5KB placeholder when LinkedIn blocks scrapers — require a larger body for /linkedin/ only.
-     GitHub avatars can be legitimately small (~1.5–2KB); Unavatar’s “missing user” placeholder is ~1506B, so use 1520B floor for non-LinkedIn URLs. */
-  function minBytesForUrl(url) {
-    if (url.indexOf('unavatar.io/linkedin/') !== -1) return 4500;
-    return 1520;
-  }
-
-  function fetchImageMeta(url) {
-    return fetch(url, { credentials: 'omit', cache: 'no-store' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('http');
-        var ct = r.headers.get('content-type') || 'image/png';
-        return r.arrayBuffer().then(function (buf) {
-          return { buf: buf, ct: ct, len: buf.byteLength };
-        });
-      });
-  }
-
-  function applyAvatar(img, meta) {
-    var url = URL.createObjectURL(new Blob([meta.buf], { type: meta.ct }));
-    img.src = url;
-  }
-
-  function loadDevAvatar(img) {
-    var svg = img.getAttribute('data-svg') || img.src;
-    var gh = img.getAttribute('data-gh');
-    var li = img.getAttribute('data-li');
-    var mid = img.getAttribute('data-mid');
-
-    var chain = [li];
-    if (mid) chain.push(mid);
-    chain.push(gh);
-
-    img.onerror = function () {
-      img.onerror = null;
-      img.src = svg;
-    };
-
-    Promise.all(
-      chain.map(function (u) {
-        return fetchImageMeta(u)
-          .then(function (meta) {
-            meta._url = u;
-            return meta;
-          })
-          .catch(function () {
-            return { buf: new ArrayBuffer(0), ct: '', len: 0, _url: u };
-          });
-      })
-    ).then(function (metas) {
-      for (var i = 0; i < metas.length; i++) {
-        var u = metas[i]._url || '';
-        if (metas[i].len >= minBytesForUrl(u)) {
-          applyAvatar(img, metas[i]);
-          return;
-        }
-      }
-      img.src = svg;
-    });
-  }
-
-  function run() {
-    document.querySelectorAll('img.dev-avatar').forEach(loadDevAvatar);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', run);
-  } else {
-    run();
-  }
-})();
-</script>
+{# Developer avatars: LinkedIn-first <img> + onerror chain in markup (avoids fetch/CORS on hosts like PythonAnywhere). #}
 {% endblock %}
