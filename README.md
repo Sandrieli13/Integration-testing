@@ -5,7 +5,7 @@ Django project for **BMCC student tools**: course planning, clubs, mentors, care
 **Active development branch:** `LucasYao_this_branch_for_myself`
 
 Upstream repo: [Sandrieli13/Integration-testing](https://github.com/Sandrieli13/Integration-testing).
-
+BMCCONNECT Website: https://lucasyao111.pythonanywhere.com/
 ## Stack
 
 - **Python 3.9+** (match your host; PythonAnywhere web app uses 3.9 in this setup)
