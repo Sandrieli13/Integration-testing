@@ -14,7 +14,7 @@
   <link href="{% static 'favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
   <link href="{% static 'webclip.png' %}" rel="apple-touch-icon">
   {# Bump ?v= when navbar.css changes (browsers/CDN cache). Source of truth: client/css/navbar.css — run collectstatic on the server. #}
-  <link href="{% static 'navbar.css' %}?v=sitenav4" rel="stylesheet" type="text/css">
+  <link href="{% static 'navbar.css' %}?v=sitenav6" rel="stylesheet" type="text/css">
   <link href="{% static 'app-shell.css' %}?v=13" rel="stylesheet" type="text/css">
   {% block extra_head %}{% endblock %}
 </head>
@@ -45,7 +45,7 @@
     });
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="{% static 'scripts.js' %}"></script>
+  <script src="{% static 'scripts.js' %}?v=navdesk2"></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

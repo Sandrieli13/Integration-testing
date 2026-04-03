@@ -3,9 +3,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from .department_metrics import (
     ENROLLMENT_CHART_DEFINITIONS,
+    GRADUATION_CHART_DEFINITIONS,
     read_year_value_csv,
     static_csv_abspath,
 )
+from .ethnicity_charts_data import DATA_ANALYSIS_PIE_SPECS
 from .models import (
     Courses,
     DepartmentMetric,
@@ -51,6 +53,7 @@ def course_search(request):
             is_computer_info_systems = (major_id == 2)
             is_computer_network_technology = (major_id == 3)
             is_geographic_information_science = (major_id == 4)
+            is_data_science = (major_id == 5)
 
             return render(request, 'course_search_result.html', {
                 'major': major,
@@ -62,6 +65,7 @@ def course_search(request):
                 'is_computer_info_systems': is_computer_info_systems,
                 'is_computer_network_technology': is_computer_network_technology,
                 'is_geographic_information_science': is_geographic_information_science,
+                'is_data_science': is_data_science,
             })
         except Majors.DoesNotExist:
             return render(request, 'course_search_result.html', {'error_message': 'Major not found.'})
@@ -76,12 +80,10 @@ def CampusInfo(request):
  
  
 
-def DataAnalysisPage(request, file_name=None):
-    """
-    Enrollment headcount time series only. DepartmentMetric ORM preferred, else CSV.
-    """
-    enrollment_data = []
-    for spec in ENROLLMENT_CHART_DEFINITIONS:
+def _line_charts_payload(definitions, metric: str):
+    """DepartmentMetric ORM preferred, else CSV. metric is 'enrollment' or 'graduation'."""
+    out = []
+    for spec in definitions:
         series_key = spec["series_key"]
         title = spec["title"]
         qs = DepartmentMetric.objects.filter(series_key=series_key).order_by("year")
@@ -90,11 +92,21 @@ def DataAnalysisPage(request, file_name=None):
         else:
             csv_file_path = static_csv_abspath(spec["csv"])
             data = read_year_value_csv(csv_file_path)
-        enrollment_data.append((data, title))
+        out.append(
+            {
+                "title": title,
+                "points": data,
+                "metric": metric,
+                "value_label": "Headcount" if metric == "enrollment" else "Degrees awarded",
+            }
+        )
+    return out
 
-    enrollment_charts_json = [
-        {"title": title, "points": data} for data, title in enrollment_data
-    ]
+
+def DataAnalysisPage(request, file_name=None):
+    """Enrollment and graduation time series, plus composition / ethnicity doughnut charts."""
+    enrollment_charts_json = _line_charts_payload(ENROLLMENT_CHART_DEFINITIONS, "enrollment")
+    graduation_charts_json = _line_charts_payload(GRADUATION_CHART_DEFINITIONS, "graduation")
 
     tableau_app_url = (
         "https://public.tableau.com/app/profile/bmcc.oiea/viz/BMCCDataDashboards/Welcome"
@@ -108,6 +120,8 @@ def DataAnalysisPage(request, file_name=None):
         "DataAnalysisPage.html",
         {
             "enrollment_charts_json": enrollment_charts_json,
+            "graduation_charts_json": graduation_charts_json,
+            "pie_charts_json": DATA_ANALYSIS_PIE_SPECS,
             "tableau_app_url": tableau_app_url,
             "facts_url": facts_url,
         },

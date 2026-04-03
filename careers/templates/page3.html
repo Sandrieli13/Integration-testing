@@ -32,7 +32,7 @@
       {% else %}
         <h1>Internship matcher</h1>
         <p class="bmc-page-hero__lede">
-          Pick a major, tap skills and courses to highlight, then search internships. Submit to see overlap with a posting and what is still missing.
+          Pick a major (including <strong>Data Science (A.S.)</strong>), then add skills and courses. The lists prioritize items linked to your major in this dataset—switch majors to refresh. Search internships, submit, and see overlap with a posting and what is still missing.
         </p>
       {% endif %}
     </div>
@@ -131,6 +131,7 @@
   {% else %}
 
     <section class="careers-card internship-matcher">
+      {{ major_skills_courses_map|json_script:"major-skills-courses-json" }}
       <form method="post" id="internship-matcher-form" action="{% url 'careers:page3' %}">
         {% csrf_token %}
 
@@ -141,6 +142,9 @@
             <option value="{{ major.id }}">{{ major.major }}</option>
           {% endfor %}
         </select>
+        <p class="careers-muted internship-matcher__major-hint" id="internship-major-hint" style="margin:0.35rem 0 0.75rem;font-size:0.875rem;">
+          After you choose a major, available skills and courses below focus on that program’s dataset links (Data Science includes stats, ML, Python, SQL, and MAT/CIS electives).
+        </p>
 
         <span class="internship-matcher__form-label">Skills · click to move into your list (click selected item to return)</span>
         <div id="skills-container" class="internship-matcher__pair">
@@ -367,6 +371,52 @@
     document.getElementById('clear-selected-skills').addEventListener('click', clearSelectedSkills);
     document.getElementById('clear-selected-courses').addEventListener('click', clearSelectedCourses);
     document.getElementById('internship').addEventListener('input', fetchInternshipSuggestions);
+
+    var majorMapEl = document.getElementById('major-skills-courses-json');
+    function applyMajorFilter() {
+      if (!majorMapEl) return;
+      var map = JSON.parse(majorMapEl.textContent);
+      var mid = document.getElementById('major').value;
+      var pack = map[mid];
+      var skillLis = document.querySelectorAll('#skills-list li.skill');
+      var courseLis = document.querySelectorAll('#courses-list li.course');
+      function showAll(nodes) {
+        nodes.forEach(function (li) { li.style.display = ''; });
+      }
+      if (!mid || !pack || (pack.skill_ids.length === 0 && pack.course_ids.length === 0)) {
+        showAll(skillLis);
+        showAll(courseLis);
+        return;
+      }
+      var sset = new Set(pack.skill_ids.map(Number));
+      var cset = new Set(pack.course_ids.map(Number));
+      if (pack.skill_ids.length === 0) {
+        showAll(skillLis);
+      } else {
+        skillLis.forEach(function (li) {
+          var id = parseInt(li.getAttribute('data-skill-id'), 10);
+          li.style.display = sset.has(id) ? '' : 'none';
+        });
+      }
+      if (pack.course_ids.length === 0) {
+        showAll(courseLis);
+      } else {
+        courseLis.forEach(function (li) {
+          var id = parseInt(li.getAttribute('data-course-id'), 10);
+          li.style.display = cset.has(id) ? '' : 'none';
+        });
+      }
+    }
+
+    var majorSelect = document.getElementById('major');
+    if (majorSelect) {
+      majorSelect.addEventListener('change', function () {
+        clearSelectedSkills();
+        clearSelectedCourses();
+        applyMajorFilter();
+      });
+      applyMajorFilter();
+    }
   })();
 </script>
 {% endif %}

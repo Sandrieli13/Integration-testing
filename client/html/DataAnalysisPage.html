@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}BMCC CIS · Enrollment analysis{% endblock %}
+{% block title %}BMCC · CIS &amp; data programs — enrollment insights{% endblock %}
 
 {% block extra_head %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -172,6 +172,10 @@
       padding: 0 0.75rem 1rem;
       position: relative;
     }
+    .da-chart-card__canvas--pie {
+      min-height: 300px;
+      padding-bottom: 1.25rem;
+    }
 
     .da-footer {
       border-top: 1px solid var(--da-border);
@@ -193,9 +197,11 @@
 {% block content %}
 <header class="bmc-page-hero">
   <div class="bmc-page-hero__panel">
-    <p class="bmc-page-hero__eyebrow">BMCC · CIS</p>
-      <h1>Enrollment headcount analysis</h1>
-      <p class="bmc-page-hero__lede">Degree-seeking headcount over time for CS, CIS A.A.S., CNT, and department aggregate — from your app database or synced extracts.</p>
+    <p class="bmc-page-hero__eyebrow">BMCC · CIS &amp; data programs</p>
+      <h1>Enrollment, completions &amp; student composition</h1>
+      <p class="bmc-page-hero__lede">
+        Trends for Computer Science, CIS, Computer Network Technology, and <strong>Data Science (A.S.)</strong>, plus OIRA-based views of who studies in these programs—use alongside your advisor and official BMCC dashboards.
+      </p>
   </div>
 </header>
 <div class="da">
@@ -203,9 +209,10 @@
 
       <div class="da-grid2">
         <div class="da-panel">
-          <h2>Scope</h2> 
-          <p><strong>Metric:</strong> headcount enrollment (majors / degree students as defined in source extracts).</p>
-          <p><strong>Coverage:</strong> four enrollment series—program-level CS, CIS A.A.S., CNT, and CIS department aggregate—aligned to the years available in the underlying CSV / <code>DepartmentMetric</code> table.</p>
+          <h2>Scope</h2>
+          <p><strong>Enrollment charts:</strong> degree-seeking headcount by year (definitions match each CSV / <code>DepartmentMetric</code> series).</p>
+          <p><strong>Completions charts:</strong> degrees awarded for programs where graduation extracts exist (Data Science A.S. completions will appear when added to the dataset).</p>
+          <p><strong>Pie &amp; doughnut views:</strong> race/ethnicity and major mix from BMCC Institutional Research fact sheets, plus a degrees-mix snapshot from project CSVs.</p>
         </div>
         <div class="da-panel">
           <h2>Method &amp; refresh</h2>
@@ -220,18 +227,20 @@
       </div>
 
       <div class="da-insights">
-        <h2>Quick read — what the series suggest</h2>
+        <h2>Quick read</h2>
         <ul>
-          <li><strong>Computer Science (A.S.)</strong> shows strong long-run growth from 2015 with more recent Fall terms (2024–2025) available in the sync; use the chart axis for exact breakpoints.</li>
-          <li><strong>CIS department</strong> aggregate enrollment reflects the full CIS portfolio; compare its slope to individual majors to see concentration vs. breadth.</li>
-          <li><strong>CIS (A.A.S.)</strong> and <strong>CNT</strong> are smaller programs—short-term volatility is normal at modest N; interpret changes alongside department totals.</li>
-          <li>Gaps on the year axis (e.g. missing Fall 2023 in some public extracts) appear as uneven spacing; that is a data availability feature, not a plotting error.</li>
+          <li><strong>Data Science (A.S.)</strong> (Mathematics Department, DSM-AS) is included in enrollment trends; replace the bundled CSV with official OIEA extracts when you sync via <code>sync_department_metrics</code>.</li>
+          <li><strong>Computer Science</strong> shows long-run enrollment growth; use the axis for exact year labels.</li>
+          <li><strong>CIS department</strong> totals help you compare breadth across the whole unit vs. individual majors.</li>
+          <li><strong>Composition charts</strong> show who is in these programs (race/ethnicity from published fact sheets). Data Science (A.S.) does not yet appear in the Fall 2022 major-mix vintage; the <strong>Computer Science (Spring 2023)</strong> ethnicity chart is a reasonable peer reference for a large STEM cohort until OIRA publishes program-specific DS rows.</li>
+          <li><strong>Degrees awarded</strong> lags enrollment; the mix pie uses 2022 completions from this project’s graduation files.</li>
+          <li>Uneven spacing on the year axis reflects missing years in the source files, not a chart bug.</li>
         </ul>
       </div>
 
-      <section aria-labelledby="charts-heading">
-        <h2 id="charts-heading" class="da-section-title">Enrollment time series</h2>
-        <p class="da-section-desc">Each panel is an independent scale—compare shape and direction, not absolute levels across programs.</p>
+      <section aria-labelledby="charts-enrollment-heading">
+        <h2 id="charts-enrollment-heading" class="da-section-title">Enrollment over time</h2>
+        <p class="da-section-desc">Each chart uses its own vertical scale—compare trends, not absolute numbers across panels.</p>
 
         {{ enrollment_charts_json|json_script:"enrollment-charts-data" }}
 
@@ -239,9 +248,47 @@
           {% for chart in enrollment_charts_json %}
           <figure class="da-chart-card">
             <figcaption class="da-chart-card__cap">{{ chart.title }}</figcaption>
-            <span class="da-chart-card__sub">Academic year on horizontal axis · headcount on vertical axis</span>
+            <span class="da-chart-card__sub">Year · {{ chart.value_label|lower }}</span>
             <div class="da-chart-card__canvas">
               <canvas id="enrollment-chart-{{ forloop.counter0 }}" aria-label="{{ chart.title }}"></canvas>
+            </div>
+          </figure>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section aria-labelledby="charts-graduation-heading">
+        <h2 id="charts-graduation-heading" class="da-section-title">Degrees awarded over time</h2>
+        <p class="da-section-desc">Completion counts from synced graduation CSVs—insight into how many students finish per year in each reporting line.</p>
+
+        {{ graduation_charts_json|json_script:"graduation-charts-data" }}
+
+        <div class="da-chart-grid">
+          {% for chart in graduation_charts_json %}
+          <figure class="da-chart-card">
+            <figcaption class="da-chart-card__cap">{{ chart.title }}</figcaption>
+            <span class="da-chart-card__sub">Year · degrees awarded</span>
+            <div class="da-chart-card__canvas">
+              <canvas id="graduation-chart-{{ forloop.counter0 }}" aria-label="{{ chart.title }}"></canvas>
+            </div>
+          </figure>
+          {% endfor %}
+        </div>
+      </section>
+
+      <section aria-labelledby="charts-pie-heading">
+        <h2 id="charts-pie-heading" class="da-section-title">Composition &amp; outcomes snapshots</h2>
+        <p class="da-section-desc">Doughnut charts summarize categorical mixes—enrollment share, race/ethnicity headcounts, and a completions split. Read subtitles for source and year.</p>
+
+        {{ pie_charts_json|json_script:"pie-charts-data" }}
+
+        <div class="da-chart-grid">
+          {% for pie in pie_charts_json %}
+          <figure class="da-chart-card">
+            <figcaption class="da-chart-card__cap">{{ pie.title }}</figcaption>
+            <span class="da-chart-card__sub">{{ pie.subtitle }}</span>
+            <div class="da-chart-card__canvas da-chart-card__canvas--pie">
+              <canvas id="pie-chart-{{ forloop.counter0 }}" aria-label="{{ pie.title }}"></canvas>
             </div>
           </figure>
           {% endfor %}
@@ -261,30 +308,44 @@
 {% block extra_js %}
 <script>
 (function () {
-  const specs = JSON.parse(document.getElementById("enrollment-charts-data").textContent);
   const palette = [
     { border: "rgb(8, 145, 178)", fill: "rgba(8, 145, 178, 0.08)" },
     { border: "rgb(79, 70, 229)", fill: "rgba(79, 70, 229, 0.08)" },
     { border: "rgb(180, 83, 9)", fill: "rgba(180, 83, 9, 0.08)" },
     { border: "rgb(5, 150, 105)", fill: "rgba(5, 150, 105, 0.08)" },
+    { border: "rgb(192, 38, 211)", fill: "rgba(192, 38, 211, 0.08)" },
+  ];
+
+  const pieColors = [
+    "rgba(8, 145, 178, 0.85)",
+    "rgba(79, 70, 229, 0.85)",
+    "rgba(180, 83, 9, 0.85)",
+    "rgba(5, 150, 105, 0.85)",
+    "rgba(192, 38, 211, 0.85)",
+    "rgba(220, 38, 38, 0.8)",
+    "rgba(14, 116, 144, 0.8)",
   ];
 
   Chart.defaults.font.family = '"DM Sans", system-ui, sans-serif';
   Chart.defaults.color = "#64748b";
 
-  function init() {
+  function initLineCharts(scriptId, canvasPrefix) {
+    const elScript = document.getElementById(scriptId);
+    if (!elScript) return;
+    const specs = JSON.parse(elScript.textContent);
     specs.forEach(function (spec, i) {
-      const el = document.getElementById("enrollment-chart-" + i);
+      const el = document.getElementById(canvasPrefix + i);
       if (!el || !spec.points.length) return;
       const years = spec.points.map(function (p) { return p[0]; });
       const values = spec.points.map(function (p) { return p[1]; });
       const c = palette[i % palette.length];
+      var valueLabel = spec.value_label || "Value";
       new Chart(el, {
         type: "line",
         data: {
           labels: years,
           datasets: [{
-            label: "Headcount",
+            label: valueLabel,
             data: values,
             borderColor: c.border,
             backgroundColor: c.fill,
@@ -314,7 +375,7 @@
                 },
                 label: function (ctx) {
                   var v = ctx.parsed.y;
-                  return " Headcount: " + v.toLocaleString();
+                  return " " + valueLabel + ": " + v.toLocaleString();
                 },
               },
             },
@@ -335,6 +396,61 @@
         },
       });
     });
+  }
+
+  function initPieCharts() {
+    const elScript = document.getElementById("pie-charts-data");
+    if (!elScript) return;
+    const specs = JSON.parse(elScript.textContent);
+    specs.forEach(function (spec, i) {
+      const el = document.getElementById("pie-chart-" + i);
+      if (!el || !spec.values || !spec.values.length) return;
+      new Chart(el, {
+        type: "doughnut",
+        data: {
+          labels: spec.labels,
+          datasets: [{
+            data: spec.values,
+            backgroundColor: spec.labels.map(function (_, j) {
+              return pieColors[j % pieColors.length];
+            }),
+            borderColor: "#ffffff",
+            borderWidth: 2,
+            hoverOffset: 6,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "58%",
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: { boxWidth: 11, padding: 10, font: { size: 11 } },
+            },
+            tooltip: {
+              backgroundColor: "rgba(15, 23, 42, 0.92)",
+              padding: 10,
+              callbacks: {
+                label: function (ctx) {
+                  var data = ctx.dataset.data;
+                  var total = data.reduce(function (a, b) { return a + b; }, 0);
+                  var v = ctx.raw;
+                  var pct = total ? ((v / total) * 100).toFixed(1) : "0";
+                  return " " + ctx.label + ": " + v.toLocaleString() + " (" + pct + "%)";
+                },
+              },
+            },
+          },
+        },
+      });
+    });
+  }
+
+  function init() {
+    initLineCharts("enrollment-charts-data", "enrollment-chart-");
+    initLineCharts("graduation-charts-data", "graduation-chart-");
+    initPieCharts();
   }
 
   if (document.readyState === "loading") {

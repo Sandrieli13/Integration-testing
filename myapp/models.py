@@ -14,7 +14,6 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=255, blank=True)
     major = models.CharField(max_length=255, blank=True)
     preferred_language = models.CharField(max_length=255, blank=True)
-    clubs = models.ManyToManyField('clubs.Club', related_name='members')
     events = models.ManyToManyField('events.Event', related_name='attendee')
     
     def save(self, *args, **kwargs):

@@ -1,12 +1,14 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db import connection
+from django.db import connection, IntegrityError
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from .forms import ClubForm
-from .models import Club
+from .models import BmccClubsInfo, Club, Membership
 
 
 def _staff(u):
@@ -18,10 +20,9 @@ def chart_view(request):
     """Club member counts without pandas/matplotlib (small disk footprint on PA)."""
     query = """
         SELECT CL.name, COUNT(*) AS club_members
-        FROM myapp_customuser_clubs CC
-        INNER JOIN myapp_customuser CU ON CC.customuser_id = CU.id
-        INNER JOIN clubs_club CL ON CC.club_id = CL.id
-        GROUP BY CC.club_id, CL.name
+        FROM clubs_membership MM
+        INNER JOIN clubs_club CL ON MM.club_id = CL.id
+        GROUP BY MM.club_id, CL.name
         ORDER BY club_members DESC
     """
     with connection.cursor() as cursor:
@@ -38,7 +39,7 @@ def chart_view(request):
 @login_required
 def profile_view(request):
     user = request.user
-    clubs = user.clubs.all()
+    clubs = Club.objects.filter(memberships__user=user).distinct().order_by("name")
     events = user.events.all()
     return render(request, "profile.html", {"user": user, "clubs": clubs, "events": events})
 
@@ -56,35 +57,55 @@ def delete_club(request, club_id):
 def join_club(request, club_id):
     club = get_object_or_404(Club, id=club_id)
     user = request.user
-    if club in user.clubs.all():
-        user.clubs.remove(club)
+    membership = Membership.objects.filter(user=user, club=club).first()
+    if membership:
+        membership.delete()
         joined = False
     else:
-        user.clubs.add(club)
-        joined = True
+        try:
+            Membership.objects.create(user=user, club=club)
+            joined = True
+        except IntegrityError:
+            joined = True
 
-    members_count = club.members.count()
-    return JsonResponse({"joined": joined, "members_count": members_count})
+    members_count = Membership.objects.filter(club=club).count()
+    club.club_members = members_count
+    club.save(update_fields=["club_members"])
+
+    wants_json = request.headers.get("X-Requested-With") == "XMLHttpRequest"
+    if wants_json:
+        return JsonResponse({"joined": joined, "members_count": members_count})
+
+    if joined:
+        messages.success(request, f"You joined {club.name}. Visit your profile anytime to see your clubs.")
+    else:
+        messages.info(request, f"You left {club.name}.")
+
+    next_url = request.POST.get("next") or reverse("clubs-list")
+    return redirect(next_url)
 
 
 def clubs_list_view(request):
     clubs = (
-        Club.objects.annotate(member_count=Count("members", distinct=True))
+        Club.objects.annotate(member_count=Count("memberships", distinct=True))
         .order_by("category", "name")
     )
     if request.user.is_authenticated:
-        user_clubs = list(request.user.clubs.all())
-        user_club_ids = {c.id for c in user_clubs}
+        user_club_ids = set(
+            Membership.objects.filter(user=request.user).values_list(
+                "club_id", flat=True
+            )
+        )
     else:
-        user_clubs = []
         user_club_ids = set()
+    bmcc_info = BmccClubsInfo.objects.filter(pk=1).first()
     return render(
         request,
         "clubs_2.html",
         {
             "clubs": clubs,
-            "user_clubs": user_clubs,
             "user_club_ids": user_club_ids,
+            "bmcc_info": bmcc_info,
         },
     )
 

@@ -111,6 +111,10 @@ class Command(BaseCommand):
                 intern.courses.set([course_map[c] for c in row["courses"] if c in course_map])
                 intern.save()
 
+        # One-time cleanup: older seeds used "Data Science AS"; canonical label is now "Data Science (A.S.)".
+        if Major.objects.filter(major="Data Science (A.S.)").exists():
+            Major.objects.filter(major="Data Science AS").delete()
+
         self.stdout.write(self.style.SUCCESS("Careers seed complete."))
         self.stdout.write(f"  Skills: {Skill.objects.count()}")
         self.stdout.write(f"  Courses: {Course.objects.count()}")

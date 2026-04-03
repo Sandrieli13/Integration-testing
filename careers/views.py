@@ -1,6 +1,7 @@
 import json
 
 from django.shortcuts import render, get_object_or_404
+from .major_ui import major_skills_courses_map, majors_ordered
 from .models import Major, Job, Course, Skill, Intern
 from django.db.models import Q
 from django.db import connection
@@ -18,8 +19,7 @@ def page1(request):
         major = get_object_or_404(Major, pk=major_id)
         return render(request, 'page1.html', {'major': major})
     else:
-        majors = Major.objects.all()
-        return render(request, 'page1.html', {'majors': majors})
+        return render(request, 'page1.html', {'majors': majors_ordered()})
 
 def _major_job_ids_map():
     data = {}
@@ -63,20 +63,18 @@ def page2(request):
                 "matched_skills": matched_skills,
                 "mismatched_skills": mismatched_skills,
                 "gap_rows": gap_rows,
-                "majors": Major.objects.all(),
+                "majors": majors_ordered(),
                 "jobs": Job.objects.all().order_by("job_title"),
                 "majors_jobs_json": majors_jobs_json,
             },
         )
 
-    majors = Major.objects.all()
-    jobs = Job.objects.all().order_by("job_title")
     return render(
         request,
         "page2.html",
         {
-            "majors": majors,
-            "jobs": jobs,
+            "majors": majors_ordered(),
+            "jobs": Job.objects.all().order_by("job_title"),
             "majors_jobs_json": majors_jobs_json,
         },
     )
@@ -89,15 +87,15 @@ def page3(request):
         if not intern:
             intr_des = "Best Matched"
 
-            major_id = request.POST['major']
-            skills_id_list = request.POST.get('skill_ids', '').split(',')
-            courses_id_list = request.POST.get('course_ids', '').split(',')
+            major_id = request.POST["major"]
+            skills_id_list = request.POST.get("skill_ids", "").split(",")
+            courses_id_list = request.POST.get("course_ids", "").split(",")
             intern_id = None
 
-            selected_major = Major.objects.get(id__in=major_id)
-            selected_skill_major = selected_major.skills.all()
-            selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
-            selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
+            selected_major = get_object_or_404(Major, pk=major_id)
+            selected_skill_names_major = list(
+                selected_major.skills.values_list("name", flat=True)
+            )
 
             if skills_id_list[0] == '':
                 # The first element is an empty string
@@ -141,15 +139,15 @@ def page3(request):
         else:
             intr_des = "Selected"
 
-            major_id = request.POST['major']
-            skills_id_list = request.POST.get('skill_ids', '').split(',')
-            courses_id_list = request.POST.get('course_ids', '').split(',')
+            major_id = request.POST["major"]
+            skills_id_list = request.POST.get("skill_ids", "").split(",")
+            courses_id_list = request.POST.get("course_ids", "").split(",")
             intern_id = Intern.objects.get(title=intern)
 
-            selected_major = Major.objects.get(id__in=major_id)
-            selected_skill_major = selected_major.skills.all()
-            selected_skill_ids_major = Skill.objects.filter(id__in=selected_skill_major)
-            selected_skill_names_major = [skill.name for skill in selected_skill_ids_major]
+            selected_major = get_object_or_404(Major, pk=major_id)
+            selected_skill_names_major = list(
+                selected_major.skills.values_list("name", flat=True)
+            )
 
             if skills_id_list[0] == '':
                 # The first element is an empty string
@@ -201,9 +199,10 @@ def page3(request):
     else:
 
         return render(request, 'page3.html', {
-            'majors': Major.objects.all(),
+            'majors': majors_ordered(),
             'skills': Skill.objects.all(),
             'courses': Course.objects.all(),
+            'major_skills_courses_map': major_skills_courses_map(),
         })
 
 def calculate_skill_compat(skill1, skill2):

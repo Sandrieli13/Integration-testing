@@ -1,16 +1,18 @@
 {% load static %}
 <header id="navbar">
-  <nav class="navbar-container container">
+  <nav class="navbar-container container" aria-label="Site">
     <a href="{% url 'index' %}" class="home-link">
       <div class="navbar-logo"><img src="{% static 'Logo.png' %}" alt="BMCC Connect"></div>
-      onnect
+      <span class="home-link__wordmark">onnect</span>
     </a>
+
+    {# Mobile / small tablet: hamburger + full overlay (unchanged behavior) #}
     <button type="button" class="navbar-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navbar-menu">
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <div id="navbar-menu" class="detached">
+    <div id="navbar-menu" class="detached navbar-mobile-panel">
       <ul class="navbar-links">
         <li class="navbar-item"><a class="navbar-link" href="{% url 'clubs-list' %}">Clubs</a></li>
         <li class="navbar-item"><a class="navbar-link" href="{% url 'mentors' %}">Mentors</a></li>
@@ -32,6 +34,44 @@
           </a>
         </li>
       </ul>
+    </div>
+
+    {# Desktop: grouped “magazine” navigation — no horizontal scrub bar #}
+    <div class="navbar-desk" aria-label="Main pages">
+      <div class="navbar-desk__clusters">
+        <details class="navbar-art-dd">
+          <summary class="navbar-art-dd__tab">Community</summary>
+          <div class="navbar-art-dd__panel">
+            <a href="{% url 'clubs-list' %}">Clubs</a>
+            <a href="{% url 'mentors' %}">Mentors</a>
+            <a href="{% url 'events' %}">Events</a>
+          </div>
+        </details>
+        <details class="navbar-art-dd">
+          <summary class="navbar-art-dd__tab">Academics</summary>
+          <div class="navbar-art-dd__panel">
+            <a href="{% url 'coursesearch' %}">Course search</a>
+            <a href="{% url 'courselistpage' %}">Majors &amp; class list</a>
+            <a href="{% url 'coursePlanner' %}">Course planner</a>
+            <a href="{% url 'checklist' %}">Checklist</a>
+            <a href="{% url 'CampusInfo' %}">Campus information</a>
+          </div>
+        </details>
+        <details class="navbar-art-dd">
+          <summary class="navbar-art-dd__tab">Careers &amp; data</summary>
+          <div class="navbar-art-dd__panel">
+            <a href="{% url 'experientiallearning:index' %}">Career readiness hub</a>
+            <a href="{% url 'careers:page1' %}">Majors &amp; careers</a>
+            <a href="{% url 'careers:page2' %}">Career skills &amp; gaps</a>
+            <a href="{% url 'careers:page3' %}">Internship matcher</a>
+            <a href="{% url 'DataAnalysisPage' %}">Data analysis</a>
+            <a href="{% url 'studentprograms' %}">Student programs</a>
+          </div>
+        </details>
+      </div>
+      <a class="navbar-desk__account" href="{% if user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">
+        {% if user.is_authenticated %}Your profile{% else %}Sign in{% endif %}
+      </a>
     </div>
   </nav>
 </header>

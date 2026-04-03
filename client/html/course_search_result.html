@@ -37,7 +37,12 @@
     <h2>Summary</h2>
     <p><strong>Total courses:</strong> {{ total_courses }}</p>
     <p><strong>Total semesters:</strong> {{ total_semesters }}</p>
+    {% if is_data_science %}
+    <p><strong>Sum of credits in this table:</strong> {{ total_credits }}</p>
+    <p><strong>Official A.S. degree total:</strong> <strong>60 credits</strong> (30 cr. CUNY Common Core + 30 cr. program area, including electives per the program sheet). The number above adds every row in this demo list; some rows are alternatives or elective choices—you do not take all of them. Use DegreeWorks and your advisor for your real progress.</p>
+    {% else %}
     <p><strong>Total credits:</strong> {{ total_credits }}</p>
+    {% endif %}
 
     {% if is_computer_science %}
       <h2>Computer Science footnotes</h2>
@@ -107,6 +112,23 @@
         <tr><td>11</td><td>Please consult with an academic or faculty advisor.</td></tr>
         <tr><td>12</td><td>Select any Creative Expression Pathways course except SPE 100 or SPE 102.</td></tr>
         <tr><td>13</td><td>A Writing Intensive course is needed to graduate.</td></tr>
+      </table>
+    {% elif is_data_science %}
+      <h2>Data Science (A.S.) — curriculum notes</h2>
+      <p class="bmc-prose" style="margin-bottom:1rem;">
+        BMCC offers an Associate in Science in Data Science (plan code <strong>DSM-AS</strong>) through the
+        <a href="https://www.bmcc.cuny.edu/academics/departments/math/" target="_blank" rel="noopener noreferrer">Mathematics Department</a>.
+        The table above lists courses used in this demo planner; always confirm your catalog year in
+        <strong>DegreeWorks</strong> and with a program advisor.
+      </p>
+      <table class="bmc-result-table major-footnotes-table">
+        <tr><th></th><th>Description</th></tr>
+        <tr><td>1</td><td>Students are required to take <strong>MAT 206</strong> or <strong>MAT 206.5</strong> (placement-dependent).</td></tr>
+        <tr><td>2</td><td>Students are required to take <strong>CSC 103</strong> and <strong>CSC 111</strong>.</td></tr>
+        <tr><td>3</td><td>Curriculum (30 cr.) includes MAT 200, 301, 302, 409, 415; plus <strong>nine credits</strong> of program electives chosen from MAT 420, CSC 203, CSC 211, CIS 395, CIS 490 (per current catalog).</td></tr>
+        <tr><td>4</td><td>Total degree: <strong>60 credits</strong> — CUNY Common Core (30 cr.) plus program curriculum (30 cr.), including general electives as specified on the official program sheet.</td></tr>
+        <tr><td>5</td><td>Official PDF maps: <a href="https://www.bmcc.cuny.edu/academics/departments/math/data-science/" target="_blank" rel="noopener noreferrer">BMCC Data Science (A.S.)</a> (links to 2-year and 5-semester plans).</td></tr>
+        <tr><td>6</td><td>Transfer: articulations exist with programs such as John Jay and NYC College of Technology; verify current agreements with Transfer Services.</td></tr>
       </table>
     {% endif %}
   {% else %}

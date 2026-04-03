@@ -237,10 +237,9 @@ var STYLE_PREFIX = 'wsite';
                 {% csrf_token %}
                 <label for="major">Select your major:</label>
                 <select name="major" id="major">
-                    <option value="1">Computer Science</option>
-                    <option value="2">Computer Information Systems</option>
-                    <option value="3">Computer Network Technology</option>
-                    <option value="4">Geographic Information Science</option>
+                    {% for m in majors %}
+                        <option value="{{ m.major_id }}">{{ m.major_name }}</option>
+                    {% endfor %}
                 </select>
                 <br>
                 <input type="submit" value="Submit">

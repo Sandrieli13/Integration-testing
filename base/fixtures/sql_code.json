@@ -15,6 +15,10 @@
       {
         "major_id": 4,
         "major_name": "Geographic Information Science"
+      },
+      {
+        "major_id": 5,
+        "major_name": "Data Science"
       }
     ],
     "Courses": [
@@ -473,6 +477,144 @@
         "course_name": "GEO 241 Population Geography",
         "major_id": 4,
         "credits": 3
+      },
+      {
+        "course_id": 77,
+        "course_name": "ENG 101 English Composition",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 78,
+        "course_name": "MAT 206.5 Intermediate Algebra and Precalculus",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 79,
+        "course_name": "CSC 103 Introduction to Computing",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 80,
+        "course_name": "CSC 111 Introduction to Programming",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 81,
+        "course_name": "MAT 200 Introduction to Discrete Mathematics",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 82,
+        "course_name": "MAT 301 Analytic Geometry and Calculus I",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 83,
+        "course_name": "MAT 302 Analytic Geometry and Calculus II",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 84,
+        "course_name": "MAT 409 Probability and Statistics for Data Science",
+        "major_id": 5,
+        "credits": 4
+      },
+      {
+        "course_id": 85,
+        "course_name": "MAT 415 Linear Algebra for Data Science",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 86,
+        "course_name": "MAT 420 Introduction to Machine Learning",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 87,
+        "course_name": "CSC 203 Python Programming",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 88,
+        "course_name": "CSC 211 Advanced Programming Techniques",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 89,
+        "course_name": "CIS 395 Database Systems I",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 90,
+        "course_name": "CIS 490 Introduction to Data Science",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 91,
+        "course_name": "XXX xxx Individual and Society",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 92,
+        "course_name": "ENG 201 Introduction to Literature",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 93,
+        "course_name": "XXX xxx U.S. Experience in Its Diversity",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 94,
+        "course_name": "XXX xxx Scientific World",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 95,
+        "course_name": "XXX xxx Creative Expression",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 96,
+        "course_name": "XXX xxx World Cultures and Global Issues",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 97,
+        "course_name": "SPE 100 Fundamentals of Public Speaking",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 98,
+        "course_name": "XXX xxx Program Elective",
+        "major_id": 5,
+        "credits": 3
+      },
+      {
+        "course_id": 99,
+        "course_name": "General Electives",
+        "major_id": 5,
+        "credits": 2
       }
     ],
     "Semester": [
@@ -649,6 +791,50 @@
         "course3": 74,
         "course4": 75,
         "course5": 76,
+        "course6": null,
+        "total_credits": 15
+      },
+      {
+        "semester_id": 1,
+        "major_id": 5,
+        "course1": 78,
+        "course2": 77,
+        "course3": 79,
+        "course4": 80,
+        "course5": 91,
+        "course6": null,
+        "total_credits": 17
+      },
+      {
+        "semester_id": 2,
+        "major_id": 5,
+        "course1": 81,
+        "course2": 82,
+        "course3": 92,
+        "course4": 93,
+        "course5": 94,
+        "course6": null,
+        "total_credits": 17
+      },
+      {
+        "semester_id": 3,
+        "major_id": 5,
+        "course1": 83,
+        "course2": 84,
+        "course3": 87,
+        "course4": 95,
+        "course5": 96,
+        "course6": null,
+        "total_credits": 17
+      },
+      {
+        "semester_id": 4,
+        "major_id": 5,
+        "course1": 85,
+        "course2": 86,
+        "course3": 88,
+        "course4": 89,
+        "course5": 90,
         "course6": null,
         "total_credits": 15
       }

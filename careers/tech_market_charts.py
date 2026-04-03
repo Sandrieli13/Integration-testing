@@ -106,7 +106,7 @@ def get_tech_career_chart_series() -> tuple[list[dict], list[dict], list[dict], 
         "openings_note": "Illustrative NYC-scale counts for selected computing occupations (for planning, not job guarantees).",
         "salary_note": "Illustrative median hourly wages; verify on BLS OEWS and current postings.",
         "languages_note": "Survey-style language shares (not required to sum to 100%).",
-        "as_of": "2025-Q2 snapshot (update tech_market_charts.py as sources publish new tables).",
+        "as_of": "2025-Q2 snapshot (update tech_market_charts.py as sources publish new tables). BMCC offers an A.S. in Data Science (DSM-AS); align coursework with the Math department program sheet.",
         "insights": {
             "top_roles_openings": top_openings,
             "salary_range": {"min": salary_min, "max": salary_max},

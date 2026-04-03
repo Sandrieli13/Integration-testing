@@ -9,11 +9,14 @@
     <p class="bmc-page-hero__eyebrow">Career readiness hub</p>
     <h1>Welcome, student</h1>
     <p class="bmc-page-hero__lede">
-      Your starting point for exploring careers at BMCC. Try the <strong>advisory chatbot</strong> (lower right), then dig into the
-      <a href="{% url 'experientiallearning:job_board' %}">job board</a>,
-      <a href="{% url 'experientiallearning:events' %}">events</a>,
-      <a href="{% url 'experientiallearning:career_info' %}">career info</a>, and
-      <a href="{% url 'careers:page1' %}">majors &amp; careers</a>.
+      Your starting point for exploring careers at BMCC—including <strong>Data Science (A.S.)</strong> alongside CS, CIS, and CNT.
+      Try the <strong>advisory chatbot</strong> (lower right), then use
+      <a href="{% url 'careers:page1' %}">majors &amp; careers</a>,
+      <a href="{% url 'coursesearch' %}">course / degree planning</a>,
+      <a href="{% url 'DataAnalysisPage' %}">enrollment &amp; composition charts</a>,
+      the <a href="{% url 'experientiallearning:job_board' %}">job board</a>,
+      <a href="{% url 'experientiallearning:events' %}">events</a>, and
+      <a href="{% url 'experientiallearning:career_info' %}">career info</a>.
     </p>
     <p class="el-home-hero__actions">
       <a class="bmc-btn bmc-btn--ghost" href="{% url 'experientiallearning:about' %}">About this project</a>
@@ -39,6 +42,16 @@
       <p>July 19, 2:30–3:45 p.m. · 70 Murray St., Room 203<br>One-year program combining skill development and internships while you complete your degree.</p>
     </article>
   </div>
+</section>
+
+<section class="careers-card el-home-hub-tools" aria-labelledby="el-hub-tools-heading">
+  <h2 id="el-hub-tools-heading">What you can do here</h2>
+  <ul class="careers-muted" style="margin:0.5rem 0 0; padding-left:1.25rem; line-height:1.65;">
+    <li><strong>Majors &amp; careers</strong> — profiles for computing programs and <strong>Data Science (A.S.)</strong>, with sample roles and linked courses.</li>
+    <li><strong>Skills, gaps &amp; internships</strong> — match coursework and skills to postings on the <a href="{% url 'careers:page2' %}">career skills</a> and <a href="{% url 'careers:page3' %}">internship matcher</a> flows.</li>
+    <li><strong>BMCC data lens</strong> — <a href="{% url 'DataAnalysisPage' %}">CIS &amp; data program charts</a> (enrollment, degrees awarded, diversity snapshots).</li>
+    <li><strong>Plan your degree</strong> — <a href="{% url 'coursesearch' %}">Course search</a> includes Data Science curriculum notes when you pick that major.</li>
+  </ul>
 </section>
 
 <section class="careers-panel el-home-stats-cta" aria-labelledby="el-stats-cta-heading">

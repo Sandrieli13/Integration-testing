@@ -2,110 +2,163 @@
 {% load static %}
 {% block title %}About · Career readiness{% endblock %}
 {% block el_content %}
+{% static 'experientiallearning/images/avatar-gagne.svg' as el_avatar_gagne %}
+{% static 'experientiallearning/images/avatar-hannah.svg' as el_avatar_hannah %}
+{% static 'experientiallearning/images/avatar-mukhlisa.svg' as el_avatar_mukhlisa %}
+{% static 'experientiallearning/images/avatar-azhar.svg' as el_avatar_azhar %}
+{% static 'experientiallearning/images/avatar-younes.svg' as el_avatar_younes %}
 {% include 'experientiallearning/_messages.html' %}
-<section class="sub1-header">
-    <h1>ABOUT</h1>
-</section>
 
-<section class="about-us">
-    <div class="row">
-        <div class="about-col">
-            <h1>ABOUT OUR WEBSITE</h1>
-            <p>Welcome to our comprehensive online platform designed to support BMCC students in their career readiness journey.
-                With a genuine passion for helping students succeed at BMCC, we have developed a solution that addresses the common challenges faced by students regarding career readiness, such as opportunities going unnoticed due to a lack of knowledge about resources around them. <br><br>Our mission is to
-                enhance students' access to opportunities, provide personalized support, and foster their career success.
-                By harnessing the power of data analytics and machine learning techniques, we have created a personalized
-                resource that will guide students throughout their undergraduate career. We understand that each student is unique,
-                and through our platform, we offer a variety of resources to help them navigate career options effectively.
-                Whether it's finding the right job or internship, preparing for interviews, or exploring BMCC community resources,
-                our platform provides convenient accessibility to comprehensive information in a structured manner.<br><br>In the future, our primary focus is on enhancing our chatbot, making it a true personal mentor for each student. We envision a chatbot capable of providing personalized recommendations and tailored suggestions based on individual skills and aspirations. But that's not all; we aim to enrich the student experience further. We're dedicated to expanding the resources available on our website, empowering students on their career readiness journey
-            </p>
-            <a href="{% url 'experientiallearning:index' %}" class="hero-btn red-btn">EXPLORE NOW</a>
-        </div>
-        <div class="about-col">
-            <div class="about-col">
-                <br><br><br><br>
-                <iframe src="https://drive.google.com/file/d/1YOlliVXtp-UafxbhdgPio4wxRoJj1gCx/preview" width="600" height="360" allow="autoplay"></iframe>
-            </div>
-        </div>
+<header class="bmc-page-hero bmc-page-hero--urban" role="banner">
+  <div class="bmc-page-hero__panel">
+    <p class="bmc-page-hero__eyebrow">Career readiness hub</p>
+    <h1>About this project</h1>
+    <p class="bmc-page-hero__lede">
+      A student-built BMCConnect space for career exploration, events, and tools that make BMCC resources easier to find.
+    </p>
+  </div>
+</header>
+
+<section class="careers-card el-about-mission" aria-labelledby="el-about-mission-heading">
+  <div class="el-about-split">
+    <div class="el-about-split__text">
+      <h2 id="el-about-mission-heading">Our mission</h2>
+      <p>
+        Welcome to our online platform for BMCC students on their career readiness journey. We focus on the challenge of
+        opportunities going unnoticed when students do not know where to look—so we bring structured paths to jobs,
+        internships, workshops, and community resources in one place.
+      </p>
+      <p>
+        Using data-informed design, we aim to guide you through options that fit <em>your</em> goals: interviews,
+        skill-building, and BMCC-specific support. In the future we plan to strengthen the advisory chatbot so it can
+        feel more like a personalized mentor for skills and next steps.
+      </p>
+      <p class="el-about-cta">
+        <a class="bmc-btn bmc-btn--primary" href="{% url 'experientiallearning:index' %}">Explore the hub</a>
+        <a class="bmc-btn bmc-btn--ghost" href="{% url 'careers:page1' %}">Majors &amp; careers</a>
+      </p>
     </div>
-</section>
-
-<section class="creators">
-    <h1>About Us</h1>
-    <p>Our project was brought to life by the collaborative efforts of Gagne Cire Niang, Hannah George, and Mukhlisa Nematova.
-        Together, we are dedicated to guiding students towards their goals by providing a platform to discover relevant courses,
-        workshops, and resources that will facilitate their career path. We believe in empowering students to make informed decisions
-        and embark on a successful educational journey.</p>
-
-    <div class="row">
-        <div class="creators-col">
-            <img src="{% static 'experientiallearning/images/gagne.jpg' %}" alt="">
-            <div>
-                <p>Hello, I'm Gagne Cire Niang, a Computer Science student at BMCC and passionate about helping others. My goal is to empower fellow students
-                    by providing recommendations to enhance their career readiness. On this website,
-                    you'll find valuable insights, practical advice, and useful tools to help you navigate your career journey
-                    with confidence. Let's embark on this path of career readiness together and unlock your full potential!</p>
-                <h3>Gagne Cire Niang</h3>
-                <div class="icons">
-                    <a href="https://www.linkedin.com/in/gagne-cire-niang-39907b279" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin"></i></a>
-                    <a href="https://github.com/Gagnecire" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="creators-col">
-            <img src="{% static 'experientiallearning/images/hannah.jpg' %}" alt="">
-            <div>
-                <p>Hello, I'm Hannah George, a dedicated Computer Science student at BMCC, driven by a deep passion for setting others up for
-                    success. My mission is to utilize my own experiences and knowledge to assist fellow students in making informed decisions
-                    and achieving their goals. I believe in showcasing as many educational resources, so you can make the most of your time at BMCC and unlock your full potential.</p>
-                <h3>Hannah George</h3>
-                <div class="icons">
-                    <a href="http://www.linkedin.com/in/hannah-george-775a17188" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin"></i></a>
-                    <a href="https://github.com/haneligeo99" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="creators-col">
-            <img src="{% static 'experientiallearning/images/mukhlisa.jpg' %}" alt="">
-            <div>
-                <p>Hey there! My name is Mukhlisa, and I am an BMCC alumni currently studying computer science at Wellesley College.
-                    BMCC offers tremendous opportunities for its students that I wish I had known early on and it's one of the biggest
-                    reasons I am working on this project geared to help make career readiness more accessible to everyone</p>
-                <h3>Mukhlisa Nematova</h3>
-                <div class="icons">
-                    <a href="https://www.linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin"></i></a>
-                    <a href="https://www.linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="mentors">
-    <h1>Meet Our Mentors</h1>
-    <p>We would like to express our sincere gratitude to Professor Azhar and Professor Younes for
-        their guidance and support throughout the development of this website.
-        Special acknowledgment to Sam and Benjamin</p>
-    <div class="mentor-row">
-      <div class="mentor-col">
-        <img src="{% static 'experientiallearning/images/mentor1.jpg' %}" alt="Mentor 1">
-        <h3>Dr. Mohammad Azhar</h3>
-        <p>Dr. Azhar is an Associate Professor of Computer Information Systems at CUNY BMCC.
-            His current research includes human-robot collaboration for assistive robotics,
-            cybersecurity education, and educational robotics. Dr. Azhar has been involved in organizing
-            and teaching numerous teacher training workshops for Educational Robotics programs, after-school
-            robotics clubs, and robotics competitions for students over a decade.</p>
-      </div>
-      <div class="mentor-col">
-        <img src="{% static 'experientiallearning/images/mentor2.jpg' %}" alt="Mentor 2">
-        <h3>Prof. Younes Benkarroum</h3>
-        <p>Professor Benkarroum is an Assistant Professor of Computer Information Systems at CUNY BMCC. His
-            research interests lie in the fields of computer vision and 3D reconstruction. His main research
-            incorporates a variety of aspects, including mathematics, computer science, and biology.</p>
+    <div class="el-about-split__media">
+      <p class="careers-muted el-about-video-label">Project overview (video)</p>
+      <div class="el-about-video">
+        <iframe
+          title="Career readiness project overview on Google Drive"
+          src="https://drive.google.com/file/d/1YOlliVXtp-UafxbhdgPio4wxRoJj1gCx/preview"
+          allow="autoplay; fullscreen"
+          loading="lazy"></iframe>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="careers-panel el-about-team" aria-labelledby="el-about-team-heading">
+  <h2 id="el-about-team-heading">Student team</h2>
+  <p class="careers-muted" style="margin-top: 0;">
+    This project was built by <strong>Gagne Cire Niang</strong>, <strong>Hannah George</strong>, and
+    <strong>Mukhlisa Nematova</strong>, with a shared goal of making career readiness easier to navigate at BMCC.
+  </p>
+
+  <div class="el-about-person-grid">
+    <article class="el-about-person">
+      <img
+        src="https://unavatar.io/linkedin/gagne-cire-niang-39907b279?size=256&amp;fallback={{ 'https://unavatar.io/github/Gagnecire?size=256'|urlencode }}"
+        alt="Portrait of Gagne Cire Niang"
+        width="120"
+        height="120"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='{{ el_avatar_gagne|escapejs }}';">
+      <h3>Gagne Cire Niang</h3>
+      <p>
+        Computer Science student at BMCC. I share practical advice and tools so you can move through your career journey
+        with more confidence.
+      </p>
+      <div class="el-about-social">
+        <a href="https://www.linkedin.com/in/gagne-cire-niang-39907b279" target="_blank" rel="noopener noreferrer" aria-label="Gagne on LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/Gagnecire" target="_blank" rel="noopener noreferrer" aria-label="Gagne on GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+      </div>
+    </article>
+
+    <article class="el-about-person">
+      <img
+        src="https://unavatar.io/linkedin/hannah-george-775a17188?size=256&amp;fallback={{ 'https://unavatar.io/github/haneligeo99?size=256'|urlencode }}"
+        alt="Portrait of Hannah George"
+        width="120"
+        height="120"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='{{ el_avatar_hannah|escapejs }}';">
+      <h3>Hannah George</h3>
+      <p>
+        Computer Science student at BMCC, focused on surfacing educational resources so you can get the most from your time here.
+      </p>
+      <div class="el-about-social">
+        <a href="https://www.linkedin.com/in/hannah-george-775a17188" target="_blank" rel="noopener noreferrer" aria-label="Hannah on LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/haneligeo99" target="_blank" rel="noopener noreferrer" aria-label="Hannah on GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>
+      </div>
+    </article>
+
+    <article class="el-about-person">
+      <img
+        src="https://ui-avatars.com/api/?name=Mukhlisa+Nematova&amp;size=256&amp;background=0d47a1&amp;color=ffffff&amp;bold=true"
+        alt="Portrait of Mukhlisa Nematova"
+        width="120"
+        height="120"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='{{ el_avatar_mukhlisa|escapejs }}';">
+      <h3>Mukhlisa Nematova</h3>
+      <p>
+        BMCC alum now studying computer science at Wellesley College. I care about making the kinds of opportunities I wish I had
+        known about earlier visible to everyone.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="careers-panel el-about-mentors" aria-labelledby="el-about-mentors-heading">
+  <h2 id="el-about-mentors-heading">Faculty mentors</h2>
+  <p class="careers-muted" style="margin-top: 0;">
+    Thank you to <strong>Professor Azhar</strong> and <strong>Professor Younes Benkarroum</strong> for guidance on this site.
+    Special thanks to Sam and Benjamin.
+  </p>
+
+  <div class="el-about-mentor-grid">
+    <article class="el-about-mentor">
+      <img
+        src="https://bmccprodstroac.blob.core.windows.net/uploads/2018/06/DrAzharProfilePictureBlackboard.png"
+        alt="Dr. Mohammad Azhar"
+        width="80"
+        height="80"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='{{ el_avatar_azhar|escapejs }}';">
+      <h3>Dr. Mohammad Azhar</h3>
+      <p>
+        Associate Professor of Computer Information Systems at BMCC. Research includes human–robot collaboration,
+        cybersecurity education, and educational robotics, with extensive robotics outreach for students and teachers.
+      </p>
+    </article>
+    <article class="el-about-mentor">
+      <img
+        src="https://ui-avatars.com/api/?name=Younes+Benkarroum&amp;size=256&amp;background=1e3a5f&amp;color=ffffff&amp;bold=true"
+        alt="Professor Younes Benkarroum"
+        width="80"
+        height="80"
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='{{ el_avatar_younes|escapejs }}';">
+      <h3>Prof. Younes Benkarroum</h3>
+      <p>
+        Assistant Professor of Computer Information Systems at BMCC. Research spans computer vision, 3D reconstruction,
+        and interdisciplinary work across mathematics, computer science, and biology.
+      </p>
+    </article>
+  </div>
 </section>
 {% endblock %}

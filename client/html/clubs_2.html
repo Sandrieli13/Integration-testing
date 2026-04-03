@@ -438,6 +438,118 @@
     margin: 0;
   }
 
+  .clubs-hub__flash {
+    margin: 0 0 1.25rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--ch-radius);
+    background: var(--ch-card);
+    border: 1px solid var(--ch-line);
+    box-shadow: 0 2px 12px rgba(10, 22, 40, 0.05);
+  }
+
+  .clubs-hub__flash-msg {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ch-ink);
+  }
+
+  .clubs-hub__flash-msg.success {
+    color: var(--ch-ok);
+    font-weight: 600;
+  }
+
+  .clubs-hub__flash-msg.info {
+    color: var(--ch-blue);
+  }
+
+  .clubs-hub__bmcc-panel {
+    margin-bottom: 1.5rem;
+    padding: 1.15rem 1.25rem;
+    background: linear-gradient(135deg, rgba(13, 71, 161, 0.06) 0%, rgba(255, 255, 255, 0.95) 55%);
+    border: 1px solid rgba(13, 71, 161, 0.18);
+    border-radius: var(--ch-radius);
+    box-shadow: 0 4px 20px rgba(10, 22, 40, 0.05);
+  }
+
+  .clubs-hub__bmcc-title {
+    margin: 0 0 0.65rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ch-navy);
+  }
+
+  .clubs-hub__bmcc-intro {
+    margin: 0 0 0.75rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--ch-ink);
+  }
+
+  .clubs-hub__bmcc-list {
+    margin: 0 0 0.85rem;
+    padding-left: 1.2rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ch-ink);
+  }
+
+  .clubs-hub__bmcc-links {
+    list-style: none;
+    margin: 0 0 0.85rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 1rem;
+  }
+
+  .clubs-hub__bmcc-links a {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ch-blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(13, 71, 161, 0.35);
+  }
+
+  .clubs-hub__bmcc-links a:hover {
+    border-bottom-color: var(--ch-blue);
+  }
+
+  .clubs-hub__osa {
+    margin: 0 0 0.75rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--ch-muted);
+  }
+
+  .clubs-hub__osa strong {
+    color: var(--ch-navy);
+  }
+
+  .clubs-hub__bmcc-meta {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--ch-muted);
+    line-height: 1.45;
+  }
+
+  .clubs-hub__bmcc-warn {
+    margin: 0.5rem 0 0;
+    font-size: 0.78rem;
+    color: #b06000;
+  }
+
+  .clubs-hub__bmcc-hint {
+    margin: 0.65rem 0 0;
+    font-size: 0.78rem;
+    color: var(--ch-muted);
+  }
+
+  .clubs-hub__bmcc-hint code {
+    font-size: 0.72rem;
+    word-break: break-all;
+  }
+
   @media (max-width: 520px) {
     .clubs-hub__cat-meta {
       width: 100%;
@@ -465,6 +577,65 @@
       {% endif %}
     </div>
   </header>
+
+  {% if messages %}
+    <div class="clubs-hub__flash" role="status">
+      {% for message in messages %}
+        <p class="clubs-hub__flash-msg {{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <section class="clubs-hub__bmcc-panel" aria-labelledby="bmcc-clubs-info-heading">
+    <h2 id="bmcc-clubs-info-heading" class="clubs-hub__bmcc-title">About BMCC clubs &amp; OSA</h2>
+    {% if bmcc_info and bmcc_info.intro_text %}
+      <p class="clubs-hub__bmcc-intro">{{ bmcc_info.intro_text }}</p>
+      {% if bmcc_info.highlights %}
+        <ul class="clubs-hub__bmcc-list">
+          {% for line in bmcc_info.highlights %}
+            <li>{{ line }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% if bmcc_info.extra_notice %}
+        <p class="clubs-hub__bmcc-intro" style="font-size:0.86rem;color:var(--ch-muted);">{{ bmcc_info.extra_notice }}</p>
+      {% endif %}
+      {% if bmcc_info.osa_email or bmcc_info.osa_phone or bmcc_info.osa_hours %}
+        <p class="clubs-hub__osa">
+          <strong>Office of Student Activities</strong>
+          {% if bmcc_info.osa_email %} · <a href="mailto:{{ bmcc_info.osa_email }}">{{ bmcc_info.osa_email }}</a>{% endif %}
+          {% if bmcc_info.osa_phone %} · {{ bmcc_info.osa_phone }}{% endif %}
+          {% if bmcc_info.osa_hours %}<br><span style="font-weight:500;">{{ bmcc_info.osa_hours }}</span>{% endif %}
+        </p>
+      {% endif %}
+      {% if bmcc_info.resource_links %}
+        <ul class="clubs-hub__bmcc-links">
+          {% for link in bmcc_info.resource_links %}
+            <li><a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.label }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      <p class="clubs-hub__bmcc-meta">
+        Summarized from BMCC’s public student activities pages{% if bmcc_info.fetched_at %} · snapshot {{ bmcc_info.fetched_at|date:"M j, Y" }}{% endif %}.
+        Always confirm deadlines and meeting times with your club or OSA.
+      </p>
+      {% if bmcc_info.fetch_error %}
+        <p class="clubs-hub__bmcc-warn">Note: {{ bmcc_info.fetch_error|truncatechars:160 }}</p>
+      {% endif %}
+    {% else %}
+      <p class="clubs-hub__bmcc-intro">
+        BMCC publishes official club hours, registration dates, the campus directory, and Office of Student Activities (OSA) contact information on its website. Use this directory to find a club, then check with the club or OSA for the latest schedule.
+      </p>
+      <ul class="clubs-hub__bmcc-links">
+        <li><a href="https://www.bmcc.cuny.edu/student-affairs/student-activities/clubs/" target="_blank" rel="noopener noreferrer">BMCC Student Clubs</a></li>
+        <li><a href="https://www.bmcc.cuny.edu/student-affairs/student-activities/clubs/how-to-join-a-club/" target="_blank" rel="noopener noreferrer">How to join a club</a></li>
+        <li><a href="https://www.bmcc.cuny.edu/student-affairs/student-activities/clubs/start-a-club/" target="_blank" rel="noopener noreferrer">Start a club</a></li>
+      </ul>
+      {% if user.is_staff %}
+        <p class="clubs-hub__bmcc-hint">To pull BMCC text and links into this panel automatically, run <code>python manage.py refresh_bmcc_clubs_info</code> on the server.</p>
+      {% endif %}
+    {% endif %}
+  </section>
 
   {% if not clubs %}
     <div class="clubs-hub__empty">
@@ -547,15 +718,21 @@
                   <a class="clubs-hub__btn clubs-hub__btn--ghost" href="{% url 'edit_club' club.id %}">Edit</a>
                 {% endif %}
                 {% if user.is_authenticated %}
-                  <button type="button" class="clubs-hub__btn clubs-hub__btn--primary" id="join-button-{{ club.id }}" onclick="joinClub({{ club.id }})">
-                    {% if club.id in user_club_ids %}Leave club{% else %}Join club{% endif %}
-                  </button>
+                  <form method="post" action="{% url 'join_club' club.id %}" class="clubs-hub__join-form" data-club-id="{{ club.id }}" style="display:inline;margin:0;">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit" class="clubs-hub__btn clubs-hub__btn--primary" id="join-button-{{ club.id }}">
+                      {% if club.id in user_club_ids %}Leave club{% else %}Join club{% endif %}
+                    </button>
+                  </form>
                   {% if user.is_staff %}
                     <form class="club-delete-form" method="post" action="{% url 'delete_club' club.id %}" onsubmit="return confirm('Delete {{ club.name|escapejs }}?');">
                       {% csrf_token %}
                       <button type="submit" class="clubs-hub__btn clubs-hub__btn--danger">Delete club</button>
                     </form>
                   {% endif %}
+                {% else %}
+                  <a class="clubs-hub__btn clubs-hub__btn--primary" href="{% url 'signin' %}?next={{ request.get_full_path|urlencode }}">Sign in to join</a>
                 {% endif %}
               </div>
             </div>
@@ -580,30 +757,33 @@
 {% block extra_js %}
 <script>
 (function () {
-  var joinUrlBase = "{% url 'join_club' club_id=999999 %}";
-  function joinClub(clubId) {
-    var url = joinUrlBase.replace('999999', String(clubId));
+  $(document).on('submit', '.clubs-hub__join-form', function (e) {
+    e.preventDefault();
+    var $form = $(this);
+    var clubId = String($form.data('club-id'));
     $.ajax({
-      url: url,
+      url: $form.attr('action'),
       type: 'POST',
       dataType: 'json',
-      data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
-      headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+      data: $form.serialize(),
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': $form.find('[name=csrfmiddlewaretoken]').val()
+      },
       success: function (data) {
-        var joinButton = $('#join-button-' + clubId);
-        var membersCountElement = $('#members-count-' + clubId);
+        var $btn = $('#join-button-' + clubId);
+        var $count = $('#members-count-' + clubId);
         if (typeof data.members_count !== 'undefined') {
-          membersCountElement.text(data.members_count);
+          $count.text(data.members_count);
         }
-        joinButton.text(data.joined ? 'Leave club' : 'Join club');
+        $btn.text(data.joined ? 'Leave club' : 'Join club');
       },
       error: function (xhr) {
         var msg = (xhr.responseJSON && xhr.responseJSON.detail) || xhr.statusText || 'Could not update membership.';
         window.alert(msg);
       }
     });
-  }
-  window.joinClub = joinClub;
+  });
 })();
 </script>
 {% endblock %}

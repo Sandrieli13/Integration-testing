@@ -46,6 +46,19 @@ COURSES: list[str] = [
     "MAT 206 – Precalculus",
     "MAT 301 – Statistics for STEM",
     "ENG 101 – Composition",
+    # Data Science (A.S.) — DSM-AS (Mathematics Department; catalog year 2024–25+)
+    "MAT 200 – Introduction to Discrete Mathematics",
+    "MAT 301 – Analytic Geometry and Calculus I",
+    "MAT 302 – Analytic Geometry and Calculus II",
+    "MAT 409 – Probability and Statistics for Data Science",
+    "MAT 415 – Linear Algebra for Data Science",
+    "MAT 420 – Introduction to Machine Learning",
+    "CSC 103 – Introduction to Computing",
+    "CSC 111 – Introduction to Programming",
+    "CSC 203 – Python Programming",
+    "CSC 211 – Advanced Programming Techniques",
+    "CIS 395 – Database Systems I",
+    "CIS 490 – Introduction to Data Science",
 ]
 
 # job_title capped at 100 chars in DB
@@ -147,6 +160,43 @@ MAJORS: list[dict] = [
         ),
         "jobs": ("Web Developer", "UI/UX Designer", "Software Developer"),
     },
+    {
+        "major": "Data Science (A.S.)",
+        "description": (
+            "Associate in Science (A.S.) in Data Science (DSM-AS) sponsored by the Mathematics Department. "
+            "Combines discrete mathematics, calculus, probability and statistics, linear algebra, and electives in "
+            "machine learning, Python, databases, and applied data science—plus CUNY Pathways common core. "
+            "Prepares students for transfer to senior colleges (e.g., John Jay, City Tech pathways) and data-focused careers. "
+            "Official maps and requirements: bmcc.cuny.edu/academics/departments/math/data-science/"
+        ),
+        "skills": (
+            "Python",
+            "SQL",
+            "Data analysis",
+            "Machine learning intro",
+            "Communication",
+            "Technical writing",
+            "Git / Version control",
+        ),
+        "courses": (
+            "MAT 200 – Introduction to Discrete Mathematics",
+            "MAT 301 – Analytic Geometry and Calculus I",
+            "MAT 302 – Analytic Geometry and Calculus II",
+            "MAT 409 – Probability and Statistics for Data Science",
+            "MAT 415 – Linear Algebra for Data Science",
+            "MAT 420 – Introduction to Machine Learning",
+            "CSC 203 – Python Programming",
+            "CSC 211 – Advanced Programming Techniques",
+            "CIS 395 – Database Systems I",
+            "CIS 490 – Introduction to Data Science",
+        ),
+        "jobs": (
+            "Data Analyst",
+            "Machine Learning Engineering Assistant",
+            "Application Support Analyst",
+            "Software Developer",
+        ),
+    },
 ]
 
 # Valid https URLs for URLField
@@ -192,5 +242,28 @@ INTERNS: list[dict] = [
         "link": "https://github.com/",
         "skills": ("Git / Version control", "Technical writing", "Python", "Communication"),
         "courses": ("CSC 220 – Computer Science II", "ENG 101 – Composition"),
+    },
+    {
+        "title": "BMCC Math — data science project studio",
+        "description": "Semester-long notebook and dashboard work aligned with MAT/CSC data science electives; present findings to peers.",
+        "link": "https://www.bmcc.cuny.edu/academics/departments/math/data-science/",
+        "skills": ("Python", "Data analysis", "SQL", "Machine learning intro", "Communication"),
+        "courses": (
+            "MAT 409 – Probability and Statistics for Data Science",
+            "CSC 203 – Python Programming",
+            "CIS 490 – Introduction to Data Science",
+        ),
+    },
+    {
+        "title": "Applied research — tabular ML & reporting",
+        "description": "Support a faculty or nonprofit project with cleaned datasets, baseline models, and short summaries for stakeholders.",
+        "link": "https://www.bmcc.cuny.edu/academics/departments/math/data-science/",
+        "skills": ("Python", "Machine learning intro", "Data analysis", "Technical writing", "SQL"),
+        "courses": (
+            "MAT 420 – Introduction to Machine Learning",
+            "MAT 409 – Probability and Statistics for Data Science",
+            "MAT 415 – Linear Algebra for Data Science",
+            "CIS 490 – Introduction to Data Science",
+        ),
     },
 ]

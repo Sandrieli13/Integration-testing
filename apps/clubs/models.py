@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 class Club(models.Model):
     CATEGORY_CHOICES = (
@@ -28,8 +29,51 @@ class Club(models.Model):
         return self.name
     
 class Membership(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    """Persists which users belong to which clubs (self-serve join or admin-assigned)."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="club_memberships",
+    )
+    club = models.ForeignKey(
+        Club,
+        on_delete=models.CASCADE,
+        related_name="memberships",
+    )
+    joined_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=("user", "club"),
+                name="clubs_membership_user_club_uniq",
+            ),
+        ]
 
     def __str__(self):
-        return f'{self.user.username} - {self.club.name}'
+        return f"{self.user_id} · {self.club.name}"
+
+
+class BmccClubsInfo(models.Model):
+    """Cached snapshot of public BMCC student-clubs / OSA web content (see refresh_bmcc_clubs_info)."""
+
+    intro_text = models.TextField(blank=True)
+    highlights = models.JSONField(default=list)
+    resource_links = models.JSONField(default=list)
+    osa_email = models.CharField(max_length=254, blank=True)
+    osa_phone = models.CharField(max_length=80, blank=True)
+    osa_hours = models.CharField(max_length=500, blank=True)
+    extra_notice = models.TextField(blank=True)
+    raw_plain_text = models.TextField(blank=True)
+    source_url = models.URLField(max_length=500, blank=True)
+    fetched_at = models.DateTimeField(null=True, blank=True)
+    fetch_error = models.TextField(blank=True)
+
+    class Meta:
+        verbose_name = "BMCC clubs page snapshot"
+        verbose_name_plural = "BMCC clubs page snapshots"
+
+    def __str__(self) -> str:
+        when = self.fetched_at.strftime("%Y-%m-%d %H:%M") if self.fetched_at else "never"
+        return f"BMCC clubs snapshot ({when})"

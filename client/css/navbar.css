@@ -1,18 +1,18 @@
 :root {
     /* Must cover real header (logo + large home link); was 64px and clipped first line of page */
     --navbar-height: 72px;
-    /* Keep 0 so first content (e.g. hero banner) sits flush under the fixed bar */
     --site-nav-below-gap: 0px;
-    /* Single source of truth for “start content below fixed nav” (safe area + bar + gap) */
     --site-nav-offset-total: calc(
         var(--navbar-height) + env(safe-area-inset-top, 0px) + var(--site-nav-below-gap)
     );
-    /* Space so Watson Assistant / browser UI does not cover last lines */
     --page-bottom-inset: 6.5rem;
+    /* Shared tokens (careers hub, app-shell) */
     --navbar-bg-color: rgba(0, 65, 150, 1);
-    --navbar-text-color: hsl(0, 0%, 85%);
-    --navbar-text-color-focus: white;
-    --navbar-bg-contrast: rgba(255, 102, 0, 1);
+    --navbar-text-color: hsl(0, 0%, 88%);
+    --navbar-text-color-focus: #ffffff;
+    --navbar-bg-contrast: #e85d04;
+    --navbar-art-gold: rgba(212, 175, 55, 0.55);
+    --navbar-art-font: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 * {
@@ -75,12 +75,15 @@ body > .content#page-content {
 #navbar {
     position: fixed;
     height: var(--navbar-height);
-    background-color: var(--navbar-bg-color);
     left: 0;
     right: 0;
     top: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     z-index: 99999;
+    font-family: var(--navbar-art-font);
+    background: linear-gradient(168deg, #021f4a 0%, #003978 38%, #004a9e 100%);
+    box-shadow:
+        0 1px 0 var(--navbar-art-gold),
+        0 12px 40px rgba(0, 12, 40, 0.45);
 }
 
 .navbar-container {
@@ -88,6 +91,11 @@ body > .content#page-content {
     justify-content: space-between;
     height: 100%;
     align-items: center;
+    gap: 0.5rem;
+}
+
+.home-link__wordmark {
+    display: inline;
 }
 
 .home-link,
@@ -96,11 +104,12 @@ body > .content#page-content {
     transition: color 0.2s ease-in-out;
     text-decoration: none;
     display: flex;
-    font-weight: 400;
+    font-weight: 500;
     font-size: x-large;
     align-items: center;
     transition: background-color 0.2s ease-in-out,
-                color 0.2s ease-in-out;
+                color 0.2s ease-in-out,
+                box-shadow 0.2s ease;
 }
 
 .home-link:focus,
@@ -117,7 +126,8 @@ body > .content#page-content {
 .navbar-link:focus,
 .navbar-link:hover {
     color: var(--navbar-text-color-focus);
-    background-color: var(--navbar-bg-contrast);
+    background-color: rgba(232, 93, 4, 0.92);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 .navbar-logo {
@@ -261,8 +271,11 @@ body > .content#page-content {
     left: 0;
     right: 0;
     margin: 1.4rem;
-    border-radius: 5px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: 14px;
+    box-shadow: 0 24px 48px rgba(0, 8, 32, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    background: linear-gradient(165deg, rgba(0, 50, 120, 0.97) 0%, rgba(0, 36, 86, 0.98) 100%) !important;
 }
 
 .attached .navbar-links {
@@ -279,31 +292,197 @@ body > .content#page-content {
 .content {
     align-items: stretch;
 }
-@media screen and (min-width: 3000px) {
+/* —— Desktop: grouped dropdown nav (no cramped scroll strip) —— */
+.navbar-desk {
+    display: none;
+}
+
+@media screen and (min-width: 1024px) {
     .navbar-toggle {
-        display: none;
+        display: none !important;
     }
-    
+
+    /* Hide the mobile sheet entirely on large screens */
     #navbar #navbar-menu,
     #navbar.opened #navbar-menu {
-        visibility: visible;
-        opacity: 1;
-        position: static;
-        display: block;
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .navbar-container.container {
+        width: 100%;
+        max-width: 100%;
+        padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+        padding-left: max(1rem, env(safe-area-inset-left, 0px));
+    }
+
+    .home-link {
+        font-size: 1.28rem;
+        flex-shrink: 0;
+        letter-spacing: -0.02em;
+    }
+
+    .navbar-desk {
+        display: flex;
+        flex: 1 1 auto;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        min-width: 0;
         height: 100%;
     }
 
-    #navbar .navbar-links,
-    #navbar.opened .navbar-links {
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-        position: static;
-        flex-direction: row;
-        list-style-type: none;
-        max-height: max-content;
-        width: 100%;
-        height: 100%;
+    .navbar-desk__clusters {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 0.15rem 0.35rem;
+        row-gap: 0.25rem;
+    }
+
+    .navbar-art-dd {
+        position: relative;
+    }
+
+    .navbar-art-dd__tab {
+        cursor: pointer;
+        list-style: none;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+        padding: 0.55rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        transition:
+            color 0.2s ease,
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .navbar-art-dd__tab::-webkit-details-marker {
+        display: none;
+    }
+
+    .navbar-art-dd:hover .navbar-art-dd__tab,
+    .navbar-art-dd__tab:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(212, 175, 55, 0.45);
+    }
+
+    .navbar-art-dd[open] .navbar-art-dd__tab {
+        color: #fff;
+        background: rgba(232, 93, 4, 0.25);
+        border-color: rgba(232, 93, 4, 0.65);
+        box-shadow: 0 0 0 1px rgba(232, 93, 4, 0.35);
+    }
+
+    .navbar-art-dd__panel {
+        position: absolute;
+        z-index: 100000;
+        top: calc(100% + 0.55rem);
+        left: 50%;
+        transform: translateX(-50%) translateY(6px);
+        min-width: 15.5rem;
+        max-width: min(18rem, 92vw);
+        padding: 0.55rem 0;
+        border-radius: 14px;
+        background: rgba(8, 28, 58, 0.82);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow:
+            0 28px 56px rgba(0, 8, 32, 0.55),
+            0 0 0 1px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.22s ease,
+            visibility 0.22s ease,
+            transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .navbar-art-dd[open] .navbar-art-dd__panel {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    /* Edge-align outer flyouts so panels don’t clip on mid-width desktops */
+    .navbar-desk__clusters .navbar-art-dd:nth-child(1) .navbar-art-dd__panel {
+        left: 0;
+        right: auto;
+        transform: translateX(0) translateY(6px);
+    }
+
+    .navbar-desk__clusters .navbar-art-dd:nth-child(1)[open] .navbar-art-dd__panel {
+        transform: translateX(0) translateY(0);
+    }
+
+    .navbar-desk__clusters .navbar-art-dd:nth-child(3) .navbar-art-dd__panel {
+        left: auto;
+        right: 0;
+        transform: translateX(0) translateY(6px);
+    }
+
+    .navbar-desk__clusters .navbar-art-dd:nth-child(3)[open] .navbar-art-dd__panel {
+        transform: translateX(0) translateY(0);
+    }
+
+    .navbar-art-dd__panel a {
+        display: block;
+        padding: 0.55rem 1.15rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.88);
+        text-decoration: none;
+        border-left: 3px solid transparent;
+        transition:
+            background 0.15s ease,
+            color 0.15s ease,
+            border-color 0.15s ease,
+            padding-left 0.15s ease;
+    }
+
+    .navbar-art-dd__panel a:hover,
+    .navbar-art-dd__panel a:focus-visible {
+        background: rgba(232, 93, 4, 0.18);
+        color: #fff;
+        border-left-color: var(--navbar-bg-contrast);
+        padding-left: 1.25rem;
+        outline: none;
+    }
+
+    .navbar-desk__account {
+        flex-shrink: 0;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #0a1628;
+        background: linear-gradient(135deg, #ffb347 0%, var(--navbar-bg-contrast) 100%);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        box-shadow: 0 4px 16px rgba(232, 93, 4, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+
+    .navbar-desk__account:hover,
+    .navbar-desk__account:focus-visible {
+        filter: brightness(1.06);
+        box-shadow: 0 6px 22px rgba(232, 93, 4, 0.45);
+        transform: translateY(-1px);
+        outline: none;
     }
 }
 
