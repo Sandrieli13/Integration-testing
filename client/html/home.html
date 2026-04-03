@@ -108,17 +108,17 @@
               <a target="_blank" rel="noopener noreferrer" href="https://github.com/lucasstranger1" aria-label="GitHub"><i class="fab fa-github"></i></a>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/lucas-yao001" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
+            {# Mustafa: use <img src> for GitHub avatar (no dev-avatar fetch). fetch() to unavatar often fails CORS in production, so PA showed a broken image. #}
             <img
-              class="profile-picture dev-avatar"
-              src="{{ home_avatar_mustafa }}"
+              class="profile-picture"
+              src="https://unavatar.io/github/MustafaDon777?size=256"
               alt="Mustafa Donmez"
               width="120"
               height="120"
               loading="lazy"
               decoding="async"
-              data-li="https://unavatar.io/linkedin/mu-don?size=256"
-              data-gh="https://unavatar.io/github/MustafaDon777?size=256"
-              data-svg="{{ home_avatar_mustafa }}">
+              referrerpolicy="no-referrer"
+              onerror="this.onerror=null;this.src='{{ home_avatar_mustafa|escapejs }}';">
             <div class="footertext">Mustafa Donmez
               <a target="_blank" rel="noopener noreferrer" href="https://github.com/MustafaDon777" aria-label="GitHub"><i class="fab fa-github"></i></a>
               <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/mu-don/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
