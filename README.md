@@ -2,7 +2,7 @@
 
 Django project for **BMCC student tools**: course planning, clubs, mentors, career readiness (Careers + Experiential Learning hub), campus data analysis, and pathway electives.
 
-**Active development branch:** `LucasYao_this_branch_for_myself`
+**Active development branch:** `BMCConnect_Public`
 
 Upstream repo: [Sandrieli13/Integration-testing](https://github.com/Sandrieli13/Integration-testing).
 BMCCONNECT Website: https://lucasyao111.pythonanywhere.com/
