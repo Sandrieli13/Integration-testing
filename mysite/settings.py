@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from typing import Optional
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -200,6 +201,27 @@ BLS_API_KEY = os.environ.get('BLS_API_KEY', '').strip()
 # Optional 7-digit CBSA code for metro OEWS (e.g. New York-Newark-Jersey City ≈ 0356200). Empty = national.
 BLS_OEWS_METRO_AREA_CODE = os.environ.get('BLS_OEWS_METRO_AREA_CODE', '').strip()
 BLS_TECH_MARKET_CACHE_HOURS = int(os.environ.get('BLS_TECH_MARKET_CACHE_HOURS', '24'))
+
+
+def _parse_bls_oews_prefer_year() -> Optional[int]:
+    """Prefer this OEWS year when BLS returns it; else use latest in the response. Set to latest only: BLS_OEWS_PREFER_YEAR=latest"""
+    raw = os.environ.get('BLS_OEWS_PREFER_YEAR', '2025').strip().lower()
+    if raw in ('', '0', 'latest', 'max', 'none', 'any'):
+        return None
+    try:
+        y = int(raw)
+        return y if 1999 < y < 2100 else None
+    except ValueError:
+        return None
+
+
+# Default 2025 so new OEWS vintages are preferred when the API includes them.
+BLS_OEWS_PREFER_YEAR = _parse_bls_oews_prefer_year()
+
+# If true, ignore data/tech_career_stats_override.json (use BLS or static only).
+TECH_CAREER_STATS_OVERRIDE_DISABLE = os.environ.get(
+    'TECH_CAREER_STATS_OVERRIDE_DISABLE', ''
+).lower() in ('1', 'true', 'yes')
 
 # Serve /static/ in production (DEBUG=False) without relying only on PythonAnywhere nginx mapping.
 if not DEBUG and _USE_WHITENOISE:

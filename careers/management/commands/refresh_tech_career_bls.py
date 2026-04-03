@@ -33,12 +33,14 @@ class Command(BaseCommand):
         metro = getattr(settings, "BLS_OEWS_METRO_AREA_CODE", "") or ""
         metro_code = metro if len(metro) == 7 and metro.isdigit() else None
         cache_hours = int(getattr(settings, "BLS_TECH_MARKET_CACHE_HOURS", 24))
+        prefer_year = getattr(settings, "BLS_OEWS_PREFER_YEAR", None)
 
         result = load_or_fetch_tech_oews(
             key,
             base,
             cache_hours=cache_hours,
             metro_area_code=metro_code,
+            prefer_year=prefer_year,
             force_refresh=True,
         )
         if result is None:

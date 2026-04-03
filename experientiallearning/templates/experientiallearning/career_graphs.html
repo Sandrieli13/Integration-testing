@@ -14,10 +14,12 @@
       <p class="bmc-page-hero__eyebrow">Career readiness</p>
       <h1>Technology career statistics</h1>
       <p class="bmc-page-hero__lede">
-        {% if chart_meta.live_oews %}
-          Openings and median hourly pay from <strong>U.S. BLS OEWS</strong> (official survey data). Language chart remains survey-style for planning—not hiring guarantees.
+        {% if chart_meta.from_file_override %}
+          Openings and wages from your <strong>local stats file</strong> (<code>data/tech_career_stats_override.json</code>)—use for any vetted source (e.g. OEWS 2025 tables). Language chart is still survey-style.
+        {% elif chart_meta.live_oews %}
+          Openings and median hourly pay from <strong>U.S. BLS OEWS</strong> (API). Language chart remains survey-style for planning—not hiring guarantees.
         {% else %}
-          Illustrative tech openings and wages plus survey-style language shares for planning (not hiring guarantees). Set <code>BLS_API_KEY</code> for live OEWS.
+          Illustrative tech openings and wages plus survey-style language shares for planning (not hiring guarantees). Set <code>BLS_API_KEY</code> or add an override JSON for live figures.
         {% endif %}
         {{ chart_meta.as_of }}
       </p>
@@ -101,7 +103,7 @@ window.addEventListener('load', function () {
   var chartOpenings = new CanvasJS.Chart("chartOpenings", {
     animationEnabled: true,
     exportEnabled: true,
-    title: { text: "{% if chart_meta.live_oews %}OEWS employment (selected occupations){% else %}Estimated openings (selected occupations){% endif %}", fontFamily: "Geneva", fontWeight: "bold" },
+    title: { text: "{% if chart_meta.from_file_override %}Employment (override file){% elif chart_meta.live_oews %}OEWS employment (selected occupations){% else %}Estimated openings (selected occupations){% endif %}", fontFamily: "Geneva", fontWeight: "bold" },
     subtitles: [{ text: "{{ chart_meta.openings_note|escapejs }}", fontFamily: "Geneva" }],
     data: [{
       type: "pie",
@@ -117,7 +119,7 @@ window.addEventListener('load', function () {
   var chartWages = new CanvasJS.Chart("chartWages", {
     animationEnabled: true,
     theme: "light2",
-    title: { text: "Median hourly pay (selected occupations)", fontFamily: "Geneva", fontWeight: "bold" },
+    title: { text: "{% if chart_meta.from_file_override %}Median hourly pay (override file){% else %}Median hourly pay (selected occupations){% endif %}", fontFamily: "Geneva", fontWeight: "bold" },
     subtitles: [{ text: "{{ chart_meta.salary_note|escapejs }}", fontFamily: "Geneva" }],
     axisY: { title: "$/hour (USD)", includeZero: true, prefix: "$" },
     data: [{

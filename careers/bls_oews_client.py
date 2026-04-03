@@ -109,12 +109,29 @@ def _post_bls(series_ids: list[str], api_key: str, timeout: int = 45) -> dict[st
     return json.loads(raw)
 
 
-def _latest_value(series_block: dict[str, Any]) -> tuple[str | None, float | None]:
-    """Most recent OEWS annual point from a BLS series object."""
+def _latest_value(
+    series_block: dict[str, Any],
+    prefer_year: int | None = None,
+) -> tuple[str | None, float | None]:
+    """Pick OEWS point for prefer_year if present, else latest year in the series."""
     rows = series_block.get("data") or []
     if not rows:
         return None, None
-    # BLS usually returns newest first; still pick max year
+
+    if prefer_year is not None:
+        want = str(prefer_year)
+        for row in rows:
+            if str(row.get("year", "")) != want:
+                continue
+            v_raw = row.get("value")
+            if v_raw is None:
+                continue
+            try:
+                v = float(str(v_raw).replace(",", ""))
+            except ValueError:
+                continue
+            return want, v
+
     best_year: str | None = None
     best_val: float | None = None
     for row in rows:
@@ -136,6 +153,7 @@ def fetch_tech_oews_live(
     api_key: str,
     *,
     metro_area_code: str | None = None,
+    prefer_year: int | None = None,
 ) -> tuple[list[dict], list[dict], str, str] | None:
     """
     Returns (openings_points, salary_points, oews_year, geo_note) in CanvasJS shape,
@@ -167,8 +185,8 @@ def fetch_tech_oews_live(
     for label, occ6 in TECH_OCCUPATIONS:
         sid_e = f"{prefix}{occ6}01"
         sid_w = f"{prefix}{occ6}08"
-        ye, ve = _latest_value(by_id.get(sid_e) or {})
-        yw, vw = _latest_value(by_id.get(sid_w) or {})
+        ye, ve = _latest_value(by_id.get(sid_e) or {}, prefer_year)
+        yw, vw = _latest_value(by_id.get(sid_w) or {}, prefer_year)
         if ve is None or vw is None:
             return None
         openings.append({"label": label, "y": int(round(ve))})
@@ -183,6 +201,9 @@ def fetch_tech_oews_live(
         geo = f"Metropolitan area CBSA {metro_area_code} (BLS OEWS)"
     else:
         geo = "United States, national (BLS OEWS)"
+
+    if prefer_year is not None and oews_year != str(prefer_year):
+        geo += f" · Requested {prefer_year}; BLS API returned latest available ({oews_year})."
 
     return openings, salary, oews_year, geo
 
@@ -203,6 +224,7 @@ def load_or_fetch_tech_oews(
     *,
     cache_hours: int = 24,
     metro_area_code: str | None = None,
+    prefer_year: int | None = None,
     force_refresh: bool = False,
 ) -> tuple[list[dict], list[dict], str, str] | None:
     path = _cache_path(base_dir)
@@ -210,21 +232,33 @@ def load_or_fetch_tech_oews(
 
     if not force_refresh and _cache_valid(path, ttl):
         cached = _load_cache(path)
-        if cached and cached.get("version") == 1:
+        if cached and cached.get("version") == 2:
             try:
-                return (
-                    cached["openings"],
-                    cached["salary"],
-                    str(cached["oews_year"]),
-                    str(cached["geo_note"]),
-                )
+                metro_ok = cached.get("metro_area_code", "") == (metro_area_code or "")
+                year_ok = cached.get("prefer_year") == prefer_year
+                if metro_ok and year_ok:
+                    return (
+                        cached["openings"],
+                        cached["salary"],
+                        str(cached["oews_year"]),
+                        str(cached["geo_note"]),
+                    )
             except (KeyError, TypeError):
                 pass
 
-    result = fetch_tech_oews_live(api_key, metro_area_code=metro_area_code)
+    result = fetch_tech_oews_live(
+        api_key,
+        metro_area_code=metro_area_code,
+        prefer_year=prefer_year,
+    )
     if result is None:
         stale = _load_cache(path)
-        if stale and stale.get("version") == 1:
+        if (
+            stale
+            and stale.get("version") == 2
+            and stale.get("prefer_year") == prefer_year
+            and stale.get("metro_area_code", "") == (metro_area_code or "")
+        ):
             try:
                 return (
                     stale["openings"],
@@ -240,13 +274,14 @@ def load_or_fetch_tech_oews(
     _save_cache(
         path,
         {
-            "version": 1,
+            "version": 2,
             "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "openings": openings,
             "salary": salary,
             "oews_year": oews_year,
             "geo_note": geo_note,
             "metro_area_code": metro_area_code or "",
+            "prefer_year": prefer_year,
         },
     )
     return result

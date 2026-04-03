@@ -24,8 +24,12 @@ os.environ["DJANGO_SECRET_KEY"] = "YOUR_LONG_RANDOM_SECRET_KEY_HERE"
 
 # --- BLS live tech career stats (OEWS) — optional but recommended ---
 os.environ["BLS_API_KEY"] = "YOUR_BLS_REGISTRATION_KEY_HERE"
+# Prefer a vintage when BLS returns it; use "latest" for max year only
+os.environ["BLS_OEWS_PREFER_YEAR"] = "2025"
 # Optional: 7-digit metro CBSA for OEWS (leave unset for U.S. national)
 # os.environ["BLS_OEWS_METRO_AREA_CODE"] = "0356200"
+# Optional: ignore local file data/tech_career_stats_override.json
+# os.environ["TECH_CAREER_STATS_OVERRIDE_DISABLE"] = "1"
 
 from django.core.wsgi import get_wsgi_application
 

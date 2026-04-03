@@ -53,6 +53,7 @@ def _meta_bundle(
     live_oews: bool,
     oews_year: str | None,
     geo_note: str | None,
+    override_source: str | None = None,
 ) -> dict:
     openings_sorted = sorted(openings, key=lambda d: d["y"], reverse=True)
     top_openings = openings_sorted[:3]
@@ -82,7 +83,18 @@ def _meta_bundle(
         },
     ]
 
-    if live_oews and oews_year and geo_note:
+    if override_source:
+        as_of = (
+            f"{override_source} · Year {oews_year} · {geo_note}. "
+            "BMCC offers an A.S. in Data Science (DSM-AS); align coursework with the Math department program sheet."
+        )
+        openings_note = (
+            f"Employment counts from your uploaded stats file (year {oews_year}) — not live job postings."
+        )
+        salary_note = (
+            f"Median hourly values from your uploaded stats file (year {oews_year}). Verify against the original source."
+        )
+    elif live_oews and oews_year and geo_note:
         as_of = (
             f"OEWS {oews_year} · {geo_note}. "
             "BMCC offers an A.S. in Data Science (DSM-AS); align coursework with the Math department program sheet."
@@ -107,6 +119,8 @@ def _meta_bundle(
         "languages_note": "Survey-style language shares (not required to sum to 100%); not from BLS.",
         "as_of": as_of,
         "live_oews": live_oews,
+        "from_file_override": bool(override_source),
+        "external_source_name": override_source or "",
         "oews_year": oews_year or "",
         "geo_note": geo_note or "",
         "insights": {
@@ -158,23 +172,47 @@ def get_tech_career_chart_series_static() -> tuple[list[dict], list[dict], list[
 
 def get_tech_career_chart_series() -> tuple[list[dict], list[dict], list[dict], dict, list[dict]]:
     """
-    Prefer live BLS OEWS when BLS_API_KEY is set; otherwise illustrative static data.
-    Cached under BASE_DIR/data/bls_tech_market_cache.json (see refresh_tech_career_bls command).
+    Data priority:
+      1) data/tech_career_stats_override.json (any vetted source you paste, e.g. OEWS 2025 tables)
+      2) BLS API + disk cache when BLS_API_KEY is set (respects BLS_OEWS_PREFER_YEAR, default 2025)
+      3) Illustrative static fallback
     """
+    base = Path(settings.BASE_DIR)
+    override_path = base / "data" / "tech_career_stats_override.json"
+    if not getattr(settings, "TECH_CAREER_STATS_OVERRIDE_DISABLE", False) and override_path.is_file():
+        from careers.tech_market_override import load_tech_career_stats_override
+
+        loaded = load_tech_career_stats_override(override_path)
+        if loaded:
+            openings, salary, oews_year, geo_note, source_name = loaded
+            languages = list(_LANGUAGES_STATIC)
+            scatter = _scatter_from(openings, salary)
+            meta = _meta_bundle(
+                openings,
+                salary,
+                languages,
+                live_oews=True,
+                oews_year=oews_year,
+                geo_note=geo_note,
+                override_source=source_name,
+            )
+            return openings, salary, languages, meta, scatter
+
     api_key = getattr(settings, "BLS_API_KEY", "") or ""
     metro = getattr(settings, "BLS_OEWS_METRO_AREA_CODE", "") or ""
     cache_hours = getattr(settings, "BLS_TECH_MARKET_CACHE_HOURS", 24)
+    prefer_year = getattr(settings, "BLS_OEWS_PREFER_YEAR", None)
 
     if api_key:
         from careers.bls_oews_client import load_or_fetch_tech_oews
 
-        base = Path(settings.BASE_DIR)
         metro_code = metro if len(metro) == 7 and metro.isdigit() else None
         live = load_or_fetch_tech_oews(
             api_key,
             base,
             cache_hours=int(cache_hours),
             metro_area_code=metro_code,
+            prefer_year=prefer_year,
             force_refresh=False,
         )
         if live:
