@@ -16,7 +16,7 @@ BMCCONNECT Website: https://lucasyao111.pythonanywhere.com/
 ## Local setup
 
 ```bash
-git clone -b LucasYao_this_branch_for_myself https://github.com/Sandrieli13/Integration-testing.git
+git clone -b BMCConnect_Public https://github.com/Sandrieli13/Integration-testing.git
 cd Integration-testing
 python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
@@ -51,7 +51,41 @@ Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 | `python manage.py sync_department_metrics` | `DepartmentMetric` rows for Data Analysis charts (CSVs under `client/css/csv/`) |
 | `python manage.py import_individual_society_bmcc` (etc.) | Live BMCC scrape; needs network; often blocked on free PythonAnywhere |
 
-**Careers** app data (majors/jobs/skills) is not in the JSON fixtures; load via uploaded `db.sqlite3`, admin, or custom import.
+**Careers** app data (majors/jobs/skills) is **not** in `sql_code.json`. Use **`python manage.py seed_careers_data`** (see below) or import an uploaded `db.sqlite3`.
+
+## Collaborator & server setup (PythonAnywhere or any host)
+
+`db.sqlite3` is **not in Git**. After you clone/pull the repo on the server, the database file either gets **created empty** when you run `migrate`, or you **upload** one.
+
+### A — Build data on the server (no DB file to share)
+
+From the project root, with your virtualenv active:
+
+```bash
+git pull origin BMCConnect_Public
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py collectstatic --noinput   # production / PythonAnywhere
+python manage.py load_json_data
+python manage.py load_elective_courses
+python manage.py sync_department_metrics
+python manage.py seed_careers_data --reset
+```
+
+Optional: `python manage.py createsuperuser` (admin).  
+Optional: `python manage.py refresh_all_bmcc_scrapes` if outbound HTTP to BMCC works from that host (often blocked on free PythonAnywhere—`load_elective_courses` is the safe substitute for pathway lists).
+
+**Still empty until you add them:** clubs and events (use Django admin or fixtures). BMCC clubs **snapshot** (`BmccClubsInfo`): `python manage.py refresh_bmcc_clubs_info` if the host can reach BMCC.
+
+### B — Use a shared `db.sqlite3` (full copy of someone’s data)
+
+1. One teammate exports or copies `db.sqlite3` from their project root (treat as **sensitive**: accounts, local test data).
+2. On the server, upload it to the same folder as `manage.py` (replace any empty DB), e.g.  
+   `/home/YOURUSERNAME/Integration-testing/db.sqlite3`
+3. Set permissions if needed: `chmod 664 db.sqlite3`
+4. After every `git pull`, run **`python manage.py migrate`** so the file stays compatible with new migrations.
+
+Secrets (**`BLS_API_KEY`**, `DJANGO_SECRET_KEY`, etc.) are **not** in the repo—configure via **`.env`** (local) or the host’s **WSGI / environment** (PythonAnywhere). See **`.env.example`**.
 
 ## Deployment (PythonAnywhere)
 

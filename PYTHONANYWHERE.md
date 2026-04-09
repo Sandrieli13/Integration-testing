@@ -4,7 +4,7 @@
 
 ```bash
 cd ~
-git clone -b LucasYao_this_branch_for_myself https://github.com/Sandrieli13/Integration-testing.git
+git clone -b BMCConnect_Public https://github.com/Sandrieli13/Integration-testing.git
 cd Integration-testing
 python3.10 -m venv venv
 source venv/bin/activate
