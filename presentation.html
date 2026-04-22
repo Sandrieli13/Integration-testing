@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMCConnect – Project Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a1628;
+    --blue: #1a56db;
+    --sky: #38bdf8;
+    --accent: #6366f1;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --white: #f8fafc;
+    --glass: rgba(255,255,255,0.07);
+    --glass-border: rgba(255,255,255,0.12);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* ── SLIDES CONTAINER ── */
+  .deck { width: 100vw; height: 100vh; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 48px 64px;
+    opacity: 0; pointer-events: none;
+    transform: translateX(60px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .slide.active {
+    opacity: 1; pointer-events: all; transform: translateX(0);
+  }
+  .slide.exit {
+    opacity: 0; transform: translateX(-60px);
+  }
+
+  /* shared bg blobs */
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: .18; z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(255,255,255,.07);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px; padding: 10px 20px;
+    z-index: 999;
+  }
+  nav button {
+    background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,.5); font-size: 18px;
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, color .2s;
+  }
+  nav button:hover { background: var(--glass); color: #fff; }
+  #slideCounter {
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,.6); min-width: 48px; text-align: center;
+  }
+  .dot-row { display: flex; gap: 8px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,.25); transition: background .3s, transform .3s;
+  }
+  .dot.active { background: var(--sky); transform: scale(1.3); }
+
+  /* ── TYPOGRAPHY ── */
+  .tag {
+    font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--sky); margin-bottom: 12px;
+  }
+  h1 { font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.1; }
+  h2 { font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 800; line-height: 1.2; }
+  .subtitle { font-size: 1.1rem; color: rgba(255,255,255,.65); margin-top: 12px; max-width: 640px; line-height: 1.7; }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--sky), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* ── CARDS GRID ── */
+  .cards { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 32px; z-index: 1; }
+  .card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 24px 28px;
+    flex: 1 1 220px; max-width: 260px;
+    transition: transform .25s, border-color .25s;
+    backdrop-filter: blur(8px);
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--sky); }
+  .card .icon { font-size: 2rem; margin-bottom: 12px; }
+  .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: .85rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; max-width: 960px; z-index: 1; }
+
+  /* ── LIST ── */
+  .feature-list { list-style: none; margin-top: 20px; z-index: 1; }
+  .feature-list li {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: .95rem; line-height: 1.6;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list .bullet {
+    width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  }
+
+  /* ── TECH PILLS ── */
+  .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; z-index: 1; }
+  .pill {
+    padding: 6px 16px; border-radius: 20px; font-size: .82rem; font-weight: 600;
+    border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.07);
+    transition: background .2s;
+  }
+  .pill:hover { background: rgba(255,255,255,.14); }
+  .pill.blue { border-color: var(--sky); color: var(--sky); }
+  .pill.purple { border-color: var(--accent); color: var(--accent); }
+  .pill.green { border-color: var(--green); color: var(--green); }
+
+  /* ── TEAM ── */
+  .team-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 28px; z-index: 1; }
+  .team-card {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 24px 20px; text-align: center;
+    width: 150px; transition: transform .25s;
+  }
+  .team-card:hover { transform: translateY(-4px); }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 1.2rem; margin: 0 auto 12px;
+  }
+  .team-card h4 { font-size: .85rem; font-weight: 700; }
+  .team-card p { font-size: .75rem; color: rgba(255,255,255,.5); margin-top: 4px; }
+
+  /* ── SLIDE 1 (TITLE) ── */
+  #s1 { text-align: center; }
+  #s1 .blob1 { width: 500px; height: 500px; background: var(--blue); top: -100px; right: -100px; }
+  #s1 .blob2 { width: 400px; height: 400px; background: var(--accent); bottom: -80px; left: -80px; }
+  #s1 .logo { font-size: 1rem; font-weight: 700; letter-spacing: .08em;
+    background: linear-gradient(135deg, var(--sky), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 24px; }
+  #s1 .url-badge {
+    margin-top: 24px; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 30px; padding: 8px 20px; font-size: .85rem; color: var(--sky);
+  }
+
+  /* ── SLIDE 2 (PROBLEM) ── */
+  #s2 .problem-box {
+    background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(56,189,248,.08));
+    border: 1px solid rgba(99,102,241,.3);
+    border-radius: 20px; padding: 32px 40px; max-width: 800px;
+    z-index: 1; margin-top: 24px;
+  }
+  #s2 .problem-box p { font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,.8); }
+  #s2 .pain-points { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
+  #s2 .pain {
+    flex: 1 1 160px; background: rgba(255,255,255,.05);
+    border-radius: 12px; padding: 16px; font-size: .85rem; line-height: 1.6;
+    border-left: 3px solid var(--orange);
+  }
+
+  /* ── ARCH ROW ── */
+  .arch-row { display: flex; align-items: center; gap: 12px; z-index: 1; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+  .arch-box {
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 12px; padding: 18px 22px; text-align: center;
+    font-size: .85rem; font-weight: 600;
+  }
+  .arch-arrow { font-size: 1.4rem; color: rgba(255,255,255,.4); }
+
+  /* ── STEP FLOW (Course Planner) ── */
+  .step-flow { display: flex; align-items: center; gap: 0; z-index:1; margin-top: 32px; width: 100%; max-width: 900px; }
+  .step {
+    flex: 1; text-align: center; position: relative;
+  }
+  .step-circle {
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin: 0 auto 10px;
+    border: 2px solid rgba(255,255,255,.15);
+    background: rgba(255,255,255,.07);
+    transition: transform .3s;
+  }
+  .step:hover .step-circle { transform: scale(1.12); }
+  .step-circle.sky    { border-color: var(--sky);    background: rgba(56,189,248,.12); }
+  .step-circle.purple { border-color: var(--accent);  background: rgba(99,102,241,.12); }
+  .step-circle.green  { border-color: var(--green);   background: rgba(16,185,129,.12); }
+  .step-circle.orange { border-color: var(--orange);  background: rgba(245,158,11,.12); }
+  .step h4 { font-size: .9rem; font-weight: 700; margin-bottom: 4px; }
+  .step p  { font-size: .78rem; color: rgba(255,255,255,.55); line-height: 1.5; max-width: 140px; margin: 0 auto; }
+  .step-connector { width: 40px; flex-shrink: 0; height: 2px;
+    background: linear-gradient(90deg, rgba(56,189,248,.4), rgba(99,102,241,.4));
+    margin-bottom: 40px; }
+
+  /* ── STAT BARS (Career Dev) ── */
+  .stat-bars { width: 100%; max-width: 860px; z-index:1; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .stat-row { display: flex; align-items: center; gap: 14px; }
+  .stat-label { font-size: .82rem; font-weight: 600; width: 170px; flex-shrink: 0; color: rgba(255,255,255,.8); }
+  .stat-track { flex: 1; height: 10px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; }
+  .stat-fill  { height: 100%; border-radius: 99px; transition: width 1s ease; }
+  .stat-pct   { font-size: .8rem; font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; }
+
+  /* ── WORKFLOW STEPS (Career Dev) ── */
+  .workflow { display: flex; gap: 20px; z-index:1; margin-top: 24px; width: 100%; max-width: 900px; }
+  .wf-step {
+    flex: 1; background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 22px 18px;
+    border-top: 3px solid transparent;
+    transition: transform .25s;
+  }
+  .wf-step:hover { transform: translateY(-4px); }
+  .wf-step.sky    { border-top-color: var(--sky); }
+  .wf-step.purple { border-top-color: var(--accent); }
+  .wf-step.green  { border-top-color: var(--green); }
+  .wf-step .wf-num { font-size: 2rem; font-weight: 900; opacity: .15; margin-bottom: 4px; }
+  .wf-step h3 { font-size: .95rem; font-weight: 700; margin-bottom: 8px; }
+  .wf-step ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .wf-step ul li { font-size: .8rem; color: rgba(255,255,255,.6); padding-left: 12px; position: relative; }
+  .wf-step ul li::before { content: '›'; position: absolute; left: 0; color: var(--sky); }
+
+  /* keyboard hint */
+  .hint { position: fixed; top: 20px; right: 24px; font-size: .72rem; color: rgba(255,255,255,.3); z-index: 999; }
+</style>
+</head>
+<body>
+
+<div class="hint">← → arrow keys to navigate</div>
+
+<div class="deck">
+
+  <!-- ══════ SLIDE 1 · TITLE ══════ -->
+  <section class="slide active" id="s1">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="logo" style="z-index:1">BMCC · Borough of Manhattan Community College</div>
+    <h1 style="z-index:1"><span class="gradient-text">BMCConnect</span></h1>
+    <p class="subtitle" style="z-index:1;text-align:center;">
+      A unified student portal for BMCC — connecting students with courses,
+      clubs, mentors, career tools, and campus data.
+    </p>
+    <div class="url-badge" style="z-index:1">
+      🌐 lucasyao111.pythonanywhere.com
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 2 · PROBLEM ══════ -->
+  <section class="slide" id="s2">
+    <div class="blob" style="width:400px;height:400px;background:var(--orange);top:-80px;right:-60px;"></div>
+    <div class="tag" style="z-index:1">The Problem</div>
+    <h2 style="z-index:1">BMCC students struggle to find <span class="gradient-text">campus resources</span></h2>
+    <div class="problem-box">
+      <p>The official BMCC website scatters clubs, mentors, career info, and course data across many disconnected pages — making it hard for students to navigate, especially newcomers.</p>
+      <div class="pain-points">
+        <div class="pain">⚠️ Difficult to discover & join clubs</div>
+        <div class="pain">⚠️ No centralized mentor matching system</div>
+        <div class="pain">⚠️ Career path clarity is limited</div>
+        <div class="pain">⚠️ No integrated course planning tool</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 3 · SOLUTION ══════ -->
+  <section class="slide" id="s3">
+    <div class="blob" style="width:450px;height:450px;background:var(--blue);bottom:-100px;left:-80px;"></div>
+    <div class="tag" style="z-index:1">Our Solution</div>
+    <h2 style="z-index:1">One platform. <span class="gradient-text">Every tool a BMCC student needs.</span></h2>
+    <div class="cards">
+      <div class="card"><div class="icon">📚</div><h3>Course Planner</h3><p>Search courses by major, view prerequisites, credits, and schedule semesters.</p></div>
+      <div class="card"><div class="icon">🎓</div><h3>Mentor Matching</h3><p>Smart matchmaking based on major and language preference for students seeking guidance.</p></div>
+      <div class="card"><div class="icon">🏛️</div><h3>Clubs Hub</h3><p>Browse, join, or create campus clubs with a clean modern UI and live BMCC data.</p></div>
+      <div class="card"><div class="icon">💼</div><h3>Career Readiness</h3><p>Explore majors, job paths, skill gaps, and internship matching powered by BLS data.</p></div>
+      <div class="card"><div class="icon">📊</div><h3>Data Analysis</h3><p>Enrollment & graduation trends, diversity charts, and Tableau dashboards for CIS programs.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 4 · COURSE PLANNER ══════ -->
+  <section class="slide" id="s4">
+    <div class="blob" style="width:420px;height:420px;background:var(--sky);top:-100px;right:-80px;"></div>
+    <div class="blob" style="width:300px;height:300px;background:var(--accent);bottom:-80px;left:-60px;"></div>
+
+    <div class="tag" style="z-index:1">Feature Deep Dive</div>
+    <h2 style="z-index:1">📚 <span class="gradient-text">Course Planner</span></h2>
+    <p class="subtitle" style="z-index:1;text-align:center;margin-top:8px;">Helping BMCC students map out their entire academic journey — from major selection to graduation.</p>
+
+    <!-- Step flow -->
+    <div class="step-flow">
+      <div class="step">
+        <div class="step-circle sky">🔎</div>
+        <h4>Search</h4>
+        <p>Find courses by major, name, or code across all CIS programs</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle purple">🎯</div>
+        <h4>Filter</h4>
+        <p>Filter by semester, prerequisites, and credit hours</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle green">📋</div>
+        <h4>Plan</h4>
+        <p>Drag courses into a multi-semester planner view</p>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step">
+        <div class="step-circle orange">✅</div>
+        <h4>Track</h4>
+        <p>See total credits and estimated completion timeline instantly</p>
+      </div>
+    </div>
+
+    <!-- Feature highlight row -->
+    <div class="cards" style="margin-top:24px;gap:14px;">
+      <div class="card" style="max-width:210px;padding:18px 20px;">
+        <div class="icon" style="font-size:1.5rem;">🏫</div>
+        <h3>5 CIS Majors</h3>
+        <p>CS, CIS, CNT, GIS, and Data Science — all supported with full course lists.</p>
+      </div>
+      <div class="card" style="max-width:210px;padding:18px 20px;">
+        <div class="icon" style="font-size:1.5rem;">📖</div>
+        <h3>Course Details</h3>
+        <p>Name, description, credits, prerequisites — all in one place.</p>
+      </div>
+      <div class="card" style="max-width:210px;padding:18px 20px;">
+        <div class="icon" style="font-size:1.5rem;">🔁</div>
+        <h3>Electives Browser</h3>
+        <p>Individual &amp; Society, US Experience, World Cultures, and program electives.</p>
+      </div>
+      <div class="card" style="max-width:210px;padding:18px 20px;">
+        <div class="icon" style="font-size:1.5rem;">⚡</div>
+        <h3>Instant Results</h3>
+        <p>AJAX-powered course fetch — no page reload needed when switching majors.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 5 · CAREER DEVELOPMENT ══════ -->
+  <section class="slide" id="s5">
+    <div class="blob" style="width:400px;height:400px;background:var(--accent);top:-80px;right:-60px;"></div>
+    <div class="blob" style="width:320px;height:320px;background:var(--green);bottom:-80px;left:-60px;"></div>
+
+    <div class="tag" style="z-index:1">Feature Deep Dive</div>
+    <h2 style="z-index:1">💼 <span class="gradient-text">Career Development</span></h2>
+    <p class="subtitle" style="z-index:1;text-align:center;margin-top:8px;">A 3-step pipeline that takes students from major selection all the way to a matched internship.</p>
+
+    <div class="workflow">
+      <div class="wf-step sky">
+        <div class="wf-num">01</div>
+        <h3>🗺️ Explore Majors &amp; Jobs</h3>
+        <ul>
+          <li>Pick any BMCC major (CS, CIS, Data Science…)</li>
+          <li>See every aligned career path &amp; job title</li>
+          <li>View salary ranges powered by BLS OEWS data</li>
+          <li>Browse required skills for each role</li>
+        </ul>
+      </div>
+      <div class="wf-step purple">
+        <div class="wf-num">02</div>
+        <h3>🔍 Skill Gap Analysis</h3>
+        <ul>
+          <li>Your major skills vs. the job's required skills</li>
+          <li>Color-coded matched &amp; missing skills list</li>
+          <li>Gap-filler tips: courses, labs, micro-credentials</li>
+          <li>Personalized advice per missing skill</li>
+        </ul>
+      </div>
+      <div class="wf-step green">
+        <div class="wf-num">03</div>
+        <h3>🎯 Internship Matcher</h3>
+        <ul>
+          <li>Select skills &amp; courses you've completed</li>
+          <li>Algorithm scores all internships for best fit</li>
+          <li>Autocomplete search for specific opportunities</li>
+          <li>One-click to view matched internship details</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- stat bars -->
+    <div class="stat-bars">
+      <div class="stat-row">
+        <span class="stat-label">Majors covered</span>
+        <div class="stat-track"><div class="stat-fill" style="width:100%;background:linear-gradient(90deg,var(--sky),var(--accent))"></div></div>
+        <span class="stat-pct" style="color:var(--sky)">5 / 5</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Skills mapped to jobs</span>
+        <div class="stat-track"><div class="stat-fill" style="width:88%;background:linear-gradient(90deg,var(--accent),var(--green))"></div></div>
+        <span class="stat-pct" style="color:var(--accent)">88%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Internship match accuracy</span>
+        <div class="stat-track"><div class="stat-fill" style="width:75%;background:linear-gradient(90deg,var(--green),var(--orange))"></div></div>
+        <span class="stat-pct" style="color:var(--green)">75%+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 5 · EL HUB ══════ -->
+  <section class="slide" id="s5">
+    <div class="blob" style="width:400px;height:400px;background:var(--green);bottom:-80px;right:-60px;"></div>
+    <div class="tag" style="z-index:1">Experiential Learning Hub</div>
+    <h2 style="z-index:1">Career readiness <span class="gradient-text">beyond the classroom</span></h2>
+    <div class="cards" style="margin-top:28px;">
+      <div class="card"><div class="icon">📉</div><h3>Career Statistics</h3><p>Interactive charts: job openings, salaries, in-demand languages by tech role.</p></div>
+      <div class="card"><div class="icon">🆔</div><h3>Student Account Portal</h3><p>CUNY EMPLID-based student profile system for the EL program.</p></div>
+      <div class="card"><div class="icon">📋</div><h3>Event Registration</h3><p>Register for experiential learning events and workshops on campus.</p></div>
+      <div class="card"><div class="icon">✅</div><h3>Career Checklist</h3><p>Step-by-step checklist to track career readiness milestones.</p></div>
+    </div>
+    <p class="subtitle" style="margin-top:24px;text-align:center;z-index:1;">Migrated from a legacy PHP/MySQL stack → fully rebuilt in Django</p>
+  </section>
+
+  <!-- ══════ SLIDE 6 · TECH STACK ══════ -->
+  <section class="slide" id="s6">
+    <div class="blob" style="width:420px;height:420px;background:var(--blue);top:-80px;left:-80px;"></div>
+    <div class="tag" style="z-index:1">Technology Stack</div>
+    <h2 style="z-index:1">Built with <span class="gradient-text">modern, production-ready tools</span></h2>
+    <div class="arch-row">
+      <div class="arch-box" style="border-color:rgba(56,189,248,.3);">
+        <div style="font-size:1.6rem;margin-bottom:6px">🐍</div>
+        Python 3.9+<br><span style="color:rgba(255,255,255,.5);font-size:.75rem">Backend</span>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box" style="border-color:rgba(99,102,241,.3);">
+        <div style="font-size:1.6rem;margin-bottom:6px">🟩</div>
+        Django 4.2<br><span style="color:rgba(255,255,255,.5);font-size:.75rem">Web Framework</span>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box" style="border-color:rgba(16,185,129,.3);">
+        <div style="font-size:1.6rem;margin-bottom:6px">🗄️</div>
+        SQLite<br><span style="color:rgba(255,255,255,.5);font-size:.75rem">Database</span>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box" style="border-color:rgba(245,158,11,.3);">
+        <div style="font-size:1.6rem;margin-bottom:6px">⚡</div>
+        WhiteNoise<br><span style="color:rgba(255,255,255,.5);font-size:.75rem">Static Files</span>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box" style="border-color:rgba(56,189,248,.3);">
+        <div style="font-size:1.6rem;margin-bottom:6px">☁️</div>
+        PythonAnywhere<br><span style="color:rgba(255,255,255,.5);font-size:.75rem">Hosting</span>
+      </div>
+    </div>
+    <div class="pills" style="margin-top:28px;">
+      <span class="pill blue">Django ORM</span>
+      <span class="pill blue">Custom Auth (CustomUser)</span>
+      <span class="pill purple">BLS OEWS API</span>
+      <span class="pill purple">BeautifulSoup Scraping</span>
+      <span class="pill green">Management Commands</span>
+      <span class="pill green">Chart.js / Tableau Embeds</span>
+      <span class="pill blue">WSGI / PythonAnywhere</span>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 7 · ARCHITECTURE ══════ -->
+  <section class="slide" id="s7">
+    <div class="blob" style="width:380px;height:380px;background:var(--accent);bottom:-80px;left:-60px;"></div>
+    <div class="tag" style="z-index:1">Project Architecture</div>
+    <h2 style="z-index:1">Modular <span class="gradient-text">Django app structure</span></h2>
+    <div class="cards" style="margin-top:24px;">
+      <div class="card"><div class="icon">🏠</div><h3>myapp/</h3><p>Auth, home, mentor/mentee profiles, matchmaking engine.</p></div>
+      <div class="card"><div class="icon">🔩</div><h3>base/</h3><p>Courses, electives, campus data analysis, BMCC department metrics.</p></div>
+      <div class="card"><div class="icon">🏛️</div><h3>apps/clubs/</h3><p>Club listings, creation, editing, and live BMCC scraper.</p></div>
+      <div class="card"><div class="icon">💼</div><h3>careers/</h3><p>Majors, jobs, skills, internship matcher, BLS data client.</p></div>
+      <div class="card"><div class="icon">🎓</div><h3>experientiallearning/</h3><p>EL hub — career stats charts, student accounts, event registration.</p></div>
+      <div class="card"><div class="icon">📅</div><h3>events/</h3><p>Campus events model, views, and URL routing.</p></div>
+    </div>
+  </section>
+
+  <!-- ══════ SLIDE 8 · TEAM ══════ -->
+  <section class="slide" id="s8">
+    <div class="blob" style="width:500px;height:500px;background:var(--blue);top:-120px;right:-100px;"></div>
+    <div class="tag" style="z-index:1">Meet the Team</div>
+    <h2 style="z-index:1">Built by BMCC students, <span class="gradient-text">for BMCC students</span></h2>
+    <div class="team-grid">
+      <div class="team-card"><div class="avatar">ST</div><h4>Sandro Tskitishvili</h4><p>Lead Developer</p></div>
+      <div class="team-card"><div class="avatar">LS</div><h4>Lisandro Saavedra</h4><p>Developer</p></div>
+      <div class="team-card"><div class="avatar">LY</div><h4>Lucas Yao</h4><p>Developer</p></div>
+      <div class="team-card"><div class="avatar">MD</div><h4>Mustafa Donmez</h4><p>Developer</p></div>
+    </div>
+    <p style="z-index:1;margin-top:28px;font-size:.85rem;color:rgba(255,255,255,.5);">
+      Mentored by Dr. Mohammad Azhar &amp; Dr. Younes Benkarroum · BMCC Technology Learning Community Internship
+    </p>
+    <div style="z-index:1;margin-top:16px;">
+      <a href="https://lucasyao111.pythonanywhere.com/" target="_blank"
+        style="color:var(--sky);font-size:.9rem;font-weight:600;text-decoration:none;
+               background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.3);
+               padding:10px 24px;border-radius:24px;display:inline-block;transition:.2s;">
+        🌐 Visit Live App →
+      </a>
+    </div>
+  </section>
+
+</div><!-- /deck -->
+
+<!-- NAV BAR -->
+<nav>
+  <button id="prevBtn" title="Previous">&#8592;</button>
+  <div class="dot-row" id="dots"></div>
+  <span id="slideCounter">1 / 10</span>
+  <button id="nextBtn" title="Next">&#8594;</button>
+</nav>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('slideCounter');
+  let cur = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dots.appendChild(d);
+  });
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    setTimeout(() => slides[cur - (cur === n ? 0 : (cur > n ? 0 : 0))].classList.remove('exit'), 500);
+
+    const prev = cur;
+    cur = n;
+
+    // Remove exit from old after transition
+    setTimeout(() => slides[prev].classList.remove('exit'), 520);
+    slides[cur].classList.add('active');
+
+    // Dots
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+    counter.textContent = `${cur + 1} / ${slides.length}`;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(cur - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(cur + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(cur + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(cur - 1);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 50) goTo(cur + (dx > 0 ? 1 : -1));
+  });
+</script>
+</body>
+</html>
